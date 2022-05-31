@@ -9,19 +9,7 @@ planes.get("/", (req, res) => {
 
   connection.query(sqlStr, (err, result, fields) => {
     if (err) throw err;
-    const finalResult = [];
-    for (const item of result) {
-      finalResult.push({
-        "id": item.planId,
-        "plan": item.plan,
-        "categoria": item.categoria,
-        "titulo": item.titulo,
-        "detalle": item.detalle,
-        "descripcion": item.descripcion,
-        "activo": item.activo,
-      });
-    }
-    res.json(finalResult);
+    res.json(result);
   });
 });
 

@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const connection = require("./mysql");
-const usuarios = express();
+const oportCriptoLinks = express();
 // Automatically allow cross-origin requests
-usuarios.use(cors({origin: true}));
-usuarios.get("/", (req, res) => {
-  const sqlStr = `SELECT * FROM ${process.env.USERS_TABLE};`;
+oportCriptoLinks.use(cors({origin: true}));
+oportCriptoLinks.get("/", (req, res) => {
+  const sqlStr = `SELECT * FROM ${process.env.OPORT_CRIPTO_TABLE};`;
 
   connection.query(sqlStr, (err, result, fields) => {
     if (err) throw err;
@@ -13,4 +13,4 @@ usuarios.get("/", (req, res) => {
   });
 });
 
-module.exports = usuarios;
+module.exports = oportCriptoLinks;

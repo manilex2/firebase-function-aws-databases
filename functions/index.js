@@ -2,8 +2,12 @@ const functions = require("firebase-functions");
 const usuarios = require("./usuarios");
 const planes = require("./planes");
 const idosIcos = require("./idosIcos");
-const oportCripto = require("./oportCripto");
+const oportCriptoLinks = require("./oportCriptoLinks");
 const chartProy = require("./chartProy");
+const cryptoList = require("./cryptoList");
+const oportSegCrypto = require("./oportSegCrypto");
+const marketData = require("./marketData");
+const precioActual = require("./precioActual");
 
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -15,5 +19,10 @@ exports.ping = functions.https.onRequest((req, res) => {
 exports.usuarios = functions.https.onRequest(usuarios);
 exports.planes = functions.https.onRequest(planes);
 exports.idosIcos = functions.https.onRequest(idosIcos);
-exports.oportCripto = functions.https.onRequest(oportCripto);
+exports.oportCriptoLinks = functions.https.onRequest(oportCriptoLinks);
 exports.chartProy = functions.https.onRequest(chartProy);
+exports.cryptoList = functions.https.onRequest(cryptoList);
+exports.oportSegCrypto = functions.https.onRequest(oportSegCrypto);
+exports.marketData = functions.https.onRequest(marketData);
+exports.precioActual = functions.https.onRequest(precioActual);
+
