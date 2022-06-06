@@ -8,6 +8,7 @@ const cryptoList = require("./cryptoList");
 const oportSegCrypto = require("./oportSegCrypto");
 const marketData = require("./marketData");
 const precioActual = require("./precioActual");
+const investmentCalculator = require("./investmentCalculator");
 
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -25,4 +26,5 @@ exports.cryptoList = functions.https.onRequest(cryptoList);
 exports.oportSegCrypto = functions.https.onRequest(oportSegCrypto);
 exports.marketData = functions.https.onRequest(marketData);
 exports.precioActual = functions.https.onRequest(precioActual);
+exports.investmentCalculator = functions.https.onRequest(investmentCalculator);
 
