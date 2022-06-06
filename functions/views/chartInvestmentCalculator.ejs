@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body{            
+            height: 100vh;
+            margin: 0;
+            background-color: #15181d;
+        }
+
+        #graph_container{            
+            height: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        #graph_container > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #graph_container > div {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            z-index: -99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #graph_container  div  img{
+            max-width: 150px;
+            max-height: 150px;
+            width: 100%;
+            text-align: center;
+            opacity: 0.5;
+        }
+
+        #graph_container + div {            
+            height: 30%;
+            padding: 15px 30px 15px 30px;
+            background-color: #202125;
+            box-sizing: border-box;
+            border-top: 0.5px #ccc solid ;
+        }
+
+        #graph_container + div p {
+            color: white;
+            font-size: 12px;
+            font-family: "Montserrat";
+
+        }
+
+        #graph_container + div p span{
+            font-weight: 600;
+        }
+
+        @media (min-width: 300px) {
+            #graph_container{
+                height: 75%;
+            }
+
+            #graph_container + div {
+                height: 25%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="graph_container">
+        <div>
+            <image src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/Logo+2.png">
+        </div>
+        <canvas >
+        </canvas>
+    </div>
+    <div>
+        <p>
+            El valor total luego de <%= (labels.length -1) %> años es de <span>$<%= totalValue %></span>.
+        </p>
+        <p>
+            El capital total invertido es de <span>$<%= contributionValue%></span> y la ganacia acumulada es de <span>$<%= returnValue %></span>.
+        </p>
+    </div>
+</body>
+<script>
+    var title = "Resultados de tu inversión";
+    var contribution_list = [<%= contributionList %>];
+    var return_list = [<%= returnList %>];
+    var labels = [<%= labels %>];
+
+    var ctx = document.querySelector("#graph_container canvas").getContext("2d");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Capital invertido",
+                    data: contribution_list,
+                    backgroundColor: "#38A4EB"
+                },
+                {
+                    label: "Ganancias",
+                    data: return_list,
+                    backgroundColor: "#ff9900"
+                }
+            ]
+        },
+        options: {
+            plugins:{
+                title: {
+                    display: true,
+                    text: title,
+                    color: "#ff9900",
+                    position: "top",
+                    padding: {
+                      top:0  
+                    },
+                    font: {
+                        weight: 'bold',
+                        family:  "Montserrat",
+                        size: 16,                        
+                    }
+                },
+                tooltip:{
+                    enabled: true,
+                    backgroundColor: "rgba(0, 0, 0, 1)",
+                    mode: "index"
+                },
+                legend:{
+                    display: true,
+                    labels:{
+                        boxWidth: 10,
+                        pointStyle: "circle",
+                        usePointStyle:  true,
+                        color: "#ffffff",
+                        font: {
+                            weight: '500',
+                            family:  "Montserrat",
+                            size: 12,  
+                        }
+                    },
+                    
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    stacked: true,
+                    grid : {
+                        display : false
+                    },
+                    ticks:{
+                        color: "#ffffff"
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true,
+                    grid:{
+                        color: "rgba(256,256,256,0.3)"
+                    },
+                    ticks:{
+                        color: "#ffffff"
+                    }
+                },
+            },
+            
+        },
+        plugins: [{
+            beforeInit(chart) {
+                    // Get reference to the original fit function
+                    const originalFit = chart.legend.fit;
+
+                    // Override the fit function
+                    chart.legend.fit = function fit() {
+                        // Call original function and bind scope in order to use `this` correctly inside it
+                        originalFit.bind(chart.legend)();
+                        // Change the height as suggested in another answers
+                        this.height += 10;
+                    }
+            },
+        }]
+    });
+</script>
+
+</html>
