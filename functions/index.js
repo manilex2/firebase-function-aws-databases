@@ -27,4 +27,3 @@ exports.oportSegCrypto = functions.https.onRequest(oportSegCrypto);
 exports.marketData = functions.https.onRequest(marketData);
 exports.precioActual = functions.https.onRequest(precioActual);
 exports.investmentCalculator = functions.https.onRequest(investmentCalculator);
-
