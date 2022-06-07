@@ -9,7 +9,7 @@ marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
   const cripto = req.params["cripto"];
   const marketName = req.params["marketName"];
   // eslint-disable-next-line max-len
-  const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE} WHERE id = "${cripto}" AND market_name="${marketName}";`;
+  const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}" AND market_name="${marketName}";`;
 
   connection.query(sqlStr, (err, result, fields) => {
     if (err) throw err;
@@ -32,7 +32,7 @@ marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
 marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
   const cripto = req.params["cripto"];
   // eslint-disable-next-line max-len
-  const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE} WHERE id = "${cripto}";`;
+  const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}";`;
 
   connection.query(sqlStr, (err, result, fields) => {
     if (err) throw err;
