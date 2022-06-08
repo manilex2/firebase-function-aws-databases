@@ -5,6 +5,14 @@ const marketData = express();
 // Automatically allow cross-origin requests
 marketData.use(cors({origin: true}));
 
+marketData.get(`/${process.env.API_KEY}/:cripto/list`, (req, res) => {
+  res.json({
+    status: "API ERROR",
+    // eslint-disable-next-line max-len
+    message: "Hay un error en la ruta, debe colocar el parametro que desea consultar despues de list",
+  });
+});
+
 marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
   const cripto = req.params["cripto"];
   const marketName = req.params["marketName"];
@@ -26,14 +34,6 @@ marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
         message: `No se encontro Market Data para ${cripto} con ${marketName}`,
       });
     }
-  });
-});
-
-marketData.get(`/${process.env.API_KEY}/:cripto/list`, (req, res) => {
-  res.json({
-    status: "API ERROR",
-    // eslint-disable-next-line max-len
-    message: "Hay un error en la ruta, debe colocar el parametro que desea consultar despues de list",
   });
 });
 
