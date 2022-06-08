@@ -29,6 +29,14 @@ marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
   });
 });
 
+marketData.get(`/${process.env.API_KEY}/:cripto/list`, (req, res) => {
+  res.json({
+    status: "API ERROR",
+    // eslint-disable-next-line max-len
+    message: "Hay un error en la ruta, debe colocar el parametro que desea consultar despues de list",
+  });
+});
+
 marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
   const cripto = req.params["cripto"];
   const sqlStr = `SELECT 
@@ -84,14 +92,6 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
         message: `No se encontro Market Data para ${cripto}`,
       });
     }
-  });
-});
-
-marketData.get(`/${process.env.API_KEY}/:cripto/list`, (req, res) => {
-  res.json({
-    status: "API ERROR",
-    // eslint-disable-next-line max-len
-    message: "Hay un error en la ruta, debe colocar el parametro que desea consultar despues de list",
   });
 });
 
