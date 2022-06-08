@@ -31,8 +31,43 @@ marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
 
 marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
   const cripto = req.params["cripto"];
-  // eslint-disable-next-line max-len
-  const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}";`;
+  const sqlStr = `SELECT 
+                        id,
+                        coin_id,
+                        symbol,
+                        name,
+                        description_en,
+                        description_es,
+                        homepage,
+                        blockchain_site,
+                        twitter_screenname,
+                        image_thumb,
+                        image_small,
+                        image_large,
+                        sentiment_votes_up_percentage,
+                        sentiment_votes_down_percentage,
+                        coingecko_rank,
+                        coingecko_score,
+                        developer_score,
+                        community_score,
+                        liquidity_score,
+                        public_interest_score,
+                        ath_change_percentage,
+                        ath_date,
+                        market_cap,
+                        market_cap_rank,
+                        total_volume,
+                        price_change_percentage_24h,
+                        price_change_percentage_7d,
+                        price_change_percentage_30d,
+                        price_change_percentage_200d,
+                        price_change_percentage_1y,
+                        total_supply,
+                        max_supply,
+                        circulating_supply,
+                        last_updated,
+                        twitter_followers
+    FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}" LIMIT 1;`;
 
   connection.query(sqlStr, (err, result, fields) => {
     if (err) throw err;
@@ -47,6 +82,37 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
         status: 400,
         error: "Request Error",
         message: `No se encontro Market Data para ${cripto}`,
+      });
+    }
+  });
+});
+
+marketData.get(`/${process.env.API_KEY}/:cripto/list`, (req, res) => {
+  res.json({
+    status: "API ERROR",
+    // eslint-disable-next-line max-len
+    message: "Hay un error en la ruta, debe colocar el parametro que desea consultar despues de list",
+  });
+});
+
+marketData.get(`/${process.env.API_KEY}/:cripto/list/exchanges`, (req, res) => {
+  const cripto = req.params["cripto"];
+  // eslint-disable-next-line max-len
+  const sqlStr = `SELECT  market_name FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}";`;
+
+  connection.query(sqlStr, (err, result, fields) => {
+    if (err) throw err;
+    if (result) {
+      res.status(200).json({
+        status: 200,
+        title: `Lista de Exchanges de ${cripto}`,
+        data: result,
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        error: "Request Error",
+        message: `No se encontro Lista de Exchanges para ${cripto}`,
       });
     }
   });
