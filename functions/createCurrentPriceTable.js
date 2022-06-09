@@ -12,7 +12,7 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
   const query =
   await admin.firestore().collection("current_prices").listDocuments();
   if (query.length == 1) {
-    await fetch("https://us-central1-invrtir-app-b3266.cloudfunctions.net/precioActual/751e3d3a-1f52-45e9-8654-d311314e3af5")
+    await fetch(`https://us-central1-invrtir-app-b3266.cloudfunctions.net/precioActual/${process.env.API_KEY}`)
         .then((response) => response.json())
         .then((data)=>{
           const prices = data["data"];
