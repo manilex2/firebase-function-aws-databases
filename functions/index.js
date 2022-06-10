@@ -10,7 +10,7 @@ const marketData = require("./marketData");
 const precioActual = require("./precioActual");
 const investmentCalculator = require("./investmentCalculator");
 const createCurrentPrice = require("./createCurrentPriceTable");
-
+const updatePrice = require("./updateTransactionPortfolio");
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   // eslint-disable-next-line max-len
@@ -29,4 +29,4 @@ exports.marketData = functions.https.onRequest(marketData);
 exports.precioActual = functions.https.onRequest(precioActual);
 exports.investmentCalculator = functions.https.onRequest(investmentCalculator);
 exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
-
+exports.updateTransactionPortfolio= updatePrice;
