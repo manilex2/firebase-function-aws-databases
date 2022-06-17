@@ -13,6 +13,7 @@ idosIcos.get(`/${process.env.API_KEY}`, (req, res) => {
   });
 });
 idosIcos.get(`/${process.env.API_KEY}/bettersRentability`, (req, res) => {
+  // eslint-disable-next-line max-len
   const sqlStr = `SELECT * FROM ${process.env.IDOS_ICOS_TABLE} GROUP BY nombre ORDER BY MAX(rentabilidad_generada) DESC LIMIT 4;`;
   connection.query(sqlStr, (err, result, fields) => {
     if (err) throw err;
