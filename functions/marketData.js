@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const connection = require("./mysql-crypto");
+const pool = require("./mysql-crypto");
 const marketData = express();
 // Automatically allow cross-origin requests
 marketData.use(cors({origin: true}));
@@ -19,21 +19,28 @@ marketData.get(`/${process.env.API_KEY}/:cripto/:marketName`, (req, res) => {
   // eslint-disable-next-line max-len
   const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}" AND market_name="${marketName}";`;
 
-  connection.query(sqlStr, (err, result, fields) => {
-    if (err) throw err;
-    if (result) {
-      res.status(200).json({
-        status: 200,
-        title: `Market Data de ${cripto} para ${marketName}`,
-        data: result,
-      });
-    } else {
-      res.status(400).json({
-        status: 400,
-        error: "Bad Request",
-        message: `No se encontro Market Data para ${cripto} con ${marketName}`,
-      });
-    }
+  pool.getConnection(function(error, connection) {
+    if (error) throw error;
+    connection.query(sqlStr, (err, result, fields) => {
+      if (result) {
+        connection.release();
+        if (err) throw err;
+        res.status(200).json({
+          status: 200,
+          title: `Market Data de ${cripto} para ${marketName}`,
+          data: result,
+        });
+      } else {
+        connection.release();
+        if (err) throw err;
+        res.status(400).json({
+          status: 400,
+          error: "Bad Request",
+          // eslint-disable-next-line max-len
+          message: `No se encontro Market Data para ${cripto} con ${marketName}`,
+        });
+      }
+    });
   });
 });
 
@@ -77,21 +84,27 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
                         twitter_followers
     FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}" LIMIT 1;`;
 
-  connection.query(sqlStr, (err, result, fields) => {
-    if (err) throw err;
-    if (result) {
-      res.status(200).json({
-        status: 200,
-        title: `Market data de ${cripto}`,
-        data: result,
-      });
-    } else {
-      res.status(400).json({
-        status: 400,
-        error: "Request Error",
-        message: `No se encontro Market Data para ${cripto}`,
-      });
-    }
+  pool.getConnection(function(error, connection) {
+    if (error) throw error;
+    connection.query(sqlStr, (err, result, fields) => {
+      if (result) {
+        connection.release();
+        if (err) throw err;
+        res.status(200).json({
+          status: 200,
+          title: `Market data de ${cripto}`,
+          data: result,
+        });
+      } else {
+        connection.release();
+        if (err) throw err;
+        res.status(400).json({
+          status: 400,
+          error: "Request Error",
+          message: `No se encontro Market Data para ${cripto}`,
+        });
+      }
+    });
   });
 });
 
@@ -100,42 +113,54 @@ marketData.get(`/${process.env.API_KEY}/:cripto/list/exchanges`, (req, res) => {
   // eslint-disable-next-line max-len
   const sqlStr = `SELECT  market_name FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}";`;
 
-  connection.query(sqlStr, (err, result, fields) => {
-    if (err) throw err;
-    if (result) {
-      res.status(200).json({
-        status: 200,
-        title: `Lista de Exchanges de ${cripto}`,
-        data: result,
-      });
-    } else {
-      res.status(400).json({
-        status: 400,
-        error: "Request Error",
-        message: `No se encontro Lista de Exchanges para ${cripto}`,
-      });
-    }
+  pool.getConnection(function(error, connection) {
+    if (error) throw error;
+    connection.query(sqlStr, (err, result, fields) => {
+      if (result) {
+        connection.release();
+        if (err) throw err;
+        res.status(200).json({
+          status: 200,
+          title: `Lista de Exchanges de ${cripto}`,
+          data: result,
+        });
+      } else {
+        connection.release();
+        if (err) throw err;
+        res.status(400).json({
+          status: 400,
+          error: "Request Error",
+          message: `No se encontro Lista de Exchanges para ${cripto}`,
+        });
+      }
+    });
   });
 });
 
 marketData.get(`/${process.env.API_KEY}`, (req, res) => {
   const sqlStr = `SELECT * FROM ${process.env.MARKET_DATA_TABLE};`;
 
-  connection.query(sqlStr, (err, result, fields) => {
-    if (err) throw err;
-    if (result) {
-      res.status(200).json({
-        status: 200,
-        title: "Market Data de todas las criptos",
-        data: result,
-      });
-    } else {
-      res.status(400).json({
-        status: 400,
-        error: "Bad Request",
-        message: "No se encontraron datos",
-      });
-    }
+  pool.getConnection(function(error, connection) {
+    if (error) throw error;
+    connection.query(sqlStr, (err, result, fields) => {
+      if (result) {
+        connection.release();
+        if (err) throw err;
+        res.status(200).json({
+          status: 200,
+          title: "Market Data de todas las criptos",
+          data: result,
+        });
+      } else {
+        connection.release();
+        if (err) throw err;
+        res.status(400).json({
+          status: 400,
+          error: "Bad Request",
+          message: "No se encontraron datos",
+        });
+      }
+    });
   });
 });
 

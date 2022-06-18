@@ -6,7 +6,7 @@ app.use(cors({origin: true}));
 app.set("view engine", "ejs");
 
 
-app.get("/", (req, res) => {
+app.get(`/${process.env.API_KEY}`, (req, res) => {
   const errors = {};
   let initialDeposit = req.query.initialDeposit;
   let contribution = req.query.contribution;
