@@ -4,7 +4,6 @@ const pool = require("./mysql-crypto");
 const criptoList = express();
 // Automatically allow cross-origin requests
 criptoList.use(cors({origin: true}));
-
 criptoList.get(`/${process.env.API_KEY}`, (req, res) => {
   const sqlStr = `SELECT * FROM ${process.env.LIST_CRYPTO_TABLE};`;
 

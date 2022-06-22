@@ -6,7 +6,6 @@ const idosIcos = express();
 idosIcos.use(cors({origin: true}));
 idosIcos.get(`/${process.env.API_KEY}`, (req, res) => {
   const sqlStr = `SELECT * FROM ${process.env.IDOS_ICOS_TABLE};`;
-
   pool.getConnection(function(error, connection) {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {

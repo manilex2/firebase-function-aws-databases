@@ -64,6 +64,38 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico`, (req, res) => {
 });
 
 // eslint-disable-next-line max-len
+oportCriptoLinks.get(`/${process.env.API_KEY}/historico/bettersRentability`, (req, res) => {
+  const date = new Date();
+  // eslint-disable-next-line max-len
+  const fechaActual = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+  // eslint-disable-next-line max-len
+  const sqlStr = `SELECT * FROM ${process.env.OPORT_CRIPTO_TABLE} WHERE tipo="Op.Hist." AND mostrar_hasta >= ${fechaActual} GROUP BY symbol ORDER BY MAX(rentabilidad_numerica) DESC LIMIT 5;`;
+
+  pool.getConnection(function(error, connection) {
+    if (error) throw error;
+    connection.query(sqlStr, (err, result, fields) => {
+      if (result) {
+        connection.release();
+        if (err) throw err;
+        res.status(200).json({
+          status: 200,
+          title: "Historico",
+          data: result,
+        });
+      } else {
+        connection.release();
+        if (err) throw err;
+        res.status(400).json({
+          status: 400,
+          error: "Request Error",
+          message: "No se encontro Historico",
+        });
+      }
+    });
+  });
+});
+
+// eslint-disable-next-line max-len
 oportCriptoLinks.get(`/${process.env.API_KEY}/historico/groupByDate`, (req, res) => {
   const date = new Date();
   // eslint-disable-next-line max-len
