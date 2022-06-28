@@ -1222,3 +1222,199 @@ Crea tablas en Firebase en la tabla de Precio actual.
 | Status | Significado | Descripcion |
 | --------- | --------- | --------- |
 | 200 | OK | data success |
+
+## rankingTotal
+
+```
+GET /{API_KEY}
+```
+
+Obtiene los datos de ranking de las criptomonedas.
+
+### Response Body
+
+```json
+    {
+        "status": 200,
+        "title": "Lista de Criptos con su ranking",
+        "data": [
+            {
+                "id": 0,
+                "id_rango": 0,
+                "coin_id": "",
+                "tendencia_ema_lp": "",
+                "tendencia_macd_lp": "",
+                "tendencia_alligator_lp": "",
+                "fuerza_tendencia_adx_lp": "",
+                "continuidad_cambio_adx_lp": "",
+                "senal_ema_lp": "",
+                "senal_macd_lp": "",
+                "senal_rsi_lp": "",
+                "senal_alligator_lp": "",
+                "fecha_ultima_senal_ema_lp": "",
+                "ultima_senal_ema_lp": "",
+                "fecha_ultima_senal_macd_lp": "",
+                "ultima_senal_macd_lp": "",
+                "fecha_ultima_senal_alligator_lp": "",
+                "ultima_senal_alligator_lp": "",
+                "tendencia_ema_lp_num": "",
+                "tendencia_macd_lp_num": "",
+                "tendencia_alligator_lp_num": "",
+                "fuerza_lp": "",
+                "continuidad_lp": "",
+                "calificacion_tendencia_lp": "",
+                "senal_ema_lp_num": "",
+                "senal_macd_lp_num": "",
+                "senal_rsi_lp_num": "",
+                "senal_alligator_lp_num": "",
+                "calificacion_indicadores_tecnicos_lp": "",
+                "calificacion_total_lp": "",
+                "tendencia_ema_mp": "",
+                "tendencia_macd_mp": "",
+                "tendencia_alligator_mp": "",
+                "fuerza_tendencia_adx_mp": "",
+                "continuidad_cambio_adx_mp": "",
+                "senal_ema_mp": "",
+                "senal_macd_mp": "",
+                "senal_rsi_mp": "",
+                "senal_alligator_mp": "",
+                "fecha_ultima_senal_ema_mp": "",
+                "ultima_senal_ema_mp": "",
+                "fecha_ultima_senal_macd_mp": "",
+                "ultima_senal_macd_mp": "",
+                "fecha_ultima_senal_alligator_mp": "",
+                "ultima_senal_alligator_mp": "",
+                "tendencia_ema_mp_num": "",
+                "tendencia_macd_mp_num": "",
+                "tendencia_alligator_mp_num": "",
+                "fuerza_mp": "",
+                "continuidad_mp": "",
+                "calificacion_tendencia_mp": "",
+                "senal_ema_mp_num": "",
+                "senal_macd_mp_num": "",
+                "senal_rsi_mp_num": "",
+                "senal_alligator_mp_num": "",
+                "calificacion_indicadores_tecnicos_mp": "",
+                "calificacion_global_tendencia": "",
+                "calificacion_global_indicadores_tecnicos": "",
+                "calificacion_total_mp": "",
+                "real_proyeccion_lp": "",
+                "forecast_proyeccion_lp": "",
+                "pesimista_proyeccion_lp": "",
+                "optimista_proyeccion_lp": ""
+            }
+        ]
+    }
+```
+
+### Parametros
+
+| Parametro | ln | Tipo | Requerido | Descripcion |
+| --------- | --------- | --------- | --------- | --------- |
+| API_KEY | ruta | string | true | API KEY para conectarse a la API |
+
+### Respuestas
+
+| Status | Significado | Descripcion |
+| --------- | --------- | --------- |
+| 200 | OK | data success |
+| 400 | Bad Request | Data no existe |
+
+## rankingTotal
+
+```
+GET /{API_KEY}/calificacion/{tipoCalificacion}
+```
+
+Obtiene los datos de ranking de las criptomonedas ordenados por el tipo de calificacion establecido.
+
+### Response Body
+
+```json
+    {
+        "status": 200,
+        "title": "Lista de Criptos con su ranking ordenado por {tipoCalificacion}",
+        "data": [
+            {
+                "id": 0,
+                "id_rango": 0,
+                "coin_id": "",
+                "tendencia_ema_lp": "",
+                "tendencia_macd_lp": "",
+                "tendencia_alligator_lp": "",
+                "fuerza_tendencia_adx_lp": "",
+                "continuidad_cambio_adx_lp": "",
+                "senal_ema_lp": "",
+                "senal_macd_lp": "",
+                "senal_rsi_lp": "",
+                "senal_alligator_lp": "",
+                "fecha_ultima_senal_ema_lp": "",
+                "ultima_senal_ema_lp": "",
+                "fecha_ultima_senal_macd_lp": "",
+                "ultima_senal_macd_lp": "",
+                "fecha_ultima_senal_alligator_lp": "",
+                "ultima_senal_alligator_lp": "",
+                "tendencia_ema_lp_num": "",
+                "tendencia_macd_lp_num": "",
+                "tendencia_alligator_lp_num": "",
+                "fuerza_lp": "",
+                "continuidad_lp": "",
+                "calificacion_tendencia_lp": "",
+                "senal_ema_lp_num": "",
+                "senal_macd_lp_num": "",
+                "senal_rsi_lp_num": "",
+                "senal_alligator_lp_num": "",
+                "calificacion_indicadores_tecnicos_lp": "",
+                "calificacion_total_lp": "",
+                "tendencia_ema_mp": "",
+                "tendencia_macd_mp": "",
+                "tendencia_alligator_mp": "",
+                "fuerza_tendencia_adx_mp": "",
+                "continuidad_cambio_adx_mp": "",
+                "senal_ema_mp": "",
+                "senal_macd_mp": "",
+                "senal_rsi_mp": "",
+                "senal_alligator_mp": "",
+                "fecha_ultima_senal_ema_mp": "",
+                "ultima_senal_ema_mp": "",
+                "fecha_ultima_senal_macd_mp": "",
+                "ultima_senal_macd_mp": "",
+                "fecha_ultima_senal_alligator_mp": "",
+                "ultima_senal_alligator_mp": "",
+                "tendencia_ema_mp_num": "",
+                "tendencia_macd_mp_num": "",
+                "tendencia_alligator_mp_num": "",
+                "fuerza_mp": "",
+                "continuidad_mp": "",
+                "calificacion_tendencia_mp": "",
+                "senal_ema_mp_num": "",
+                "senal_macd_mp_num": "",
+                "senal_rsi_mp_num": "",
+                "senal_alligator_mp_num": "",
+                "calificacion_indicadores_tecnicos_mp": "",
+                "calificacion_global_tendencia": "",
+                "calificacion_global_indicadores_tecnicos": "",
+                "calificacion_total_mp": "",
+                "real_proyeccion_lp": "",
+                "forecast_proyeccion_lp": "",
+                "pesimista_proyeccion_lp": "",
+                "optimista_proyeccion_lp": ""
+            }
+        ]
+    }
+```
+
+### Parametros
+
+| Parametro | ln | Tipo | Requerido | Descripcion |
+| --------- | --------- | --------- | --------- | --------- |
+| API_KEY | ruta | string | true | API KEY para conectarse a la API |
+| calificacion | ruta | string | true | Indica que los datos seran ordenados por calificacion |
+| tipoCalificacion | ruta | string | true | Trae los datos por la calificacion establecida. Estos pueden ser: calificacionTendenciaLP, calificacionIndicadoresTecnicosLP, calificacionTotalLP, calificacionTendenciaMP, calificacionIndicadoresTecnicosMP, calificacionTotalMP, calificacionGlobalTendencia, calificacionIndicadoresTecnicos |
+
+### Respuestas
+
+| Status | Significado | Descripcion |
+| --------- | --------- | --------- |
+| 200 | OK | data success |
+| 400 | Bad Request | Data no existe |
