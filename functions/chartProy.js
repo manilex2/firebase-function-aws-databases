@@ -4,7 +4,7 @@ const pool = require("./mysql");
 const chartProy = express();
 // Automatically allow cross-origin requests
 chartProy.use(cors({origin: true}));
-chartProy.get("/", (req, res) => {
+chartProy.get(`/${process.env.API_KEY}`, (req, res) => {
   const sqlStr = `SELECT * FROM ${process.env.CHART_PROY_TABLE};`;
 
   pool.getConnection(function(error, connection) {
@@ -31,4 +31,17 @@ chartProy.get("/", (req, res) => {
   });
 });
 
+chartProy.get("/", (req, res) => {
+  res.json({
+    status: "API KEY ERROR",
+    message: "Debe proporcionar la API-KEY para conectarse",
+  });
+});
+
+chartProy.get("*", (req, res) => {
+  res.json({
+    status: "API ERROR",
+    message: "Hay un error en la ruta, revise API-KEY y/o los parámetros",
+  });
+});
 module.exports = chartProy;

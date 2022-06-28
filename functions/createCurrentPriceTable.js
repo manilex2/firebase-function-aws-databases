@@ -42,4 +42,18 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.json({
+    status: "API KEY ERROR",
+    message: "Debe proporcionar la API-KEY para conectarse",
+  });
+});
+
+app.get("*", (req, res) => {
+  res.json({
+    status: "API ERROR",
+    message: "Hay un error en la ruta, revise API-KEY y/o los parámetros",
+  });
+});
+
 module.exports = app;

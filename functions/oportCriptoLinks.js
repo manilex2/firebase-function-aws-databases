@@ -79,7 +79,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico/bettersRentability`, (re
         if (err) throw err;
         res.status(200).json({
           status: 200,
-          title: "Historico",
+          title: "Historico con las Mejores Rentabilidades Numericas",
           data: result,
         });
       } else {
@@ -179,7 +179,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/tradehold/:transaccion`, (req, res
 // eslint-disable-next-line max-len
 oportCriptoLinks.get(`/${process.env.API_KEY}/trade`, (req, res) => {
   // eslint-disable-next-line max-len
-  const sqlStr = `SELECT * FROM ${process.env.OPORT_CRIPTO_TABLE} WHERE trade_hold="trades" AND tipo="Op.Act."`;
+  const sqlStr = `SELECT * FROM ${process.env.OPORT_CRIPTO_TABLE} WHERE trade_hold="Trade" AND tipo="Op.Act."`;
 
   pool.getConnection(function(error, connection) {
     if (error) throw error;
@@ -202,6 +202,20 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/trade`, (req, res) => {
         });
       }
     });
+  });
+});
+
+oportCriptoLinks.get("/", (req, res) => {
+  res.json({
+    status: "API KEY ERROR",
+    message: "Debe proporcionar la API-KEY para conectarse",
+  });
+});
+
+oportCriptoLinks.get("*", (req, res) => {
+  res.json({
+    status: "API ERROR",
+    message: "Hay un error en la ruta, revise API-KEY y/o los parámetros",
   });
 });
 

@@ -31,4 +31,18 @@ usuarios.get(`/${process.env.API_KEY}`, (req, res) => {
   });
 });
 
+usuarios.get("/", (req, res) => {
+  res.json({
+    status: "API KEY ERROR",
+    message: "Debe proporcionar la API-KEY para conectarse",
+  });
+});
+
+usuarios.get("*", (req, res) => {
+  res.json({
+    status: "API ERROR",
+    message: "Hay un error en la ruta, revise API-KEY y/o los parámetros",
+  });
+});
+
 module.exports = usuarios;
