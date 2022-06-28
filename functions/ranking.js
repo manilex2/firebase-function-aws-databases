@@ -1,3 +1,6 @@
+/* eslint-disable no-redeclare */
+/* eslint-disable no-var */
+/* eslint-disable max-len */
 const express = require("express");
 const cors = require("cors");
 const pool = require("./mysql");
