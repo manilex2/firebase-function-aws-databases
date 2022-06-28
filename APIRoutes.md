@@ -1320,7 +1320,7 @@ Obtiene los datos de ranking de las criptomonedas.
 | 200 | OK | data success |
 | 400 | Bad Request | Data no existe |
 
-## rankingTotal
+## rankingCalificacionTipo
 
 ```
 GET /{API_KEY}/calificacion/{tipoCalificacion}
