@@ -239,7 +239,7 @@ ranking.get(`/${process.env.API_KEY}/calificacion/:tipoCalificacion`, (req, res)
       });
       break;
     case "calificacionGlobalGeneral":
-      var sqlStr = `SELECT * FROM ${process.env.RANKING_TABLE} ORDER BY calificacion_global_general DESC;`;
+      var sqlStr = `SELECT * FROM ${process.env.RANKING_TABLE} WHERE calificacion_global_general > 0 AND calificacion_global_general IS NOT NULL ORDER BY calificacion_global_general DESC;`;
       pool.getConnection(function(error, connection) {
         if (error) throw error;
         connection.query(sqlStr, (err, result, fields) => {
