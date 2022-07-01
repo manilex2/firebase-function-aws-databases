@@ -88,16 +88,25 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
   pool.getConnection(function(error, connection) {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
-      console.log(result);
-      if (result[0].error === null) {
-        connection.release();
-        if (err) throw err;
-        res.status(200).json({
-          status: 200,
-          title: `Market data de ${cripto}`,
-          error: null,
-          data: result,
-        });
+      if (result) {
+        if (result[0].error === null) {
+          connection.release();
+          if (err) throw err;
+          res.status(200).json({
+            status: 200,
+            title: `Market data de ${cripto}`,
+            error: null,
+            data: result,
+          });
+        } else {
+          connection.release();
+          if (err) throw err;
+          res.status(200).json({
+            status: 200,
+            error: result[0].error,
+            message: `No se encontro Market Data para ${cripto}`,
+          });
+        }
       } else {
         connection.release();
         if (err) throw err;
