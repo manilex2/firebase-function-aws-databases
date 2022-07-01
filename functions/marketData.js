@@ -81,7 +81,8 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
                         max_supply,
                         circulating_supply,
                         last_updated,
-                        twitter_followers
+                        twitter_followers,
+                        error
     FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${cripto}" LIMIT 1;`;
 
   pool.getConnection(function(error, connection) {
