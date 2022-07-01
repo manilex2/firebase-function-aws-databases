@@ -88,7 +88,7 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
   pool.getConnection(function(error, connection) {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
-      if (result) {
+      if (!result.error == null) {
         connection.release();
         if (err) throw err;
         res.status(200).json({
