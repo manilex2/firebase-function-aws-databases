@@ -238,6 +238,31 @@ ranking.get(`/${process.env.API_KEY}/calificacion/:tipoCalificacion`, (req, res)
         });
       });
       break;
+    case "calificacionGlobalGeneral":
+      var sqlStr = `SELECT * FROM ${process.env.RANKING_TABLE} ORDER BY calificacion_global_general DESC;`;
+      pool.getConnection(function(error, connection) {
+        if (error) throw error;
+        connection.query(sqlStr, (err, result, fields) => {
+          if (result) {
+            connection.release();
+            if (err) throw err;
+            res.status(200).json({
+              status: 200,
+              title: "Lista de Criptos con su ranking ordenado por Calificacion Global General",
+              data: result,
+            });
+          } else {
+            connection.release();
+            if (err) throw err;
+            res.status(400).json({
+              status: 400,
+              error: "Bad Request",
+              message: "No se pudo obtener los rankings",
+            });
+          }
+        });
+      });
+      break;
     default:
       break;
   }
