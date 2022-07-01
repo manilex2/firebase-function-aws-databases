@@ -101,7 +101,7 @@ marketData.get(`/${process.env.API_KEY}/:cripto`, (req, res) => {
         if (err) throw err;
         res.status(400).json({
           status: 400,
-          error: "Request Error",
+          error: `${result.error}`,
           message: `No se encontro Market Data para ${cripto}`,
         });
       }
