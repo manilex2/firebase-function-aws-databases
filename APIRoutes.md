@@ -975,7 +975,7 @@ Obtener los datos de oportunidades historicos donde posean el tipo de Oportunida
     GET /{API_KEY}/tradehold/{transaccion}
 ```
 
-Obtener los datos de oportunidades filtrando por transaccion.
+Obtener los datos de oportunidades por Oportunidad Activa filtrando por transaccion ordenado de mas reciente a mas antigua.
 
 ### Response Body
 
@@ -1031,75 +1031,6 @@ Obtener los datos de oportunidades filtrando por transaccion.
 | API_KEY | ruta | string | true | API KEY para conectarse a la API |
 | tradehold | ruta | string | true | Indica que se va a filtrar por tradehold |
 | transaccion | ruta | string | true | Trae los datos de acuerdo de la transaccion. Estas pueden ser: Trade u Hold |
-
-### Respuestas
-
-| Status | Significado | Descripcion |
-| --------- | --------- | --------- |
-| 200 | OK | data success |
-| 400 | Bad Request | Data no existe |
-
-## oportCriptoLinksTrades
-
-```
-    GET /{API_KEY}/trade
-```
-
-Obtener los datos de oportunidades donde sean una transaccion Trade y haya una Oportunidad Activa.
-
-### Response Body
-
-```json
-    {
-        "status": 200,
-        "title": "Trades",
-        "data": [
-            {
-                "id": 0,
-                "cuenta_actual": "",
-                "cuenta_historico": "",
-                "cuenta_unificada": "",
-                "tipo": "",
-                "fecha_publicacion": "",
-                "symbol": "",
-                "nombre": "",
-                "precio_entrada_1": "",
-                "precio_entrada_2": "",
-                "precio_entrada_3": "",
-                "precio_entrada_4": "",
-                "precio_meta_1": "",
-                "precio_meta_2": "",
-                "stop_loss": "",
-                "trade_hold": "",
-                "nivel_riesgo": "",
-                "exchange": "",
-                "logo": "",
-                "id_precio": "",
-                "data_price": "",
-                "precio_actual": "",
-                "valido_hasta": "",
-                "rentabilidad_estimada": "",
-                "recomendar": "",
-                "chart": "",
-                "rentabilidad_generada": "",
-                "rentabilidad_numerica": "",
-                "recomendacion_caduca": "",
-                "mostrar_hasta": "",
-                "riesgo_estrella": 0,
-                "chart_seguimiento": "",
-                "widget_symbol": "",
-                "analisis_grafico": ""
-            }
-        ]
-    }
-```
-
-### Parametros
-
-| Parametro | ln | Tipo | Requerido | Descripcion |
-| --------- | --------- | --------- | --------- | --------- |
-| API_KEY | ruta | string | true | API KEY para conectarse a la API |
-| trade | ruta | string | true | Trae los datos de la transaccion |
 
 ### Respuestas
 
