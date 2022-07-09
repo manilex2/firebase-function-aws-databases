@@ -34,6 +34,33 @@ ranking.get(`/${process.env.API_KEY}`, (req, res) => {
     });
   });
 });
+ranking.get(`/${process.env.API_KEY}/:crypto`, (req, res) => {
+  const crypto = req.params["crypto"];
+  const sqlStr = `SELECT * FROM ${process.env.RANKING_TABLE}  WHERE coin_id = "${crypto}" ;`;
+
+  pool.getConnection(function(error, connection) {
+    if (error) throw error;
+    connection.query(sqlStr, (err, result, fields) => {
+      if (result) {
+        connection.release();
+        if (err) throw err;
+        res.status(200).json({
+          status: 200,
+          title: `Información de Ranking de ${crypto}`,
+          data: result,
+        });
+      } else {
+        connection.release();
+        if (err) throw err;
+        res.status(400).json({
+          status: 400,
+          error: "Bad Request",
+          message: `No se pudo obtener la información de Ranking de ${crypto}`,
+        });
+      }
+    });
+  });
+});
 
 ranking.get(`/${process.env.API_KEY}/calificacion/:tipoCalificacion`, (req, res) => {
   const calificacion = req.params["tipoCalificacion"];
