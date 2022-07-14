@@ -42,7 +42,7 @@ ranking.get(`/${process.env.API_KEY}/:crypto`, (req, res) => {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
       if (result) {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(200).json({
           status: 200,
@@ -50,7 +50,7 @@ ranking.get(`/${process.env.API_KEY}/:crypto`, (req, res) => {
           data: result,
         });
       } else {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(400).json({
           status: 400,
