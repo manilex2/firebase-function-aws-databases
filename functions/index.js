@@ -12,6 +12,8 @@ const investmentCalculator = require("./investmentCalculator");
 const createCurrentPrice = require("./createCurrentPriceTable");
 const updatePrice = require("./updateTransactionPortfolio");
 const ranking = require("./ranking");
+const addUserToDiscord = require("./addUserToDiscord");
+
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   // eslint-disable-next-line max-len
@@ -32,3 +34,4 @@ exports.ranking = functions.https.onRequest(ranking);
 exports.investmentCalculator = functions.https.onRequest(investmentCalculator);
 exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
 exports.updateTransactionPortfolio= updatePrice;
+exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
