@@ -11,7 +11,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}`, (req, res) => {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
       if (result) {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(200).json({
           status: 200,
@@ -19,7 +19,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}`, (req, res) => {
           data: result,
         });
       } else {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(400).json({
           status: 400,
@@ -43,7 +43,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico`, (req, res) => {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
       if (result) {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(200).json({
           status: 200,
@@ -51,7 +51,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico`, (req, res) => {
           data: result,
         });
       } else {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(400).json({
           status: 400,
@@ -75,7 +75,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico/bettersRentability`, (re
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
       if (result) {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(200).json({
           status: 200,
@@ -83,7 +83,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico/bettersRentability`, (re
           data: result,
         });
       } else {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(400).json({
           status: 400,
@@ -126,7 +126,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico/groupByDate`, (req, res)
       }
 
       if (result) {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(200).json({
           status: 200,
@@ -134,7 +134,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/historico/groupByDate`, (req, res)
           data: dict,
         });
       } else {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(400).json({
           status: 400,
@@ -156,7 +156,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/tradehold/:transaccion`, (req, res
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
       if (result.length > 0) {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(200).json({
           status: 200,
@@ -164,7 +164,7 @@ oportCriptoLinks.get(`/${process.env.API_KEY}/tradehold/:transaccion`, (req, res
           data: result,
         });
       } else {
-        connection.release();
+        connection.destroy();
         if (err) throw err;
         res.status(400).json({
           status: 400,
