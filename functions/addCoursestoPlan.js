@@ -8,6 +8,7 @@ const admin = require("firebase-admin");
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
 app.post(`/${process.env.API_KEY}`, async (req, res) => {
+  res.set("Content-Type", "application/json");
   const id = req.body.id;
   const typePlan = req.body.typePlan;
   // eslint-disable-next-line max-len
