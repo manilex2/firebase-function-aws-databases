@@ -11,10 +11,10 @@ module.exports = functions.firestore
       const currentprices = doc.after.data();
       currentprices["currentId"] = context.params.currentId;
       const query = await admin.firestore().collection("transaction_portfolio")
-      .where("id", "==", currentprices.id).get();
+      .where("id", "==", currentprices.name).get();
       if (!query.empty) {
         for (let i=0; i<query.size; i++) {
-          const price = Number(currentprices.price);
+          const price = Number(currentprices.precio);
           const transaction = await admin.firestore().
           collection("transaction_portfolio").doc(query.docs.pop().id).get();
           const totalValue = transaction.data().amount * price;
