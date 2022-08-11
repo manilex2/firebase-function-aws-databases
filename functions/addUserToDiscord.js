@@ -5,12 +5,9 @@ const cors = require("cors");
 const app = express();
 const admin = require("firebase-admin");
 const UrlApi = "https://discord.com/api/v9";
-// const discord = require("discord.js");
-
-
-// admin.initializeApp();
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
+
 
 app.get("/", async (req, res) => {
   const userToken = await getUserToken(req.query.code);
@@ -19,9 +16,6 @@ app.get("/", async (req, res) => {
     const userInfo = await getUserInfo(userToken);
 
     if (userInfo != null) {
-      console.log(userToken);
-      console.log(userInfo);
-
       const userRef = await getUserReference(userInfo.email);
 
       if (userRef != null) {
@@ -29,8 +23,11 @@ app.get("/", async (req, res) => {
         await setUserDiscordRefreshToken(userRef, userToken.refresh_token);
 
         if (savedUserToken) {
-          await addUserOrModify(
-              ["1006247087459008653"], userToken.access_token, userInfo.id);
+          const rolesId = await getRoleId(userRef.data().plan);
+          if (rolesId) {
+            await addUserOrModify(
+                rolesId, userToken.access_token, userInfo.id);
+          }
         }
       } else {
         functions.logger.log(
@@ -113,7 +110,7 @@ async function getUserInfo(token) {
  * Obtiene la referencia de un usuario de firebase
  * a través del correo electrónico.
  * @param {string} email -  Email del usuario que se desea obtener.
- * @return {any} La referencia de un usuario de firebase
+ * @return {DocumentSnapshot} La referencia de un usuario de firebase
  * o null si no existe en la base.
  */
 async function getUserReference(email) {
@@ -128,7 +125,8 @@ async function getUserReference(email) {
 
 /**
  * Guarda el Refresh Token en la base de datos para futuras peticiones.
- * @param {string} userRef - Referencia del usuario obtenido de firebase.
+ * @param {DocumentSnapshot} userRef -
+ * Referencia del usuario obtenido de firebase.
  * @param {string} userToken - Token del usario autorizado.
  * @return {boolean} true si se guardó el código en la base,
  * caso contrario devuelve false.
@@ -162,7 +160,7 @@ async function setUserDiscordRefreshToken(userRef, userToken) {
  */
 async function addUserOrModify(roles, token, id) {
   let hasAddOrModify = false;
-
+  let status;
   const headers = {
     "Authorization":
     `Bot ${process.env.DISCORD_BOT_TOKEN}`,
@@ -173,7 +171,6 @@ async function addUserOrModify(roles, token, id) {
     "access_token": token,
     "roles": roles};
 
-  // console.log(paramsUser);
   await fetch( UrlApi+"/guilds/"+
   process.env.DISCORD_GUILD_ID+"/members/"+id, {
     method: "PUT",
@@ -181,36 +178,183 @@ async function addUserOrModify(roles, token, id) {
     body: JSON.stringify(paramsUser),
   })
       .then((addUser) => {
+        status = addUser.status;
         return addUser.json();
       })
       .then((data) => {
-        console.log(data);
-        hasAddOrModify = true;
+        if (status == 201) {
+          hasAddOrModify = true;
+        }
       })
       .catch((err) =>{
         functions.logger.log(err);
         // res.send();
       });
 
-  /* if (statusAddUser == 201 || statusAddUser == 204) {
-            await fetch( UrlApi+
-                "/guilds/"+process.env.DISCORD_GUILD_ID+
-                "/members/"+userInfo.id+
-                "/roles/1006247087459008653", {
-              method: "PUT",
-              headers: appHeaders,
-            })
-                .then((userModify) => userModify.json() )
-                .then((data) => {
-                  console.log(data);
-                })
-                .catch((err)=> {
-                  functions.logger.log(err);
-                // res.send();
-                });
-          }*/
+  if (status == 204) {
+    const userRoles = await getUserRoles(id);
+    console.log(userRoles);
+    const returnValues = getAddRemoveRoles(roles, userRoles);
+
+    for (const rolId of returnValues[1]) {
+      await removeRol(rolId, id);
+    }
+
+    for (const rolId of returnValues[0]) {
+      await addRol(rolId, id);
+    }
+    /* await fetch( UrlApi+
+          "/guilds/"+process.env.DISCORD_GUILD_ID+
+          "/members/"+id+
+          "/roles/1006247087459008653", {
+      method: "PUT",
+      headers: headers,
+    })
+        .then((userModify) => userModify.json() )
+        .then((data) => {
+          hasAddOrModify = true;
+          console.log(data);
+        })
+        .catch((err)=> {
+          functions.logger.log(err);
+        });
+        */
+  }
   return hasAddOrModify;
+}
+
+/**
+ * Obtiene el id del rol de discord de acuerdo al plan del usuario.
+ * @param {DocumentSnapshot} planRef - Plan del usuario.
+ * @return {Object} - La referencia del plan o null.
+ */
+async function getRoleId(planRef) {
+  const rolesId = [];
+  const query = await admin.firestore().collection("discord_roles")
+      .where("plan", "==", planRef).get();
+
+  if (query.empty) {
+    return [];
+  }
+
+  query.forEach((doc) => {
+    rolesId.push(doc.data().discord_id);
+  });
+
+  return rolesId;
 }
 
 module.exports = app;
 
+
+/**
+ * Obtiene los roles del usuario de discord.
+ * @param {string} id - Id del usuario.
+ * @return {String[]} - Arreglo de roles.
+ */
+async function getUserRoles(id) {
+  let roles = null;
+  const headers = {
+    "Authorization": "Bot " + process.env.DISCORD_BOT_TOKEN,
+  };
+
+  await fetch(UrlApi + "/guilds/" + process.env.DISCORD_GUILD_ID +
+    "/members/" + id, {
+    method: "GET",
+    headers: headers,
+  })
+      .then((userRol) => userRol.json())
+      .then((data) => {
+        console.log(data);
+        roles = data.roles;
+      })
+      .catch((err)=>{
+        functions.logger.log(err);
+      });
+  return roles;
+}
+
+/**
+ * Obtiene los roles que se deben agregar
+ * y los que se deben eliminar al usuario.
+ * @param {String[]} planRoles - Roles pertenecientes al plan.
+ * @param {String[]} userRoles - Roles del usuario.
+ * @return {[Set<String>]} - Dos arreglos: uno con los que se deben
+ * eliminar y otro con los que se deben agregar.
+ */
+function getAddRemoveRoles(planRoles, userRoles) {
+  const addRoles = new Set(planRoles);
+  const removeRoles = new Set(userRoles);
+  const returnValues = [];
+  for (const id of userRoles) {
+    addRoles.delete(id);
+  }
+
+  for (const id of planRoles) {
+    removeRoles.delete(id);
+  }
+
+  returnValues.push(addRoles);
+  returnValues.push(removeRoles);
+
+  return returnValues;
+}
+/**
+ * Remueve el rol del usuario en discord.
+ * @param {string} rol - Lista de roles.
+ * @param {string} id - Id del usuario.
+ * @return {boolean} - True si fue borrado.
+ */
+async function removeRol(rol, id) {
+  let hasRemove = false;
+
+  const headers = {
+    "Authorization": "Bot " + process.env.DISCORD_BOT_TOKEN,
+  };
+
+  await fetch(UrlApi +
+    "/guilds/" + process.env.DISCORD_GUILD_ID +
+    "/members/" + id + "/roles/" + rol, {
+    method: "DELETE",
+    headers: headers,
+  })
+      .then((deleteRol) => {
+        if (deleteRol.status == 204) {
+          hasRemove = true;
+        }
+      })
+      .catch((err) => functions.logger.log(err));
+
+  return hasRemove;
+}
+
+/**
+ * Agrega el rol del usuario en discord.
+ * @param {string} rol - Lista de roles.
+ * @param {string} id - Id del usuario.
+ * @return {boolean} True si fue agregado.
+ */
+async function addRol(rol, id) {
+  let hasAdd = false;
+
+  const headers = {
+    "Authorization": "Bot " + process.env.DISCORD_BOT_TOKEN,
+  };
+
+  await fetch(UrlApi +
+    "/guilds/" + process.env.DISCORD_GUILD_ID +
+    "/members/" + id + "/roles/" + rol, {
+    method: "PUT",
+    headers: headers,
+  })
+      .then((addRol) => {
+        if (addRol.status == 204) {
+          hasAdd = true;
+        }
+      })
+      .catch((err) => functions.logger.log(err));
+
+  return hasAdd;
+}
+
+module.exports = app;
