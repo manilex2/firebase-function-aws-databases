@@ -6,7 +6,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
 module.exports = functions.firestore
-    .document("/current_prices/{currentId}")
+    .document("/precio_criptos_actual/{currentId}")
     .onUpdate(async (doc, context)=>{
       const currentprices = doc.after.data();
       currentprices["currentId"] = context.params.currentId;
