@@ -131,20 +131,12 @@ FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${crypto["name"]}" LIMIT 
                   } else {
                     connection.destroy();
                     if (err) throw err;
-                    res.status(200).json({
-                      status: 200,
-                      error: result[0].error,
-                      message: `No se pudo crear la colepsión por ${crypto["name"]}`,
-                    });
+                    console.log(`No se pudo crear la colección a ${crypto["name"]}`);
                   }
                 } else {
                   connection.destroy();
                   if (err) throw err;
-                  res.status(400).json({
-                    status: 400,
-                    error: result[0].error,
-                    message: `No se crear la colepsión por ${crypto["name"]}`,
-                  });
+                  console.log(`No se pudo crear la colección a ${crypto["name"]}`);
                 }
               });
             });
