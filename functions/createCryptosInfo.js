@@ -153,6 +153,7 @@ FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${crypto["name"]}" LIMIT 
       });
     });
   }
+  res.send({"msg": "Colección has been created"});
 });
 
 module.exports = app;
