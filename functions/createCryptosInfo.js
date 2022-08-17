@@ -17,7 +17,7 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
     .firestore()
     .collection("cryptos_info")
     .listDocuments();
-  if (query.length == 1) {
+  if (query.length == 0) {
     const sqlStr = `SELECT * FROM ${process.env.LIST_CRYPTO_TABLE};`;
     pool.getConnection(function (error, connection) {
       if (error) throw error;
@@ -26,50 +26,50 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
           connection.destroy();
           if (err) throw err;
           for (const crypto of result) {
-            const sqlStr2 = `SELECT 
-            id,
-            coin_id,
-            symbol,
-            name,
-            description_en,
-            description_es,
-            homepage,
-            blockchain_site,
-            twitter_screenname,
-            image_thumb,
-            image_small,
-            image_large,
-            sentiment_votes_up_percentage,
-            sentiment_votes_down_percentage,
-            coingecko_rank,
-            coingecko_score,
-            developer_score,
-            community_score,
-            liquidity_score,
-            public_interest_score,
-            ath_change_percentage,
-            ath_date,
-            market_cap,
-            market_cap_rank,
-            total_volume,
-            price_change_percentage_24h,
-            price_change_percentage_7d,
-            price_change_percentage_30d,
-            price_change_percentage_200d,
-            price_change_percentage_1y,
-            total_supply,
-            max_supply,
-            circulating_supply,
-            last_updated,
-            twitter_followers,
-            error
-FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${crypto["name"]}" LIMIT 1;`;
-
+            const sqlStr2 = `
+              SELECT 
+              id,
+              coin_id,
+              symbol,
+              name,
+              description_en,
+              description_es,
+              homepage,
+              blockchain_site,
+              twitter_screenname,
+              image_thumb,
+              image_small,
+              image_large,
+              sentiment_votes_up_percentage,
+              sentiment_votes_down_percentage,
+              coingecko_rank,
+              coingecko_score,
+              developer_score,
+              community_score,
+              liquidity_score,
+              public_interest_score,
+              ath_change_percentage,
+              ath_date,
+              market_cap,
+              market_cap_rank,
+              total_volume,
+              price_change_percentage_24h,
+              price_change_percentage_7d,
+              price_change_percentage_30d,
+              price_change_percentage_200d,
+              price_change_percentage_1y,
+              total_supply,
+              max_supply,
+              circulating_supply,
+              last_updated,
+              twitter_followers,
+              error
+              FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${crypto["name"]}" LIMIT 1;
+            `;
             pool.getConnection(function (error, connection) {
               if (error) throw error;
               connection.query(sqlStr2, (err, result, fields) => {
                 if (result) {
-                    console.log(result);
                   if (result[0].error === null) {
                     connection.destroy();
                     if (err) throw err;
@@ -128,15 +128,13 @@ FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${crypto["name"]}" LIMIT 
                         circulating_supply: result[0]["circulating_supply"],
                         last_updated: Date(result[0]["last_updated"]),
                       });
-                  } else {
-                    connection.destroy();
-                    if (err) throw err;
-                    console.log(`No se pudo crear la colección a ${crypto["name"]}`);
                   }
                 } else {
                   connection.destroy();
                   if (err) throw err;
-                  console.log(`No se pudo crear la colección a ${crypto["name"]}`);
+                  console.log(
+                    `No se pudo crear la colección a ${crypto["name"]}`
+                  );
                 }
               });
             });
@@ -153,7 +151,7 @@ FROM ${process.env.MARKET_DATA_TABLE} WHERE coin_id = "${crypto["name"]}" LIMIT 
       });
     });
   }
-  res.send({"msg": "Colección has been created"});
+  res.send({"msg": "table has been created"});
 });
 
 module.exports = app;
