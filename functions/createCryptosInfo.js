@@ -78,7 +78,7 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
                       .collection("cryptos_info")
                       .doc(crypto["name"])
                       .create({
-                        coin_id: result[0]["name"],
+                        coin_id: result[0]["coin_id"],
                         symbol: result[0]["symbol"],
                         name: result[0]["name"],
                         description: "",
