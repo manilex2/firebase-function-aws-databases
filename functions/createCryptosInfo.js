@@ -18,6 +18,7 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
     if (error) throw error;
     connection.query(sqlStr, (err, result, fields) => {
       if (result) {
+        console.log(result);
         connection.destroy();
         if (err) throw err;
         for (const crypto of result) {
@@ -65,13 +66,15 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
             if (error) throw error;
             connection.query(sqlStr2, async (err, result, fields) => {
               if (result) {
-                if (result[0].error === null) {
+                const lengthArray = result.length;
+                if (lengthArray > 0) {
                   connection.destroy();
                   if (err) throw err;
                   const query = admin
                     .firestore()
                     .collection("cryptos_info")
                     .doc(crypto["name"]);
+                  console.log((await query.get()).exists);
                   if (!((await query.get()).exists)) {
                     admin
                       .firestore()
@@ -129,6 +132,11 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
                         last_updated: Date(result[0]["last_updated"]),
                       });
                   }
+                } else {
+                  connection.destroy();
+                  console.log(
+                    `No se pudo crear la colección a ${crypto["name"]}`
+                  );
                 }
               } else {
                 connection.destroy();
@@ -151,7 +159,6 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
       }
     });
   });
-  res.send({ msg: "table has been created" });
 });
 
 module.exports = app;
