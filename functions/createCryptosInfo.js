@@ -209,6 +209,11 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
       }
     });
   });
+  res.status(200).json({
+    status: 200,
+    error: "Correct Request",
+    message: "Se ha actualizado la tabla de cryptos",
+  });
 });
 
 module.exports = app;
