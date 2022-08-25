@@ -14,12 +14,8 @@ const updatePrice = require("./updateTransactionPortfolio");
 const ranking = require("./ranking");
 const addUserToDiscord = require("./addUserToDiscord");
 const addCoursestoPlan = require("./addCoursestoPlan");
-<<<<<<< HEAD
 const formEmailOctupus = require("./formEmailOctupus");
-=======
 const createCryptosInfo = require("./createCryptosInfo");
->>>>>>> 0b5227e1cb719661b97b3c4b3d6cf77503c40c07
-
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   // eslint-disable-next-line max-len
@@ -42,8 +38,5 @@ exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
 exports.updateTransactionPortfolio= updatePrice;
 exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
 exports.addCoursestoPlan = functions.https.onRequest(addCoursestoPlan);
-<<<<<<< HEAD
 exports.formEmailOctupus = functions.https.onRequest(formEmailOctupus);
-=======
 exports.createCryptosInfo = functions.https.onRequest(createCryptosInfo);
->>>>>>> 0b5227e1cb719661b97b3c4b3d6cf77503c40c07
