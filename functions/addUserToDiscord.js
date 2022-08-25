@@ -5,12 +5,29 @@ const cors = require("cors");
 const app = express();
 const admin = require("firebase-admin");
 const UrlApi = "https://discord.com/api/v9";
+const {google} = require("googleapis");
+const { request } = require("express");
+const auth = new google.auth.GoogleAuth({
+  keyFile: "credentials.json",
+  scopes: "https://www.googleapis.com/auth/spreadsheets"});
+
+
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
 
 
-app.get("/", async (req, res) => {
-  const userToken = await getUserToken(req.query.code);
+const requireParams = (params) => (req, res, next) => {
+  const reqParamList = Object.keys(req.params);
+  const hasAllRequiredParams = params.every((param) =>
+    reqParamList.includes(param));
+  if (!hasAllRequiredParams) {
+    return res.status(404).send({error: "Param \"code\" is required."});
+  }
+  next();
+};
+
+app.get("/app_flutter", requireParams(["code"]), async (req, res) => {
+  const userToken = await getUserToken(req.params.code);
 
   if (userToken != null) {
     const userInfo = await getUserInfo(userToken);
@@ -43,6 +60,81 @@ app.get("/", async (req, res) => {
   }
   res.send("OK");
 });
+
+
+app.get("/app_glide", requireParams(["code"]), async (req, res) => {
+  const client = await auth.getClient();
+  const sheet = google.sheets({version: "v4", auth: client});
+
+  const request = {
+    spreadsheetId: process.env.SPREADSHEET_USERS_ID,
+    resource: {
+      dataFilters: [
+        {
+          "developerMetadataLookup":
+            {
+              "metadataLocation":
+                {
+                  "spreadsheet": true,
+                  "sheetId": process.env.SPREADSHEET_USERS_ID,
+                  "dimensionRange":
+                    {
+                      "sheetId": process.env.SPREADSHEET_USERS_ID,
+                      "startIndex": 0,
+                      "endIndex": 9,
+                    },
+                },
+              "metadataId": integer,
+              "metadataKey": string,
+              "metadataValue": string,
+            },
+          "a1Range": "",
+          "gridRange":
+            {
+              "sheetId": integer,
+              "startRowIndex": integer,
+              "endRowIndex": integer,
+              "startColumnIndex": integer,
+              "endColumnIndex": integer,
+            }
+        }
+      ],
+      includeGridData: false,
+    },
+  };
+
+  const results = await sheet.spreadsheets.getByDataFilter().data;
+  console.log(results);
+
+  const userToken = await getUserToken(req.params.code);
+
+  if (userToken != null) {
+    const userInfo = await getUserInfo(userToken);
+
+    if (userInfo != null) {
+      const userRef = await getUserReference(userInfo.email);
+
+      if (userRef != null) {
+        const rolesId = await getRoleId(userRef.data().plan);
+        if (rolesId) {
+          await addUserOrModify(
+              rolesId, userToken.access_token, userInfo.id);
+        }
+      } else {
+        functions.logger.log(
+            "User with email: ", userInfo.email, " no exists in database");
+        // Mandar al usuario algun mensaje
+      }
+    } else {
+      functions.logger.log("error", userInfo);
+      // Usar otro token
+    }
+  } else {
+    functions.logger.log(userToken);
+  }
+  res.send("OK");
+});
+
 
 /**
  * Obtiene el token del usuario autorizado.
@@ -114,6 +206,23 @@ async function getUserInfo(token) {
  * o null si no existe en la base.
  */
 async function getUserReference(email) {
+  const query =
+  await admin.firestore().collection("user").where("email", "==", email).get();
+
+  if (!query.empty) {
+    return query.docs.pop();
+  }
+  return null;
+}
+
+/**
+ * Obtiene la fila de la hoja de google sheet en la que se encuentra
+ * registrado el usuario.
+ * @param {string} email -  Email del usuario que se desea obtener.
+ * @return {DocumentSnapshot} La referencia de un usuario de firebase
+ * o null si no existe en la base.
+ */
+async function getUserRow(email) {
   const query =
   await admin.firestore().collection("user").where("email", "==", email).get();
 

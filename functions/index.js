@@ -14,6 +14,7 @@ const updatePrice = require("./updateTransactionPortfolio");
 const ranking = require("./ranking");
 const addUserToDiscord = require("./addUserToDiscord");
 const addCoursestoPlan = require("./addCoursestoPlan");
+const formEmailOctupus = require("./formEmailOctupus");
 
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -37,3 +38,4 @@ exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
 exports.updateTransactionPortfolio= updatePrice;
 exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
 exports.addCoursestoPlan = functions.https.onRequest(addCoursestoPlan);
+exports.formEmailOctupus = functions.https.onRequest(formEmailOctupus);
