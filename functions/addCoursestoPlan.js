@@ -104,6 +104,13 @@ app.post(`/${process.env.API_KEY}`, async (req, res) => {
       admin
         .firestore()
         .collection("plans")
+        .doc("plan_advance")
+        .update({
+          courses_stock: FieldValue.arrayUnion(referenceCourses),
+        });
+      admin
+        .firestore()
+        .collection("plans")
         .doc("plan_pro")
         .update({
           courses_stock: FieldValue.arrayUnion(referenceCourses),
