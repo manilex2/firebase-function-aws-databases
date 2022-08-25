@@ -5,11 +5,27 @@ const cors = require("cors");
 const app = express();
 const admin = require("firebase-admin");
 const UrlApi = "https://discord.com/api/v9";
+const {google} = require("googleapis");
+const auth = new google.auth.GoogleAuth({
+  keyFile: "credentials.json",
+  scopes: "https://www.googleapis.com/auth/spreadsheets"});
+
+
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
 
 
-app.get("/", async (req, res) => {
+const requireParams = (params) => (req, res, next) => {
+  const reqParamList = Object.keys(req.query);
+  const hasAllRequiredParams = params.every((param) =>
+    reqParamList.includes(param));
+  if (!hasAllRequiredParams) {
+    return res.status(404).send({error: "Param 'code' and 'app' is required."});
+  }
+  next();
+};
+
+app.get("/app_flutter", requireParams(["code"]), async (req, res) => {
   const userToken = await getUserToken(req.query.code);
 
   if (userToken != null) {
@@ -41,6 +57,41 @@ app.get("/", async (req, res) => {
   } else {
     functions.logger.log(userToken);
   }
+  res.send("OK");
+});
+
+app.get("/app_glade", requireParams(["code"]), async (req, res) => {
+  const client = await auth.getClient();
+  const googleSheet = google.sheets({version: "v4", auth: client});
+  // const user = await getUserRow("aaron@invrtir.com", googleSheet);
+  const userToken = await getUserToken(req.query.code);
+
+  if (userToken != null) {
+    const userInfo = await getUserInfo(userToken);
+    if (userInfo != null) {
+      const userRef = await getUserRow(userInfo.email, googleSheet);
+
+      if (userRef) {
+        const rolesId = await getRolesIdGS(userRef);
+
+        if (rolesId) {
+          await addUserOrModify(
+              rolesId, userToken.access_token, userInfo.id);
+        }
+      } else {
+        functions.logger.log(
+            "User with email: ", userInfo.email, " no exists in database");
+        // Mandar al usuario algun mensaje
+      }
+    } else {
+      functions.logger.log("error", userInfo);
+      // Usar otro token
+    }
+  } else {
+    functions.logger.log(userToken);
+  }
+  // console.log(users);
+  // res.send(JSON.stringify(users));
   res.send("OK");
 });
 
@@ -121,6 +172,33 @@ async function getUserReference(email) {
     return query.docs.pop();
   }
   return null;
+}
+
+/**
+ * Obtiene la fila de la hoja de google sheet en la que se encuentra
+ * registrado el usuario.
+ * @param {string} email -  Email del usuario que se desea obtener.
+ * @param {sheets_v4.Sheets} spreadSheet - SpreadSheet Object
+ * @return {DocumentSnapshot} La referencia de un usuario de firebase
+ * o null si no existe en la base.
+ */
+async function getUserRow(email, spreadSheet) {
+  // const userRow;
+
+  const userRow = (await spreadSheet.spreadsheets.values.get({
+    spreadsheetId: process.env.SPREADSHEET_ID,
+    range: process.env.ID_HOJA_RANGO,
+  })).data;
+
+  const values = userRow.values;
+
+  for (const value of values) {
+    if (value[0] == email) {
+      return value;
+    }
+  }
+
+  return {};
 }
 
 /**
@@ -240,6 +318,57 @@ async function getRoleId(planRef) {
   query.forEach((doc) => {
     rolesId.push(doc.data().discord_id);
   });
+
+  return rolesId;
+}
+
+/**
+ * Obtiene el id del rol de discord de acuerdo al plan del usuario.
+ * @param {JSON} userRow - Fila de datos del usuario en google sheet.
+ * @return {Object} - La referencia del plan o null.
+ */
+async function getRolesIdGS(userRow) {
+  const rolesId = [];
+  // const rolesNames = [];
+  let actualRoles = [];
+  const rolesInfo = {};
+
+  const headers = {
+    "Authorization": `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+  };
+
+  const crypto = userRow[6];
+  const stock = userRow[5];
+
+  await fetch(UrlApi + "/guilds/" + process.env.DISCORD_GUILD_ID+
+  "/roles", {
+    headers: headers,
+    method: "GET",
+  })
+      .then((res)=>res.json())
+      .then((data)=>{
+        actualRoles = data;
+      })
+      .catch((err)=>{
+        console.log(err);
+      });
+  for (const rol of actualRoles) {
+    rolesInfo[rol.name] = rol.id;
+  }
+
+  if (crypto == 1 || stock == 1) {
+    rolesId.push(rolesInfo["Invrtir-free"]);
+  }
+
+  if (crypto == 2) {
+    rolesId.push(rolesInfo["Invrtir-crypto"]);
+  }
+
+  if (stock == 2) {
+    rolesId.push(rolesInfo["Invrtir-basic"]);
+  } else if (stock == 3) {
+    rolesId.push(rolesInfo["Invrtir-pro"]);
+  }
 
   return rolesId;
 }
