@@ -27,7 +27,6 @@ const requireParams = (params) => (req, res, next) => {
 
 app.get("/app_flutter", requireParams(["code"]), async (req, res) => {
   const userToken = await getUserToken(req.query.code);
-
   if (userToken != null) {
     const userInfo = await getUserInfo(userToken);
 
@@ -73,7 +72,6 @@ app.get("/app_glade", requireParams(["code"]), async (req, res) => {
 
       if (userRef) {
         const rolesId = await getRolesIdGS(userRef);
-
         if (rolesId) {
           await addUserOrModify(
               rolesId, userToken.access_token, userInfo.id);

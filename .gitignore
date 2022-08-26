@@ -66,5 +66,7 @@ node_modules/
 .env
 credentials.json
 *.DS_Store
-
 package-lock.json
+
+# other dirs
+.vscode
