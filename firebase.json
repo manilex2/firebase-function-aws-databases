@@ -14,6 +14,23 @@
     },
     "firestore": {
       "port": 8080
+    },
+    "hosting": {
+      "port": 3000
     }
+  },
+  "hosting": {
+    "public": "public",
+    "rewrites": [
+      {
+        "source": "/formEmailOctupus",
+        "function": "formEmailOctupus"
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }
