@@ -24,7 +24,7 @@
     "rewrites": [
       {
         "source": "/formEmailOctupus",
-        "function": "formEmailOctupus"
+        "function": "routes"
       }
     ],
     "ignore": [
