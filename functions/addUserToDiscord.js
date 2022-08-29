@@ -10,9 +10,11 @@ const auth = new google.auth.GoogleAuth({
   keyFile: "credentials.json",
   scopes: "https://www.googleapis.com/auth/spreadsheets"});
 
+// const currentUrl = "http://localhost:5001/invrtir-app-b3266/us-central1/addUserToDiscord";
 
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
+app.set("view engine", "ejs");
 
 
 const requireParams = (params) => (req, res, next) => {
@@ -20,19 +22,17 @@ const requireParams = (params) => (req, res, next) => {
   const hasAllRequiredParams = params.every((param) =>
     reqParamList.includes(param));
   if (!hasAllRequiredParams) {
-    return res.status(404).send({error: "Param 'code' and 'app' is required."});
+    return res.status(404).send({error: "Missing parameters"});
   }
   next();
 };
 
 app.get("/app_flutter", requireParams(["code"]), async (req, res) => {
-  const userToken = await getUserToken(req.query.code);
+  const userToken = await getUserToken(req.query.code, "code");
   if (userToken != null) {
     const userInfo = await getUserInfo(userToken);
-
     if (userInfo != null) {
       const userRef = await getUserReference(userInfo.email);
-
       if (userRef != null) {
         const savedUserToken =
         await setUserDiscordRefreshToken(userRef, userToken.refresh_token);
@@ -62,51 +62,171 @@ app.get("/app_flutter", requireParams(["code"]), async (req, res) => {
 app.get("/app_glade", requireParams(["code"]), async (req, res) => {
   const client = await auth.getClient();
   const googleSheet = google.sheets({version: "v4", auth: client});
-  // const user = await getUserRow("aaron@invrtir.com", googleSheet);
-  const userToken = await getUserToken(req.query.code);
+  let rolesId = [];
+  const userToken = await getUserToken(req.query.code, "code");
 
   if (userToken != null) {
     const userInfo = await getUserInfo(userToken);
+
     if (userInfo != null) {
       const userRef = await getUserRow(userInfo.email, googleSheet);
 
       if (userRef) {
-        const rolesId = await getRolesIdGS(userRef);
-        if (rolesId) {
-          await addUserOrModify(
-              rolesId, userToken.access_token, userInfo.id);
+        if (userRef[0][38] == "" || !userRef[0][38] || userRef[0][38] == null) {
+          const updateValues = [];
+          updateValues.push([userInfo.id]);
+          await googleSheet.spreadsheets.values.update({
+            spreadsheetId: process.env.SPREADSHEET_ID,
+            range: "Users!AM"+ userRef[1] + ":AM"+ userRef[1],
+            valueInputOption: "USER_ENTERED",
+            requestBody: {
+              "range": "Users!AM"+ userRef[1] + ":AM"+ userRef[1],
+              "values": updateValues},
+          });
+        }
+        rolesId = await getRolesIdGS(userRef[0]);
+
+        if (rolesId.length > 0) {
+          if (
+            await addUserOrModify(rolesId, userToken.access_token, userInfo.id)
+          ) {
+            res.render("successAddUserToDiscord", {url: "https://link.invrtir.com/comunidad"});
+          } else {
+            res.render("errorAddUserToDiscord", {
+              msg: "Algo salió mal con la autorización," +
+              " por favor intente nuevamente.",
+              msg_sec: "",
+              addUser: false,
+              url: ""});
+          }
         }
       } else {
         functions.logger.log(
             "User with email: ", userInfo.email, " no exists in database");
-        // Mandar al usuario algun mensaje
+        res.render("errorAddUserToDiscord", {
+          msg: "Usuario con email: '"+ userInfo.email +
+            "' no consta en nuestra base de datos.",
+          msg_sec: "¿Quieres crear una cuenta o deseas cambiar de usuario?",
+          addUser: true,
+          url: "?email=" +
+          userInfo.email+"&id="+userInfo.id+
+          "&refresh_token="+userToken.refresh_token});
       }
     } else {
       functions.logger.log("error", userInfo);
-      // Usar otro token
+      res.render("errorAddUserToDiscord", {
+        msg: "Algo salió mal con la autorización,"+
+          " por favor intente nuevamente.",
+        msg_sec: "",
+        addUser: false,
+        url: ""});
     }
   } else {
     functions.logger.log(userToken);
+    res.render("errorAddUserToDiscord", {
+      msg: "Algo salió mal con la autorización,"+
+        " por favor intente nuevamente.",
+      msg_sec: "",
+      addUser: false,
+      url: ""});
   }
-  // console.log(users);
-  // res.send(JSON.stringify(users));
-  res.send("OK");
 });
+
+app.get("/app_glade/create_user",
+    requireParams(["refresh_token", "email", "id"]), async (req, res) => {
+      const params = req.query;
+      const client = await auth.getClient();
+      const googleSheet = google.sheets({version: "v4", auth: client});
+
+      const userToken = await getUserToken(params.refresh_token, "refresh");
+
+      const values = [];
+      values.push([
+        "11111111",
+        "",
+        params.email,
+        "",
+        "1381537",
+        "", "", "", "", "", "", "", "", "", "", "",
+        params.id]);
+
+      if (userToken!=null) {
+        const addUserRes = await googleSheet.spreadsheets.values.append({
+          spreadsheetId: process.env.SPREADSHEET_ID,
+          range: process.env.ID_HOJA_NEW_USER,
+          valueInputOption: "USER_ENTERED",
+          requestBody: {
+            "range": process.env.ID_HOJA_NEW_USER,
+            "values": values},
+        });
+
+        if (addUserRes.status == 200) {
+          let flag = true;
+          let userRow;
+          while (flag) {
+            userRow = await getUserRow(params.email, googleSheet);
+            if (userRow != null) {
+              flag = false;
+            }
+          }
+          const updateValues = [];
+          updateValues.push([params.id]);
+          if (userRow != null) {
+            const modifyUserRes = await googleSheet.spreadsheets.values.update({
+              spreadsheetId: process.env.SPREADSHEET_ID,
+              range: "Users!AM"+ userRow[1] + ":AM"+ userRow[1],
+              valueInputOption: "USER_ENTERED",
+              requestBody: {
+                "range": "Users!AM"+ userRow[1] + ":AM"+ userRow[1],
+                "values": updateValues},
+            });
+
+            const rolesId = ["861566442418995240"];
+            if (modifyUserRes.status == 200) {
+              if (
+                await addUserOrModify(
+                    rolesId, userToken.access_token, params.id)
+              ) {
+                res.render("successAddUserToDiscord", {url: "https://discord.com/login"});
+                return;
+              }
+            } else {
+              functions.logger.log(modifyUserRes.json());
+            }
+          }
+        } else {
+          functions.logger.log(addUserRes.json());
+        }
+      }
+      res.render("errorAddUserToDiscord", {
+        msg: "Algo salió mal con la autorización," +
+        " por favor intente nuevamente.",
+        msg_sec: "",
+        addUser: false,
+        url: ""});
+    });
 
 /**
  * Obtiene el token del usuario autorizado.
  * @param {string} code - Código de autorización del usuario.
+ * @param {string} type - Tipo de obtención de token.
  * @return {Json} Json que contiene el token.
  */
-async function getUserToken(code) {
+async function getUserToken(code, type) {
   const body = new URLSearchParams();
   const headers = {"Content-Type": "application/x-www-form-urlencoded;"};
 
   body.append("client_id", process.env.DISCORD_CLIENT_ID);
   body.append("client_secret", process.env.DISCORD_CLIENT_SECRET);
-  body.append("grant_type", "authorization_code");
-  body.append("code", code);
-  body.append("redirect_uri", process.env.DISCORD_REDIRECT_URI);
+
+  if (type == "refresh") {
+    body.append("grant_type", "refresh_token");
+    body.append("refresh_token", code);
+  } else if ( type == "code") {
+    body.append("grant_type", "authorization_code");
+    body.append("code", code);
+    body.append("redirect_uri", process.env.DISCORD_REDIRECT_URI);
+  }
 
   let token = null;
   await fetch(UrlApi+"/oauth2/token", {
@@ -146,7 +266,11 @@ async function getUserInfo(token) {
   })
       .then((user) => user.json())
       .then((data) => {
-        userInfo = data;
+        if (data.email) {
+          userInfo = data;
+        } else {
+          functions.logger.log(data);
+        }
       })
       .catch((err) => {
         functions.logger.log(err);
@@ -181,22 +305,27 @@ async function getUserReference(email) {
  * o null si no existe en la base.
  */
 async function getUserRow(email, spreadSheet) {
-  // const userRow;
+  const user = [];
 
   const userRow = (await spreadSheet.spreadsheets.values.get({
     spreadsheetId: process.env.SPREADSHEET_ID,
     range: process.env.ID_HOJA_RANGO,
   })).data;
 
-  const values = userRow.values;
-
-  for (const value of values) {
-    if (value[0] == email) {
-      return value;
+  if (userRow.values) {
+    const values = userRow.values;
+    let i = 0;
+    for (const value of values) {
+      i++;
+      if (value[0] == email) {
+        user.push(value);
+        user.push(i);
+        return user;
+      }
     }
   }
 
-  return {};
+  return null;
 }
 
 /**
@@ -236,10 +365,12 @@ async function setUserDiscordRefreshToken(userRef, userToken) {
  */
 async function addUserOrModify(roles, token, id) {
   let hasAddOrModify = false;
+  let hasRemoved = true;
+  let hasAdded = true;
   let status;
+
   const headers = {
-    "Authorization":
-    `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+    "Authorization": "Bot " + process.env.DISCORD_BOT_TOKEN,
     "Content-Type": "application/json",
   };
 
@@ -253,49 +384,47 @@ async function addUserOrModify(roles, token, id) {
     headers: headers,
     body: JSON.stringify(paramsUser),
   })
-      .then((addUser) => {
-        status = addUser.status;
-        return addUser.json();
+      .then((res) => {
+        status = res.status;
+        return res;
       })
-      .then((data) => {
-        if (status == 201) {
-          hasAddOrModify = true;
-        }
-      })
-      .catch((err) =>{
+      .catch((err)=>{
         functions.logger.log(err);
-        // res.send();
+        return false;
       });
+
 
   if (status == 204) {
     const userRoles = await getUserRoles(id);
-    console.log(userRoles);
     const returnValues = getAddRemoveRoles(roles, userRoles);
 
-    for (const rolId of returnValues[1]) {
-      await removeRol(rolId, id);
+    if (returnValues[1].size > 0) {
+      for (const rolId of returnValues[1]) {
+        if (!await removeRol(rolId, id)) {
+          hasRemoved = false;
+          break;
+        }
+      }
     }
 
-    for (const rolId of returnValues[0]) {
-      await addRol(rolId, id);
+    if (returnValues[0].size > 0) {
+      for (const rolId of returnValues[0]) {
+        if (!await addRol(rolId, id)) {
+          hasAdded = false;
+          break;
+        }
+      }
     }
-    /* await fetch( UrlApi+
-          "/guilds/"+process.env.DISCORD_GUILD_ID+
-          "/members/"+id+
-          "/roles/1006247087459008653", {
-      method: "PUT",
-      headers: headers,
-    })
-        .then((userModify) => userModify.json() )
-        .then((data) => {
-          hasAddOrModify = true;
-          console.log(data);
-        })
-        .catch((err)=> {
-          functions.logger.log(err);
-        });
-        */
+
+    if (hasRemoved && hasAdded) {
+      hasAddOrModify = true;
+    }
+  } else if (status != 201) {
+    functions.logger.log("error_status: ", status);
+  } else {
+    hasAddOrModify = true;
   }
+
   return hasAddOrModify;
 }
 
@@ -345,17 +474,23 @@ async function getRolesIdGS(userRow) {
   })
       .then((res)=>res.json())
       .then((data)=>{
-        actualRoles = data;
+        if (data[0].name) {
+          actualRoles = data;
+        } else {
+          functions.logger.log(data);
+          return [];
+        }
       })
       .catch((err)=>{
-        console.log(err);
+        functions.logger.log(err);
       });
+
   for (const rol of actualRoles) {
     rolesInfo[rol.name] = rol.id;
   }
 
   if (crypto == 1 || stock == 1) {
-    rolesId.push(rolesInfo["Invrtir-free"]);
+    rolesId.push(rolesInfo["invrtir-free"]);
   }
 
   if (crypto == 2) {
@@ -363,11 +498,10 @@ async function getRolesIdGS(userRow) {
   }
 
   if (stock == 2) {
-    rolesId.push(rolesInfo["Invrtir-basic"]);
+    rolesId.push(rolesInfo["invrtir-basic"]);
   } else if (stock == 3) {
-    rolesId.push(rolesInfo["Invrtir-pro"]);
+    rolesId.push(rolesInfo["invrtir-pro"]);
   }
-
   return rolesId;
 }
 
@@ -392,7 +526,6 @@ async function getUserRoles(id) {
   })
       .then((userRol) => userRol.json())
       .then((data) => {
-        console.log(data);
         roles = data.roles;
       })
       .catch((err)=>{
@@ -448,7 +581,10 @@ async function removeRol(rol, id) {
       .then((deleteRol) => {
         if (deleteRol.status == 204) {
           hasRemove = true;
+        } else {
+          functions.logger.log(deleteRol);
         }
+        return deleteRol;
       })
       .catch((err) => functions.logger.log(err));
 
@@ -478,6 +614,7 @@ async function addRol(rol, id) {
         if (addRol.status == 204) {
           hasAdd = true;
         }
+        return addRol;
       })
       .catch((err) => functions.logger.log(err));
 
