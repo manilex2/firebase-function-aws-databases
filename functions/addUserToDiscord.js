@@ -10,7 +10,7 @@ const auth = new google.auth.GoogleAuth({
   keyFile: "credentials.json",
   scopes: "https://www.googleapis.com/auth/spreadsheets"});
 
-const currentUrl = "http://localhost:5001/invrtir-app-b3266/us-central1/addUserToDiscord";
+// const currentUrl = "http://localhost:5001/invrtir-app-b3266/us-central1/addUserToDiscord";
 
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
@@ -22,7 +22,7 @@ const requireParams = (params) => (req, res, next) => {
   const hasAllRequiredParams = params.every((param) =>
     reqParamList.includes(param));
   if (!hasAllRequiredParams) {
-    return res.status(404).send({error: "Param 'code' is required."});
+    return res.status(404).send({error: "Missing parameters"});
   }
   next();
 };
@@ -72,13 +72,25 @@ app.get("/app_glade", requireParams(["code"]), async (req, res) => {
       const userRef = await getUserRow(userInfo.email, googleSheet);
 
       if (userRef) {
+        if (userRef[0][38] == "" || !userRef[0][38] || userRef[0][38] == null) {
+          const updateValues = [];
+          updateValues.push([userInfo.id]);
+          await googleSheet.spreadsheets.values.update({
+            spreadsheetId: process.env.SPREADSHEET_ID,
+            range: "Users!AM"+ userRef[1] + ":AM"+ userRef[1],
+            valueInputOption: "USER_ENTERED",
+            requestBody: {
+              "range": "Users!AM"+ userRef[1] + ":AM"+ userRef[1],
+              "values": updateValues},
+          });
+        }
         rolesId = await getRolesIdGS(userRef[0]);
 
         if (rolesId.length > 0) {
           if (
             await addUserOrModify(rolesId, userToken.access_token, userInfo.id)
           ) {
-            res.render("successAddUserToDiscord", {url: "https://discord.com/login"});
+            res.render("successAddUserToDiscord", {url: "https://link.invrtir.com/comunidad"});
           } else {
             res.render("errorAddUserToDiscord", {
               msg: "Algo salió mal con la autorización," +
@@ -94,9 +106,9 @@ app.get("/app_glade", requireParams(["code"]), async (req, res) => {
         res.render("errorAddUserToDiscord", {
           msg: "Usuario con email: '"+ userInfo.email +
             "' no consta en nuestra base de datos.",
-          msg_sec: "¿Quiere continuar igualmente o desea cambiar de usuario?",
+          msg_sec: "¿Quieres crear una cuenta o deseas cambiar de usuario?",
           addUser: true,
-          url: currentUrl + "/app_glade/create_user?email="+
+          url: "?email=" +
           userInfo.email+"&id="+userInfo.id+
           "&refresh_token="+userToken.refresh_token});
       }
@@ -118,7 +130,6 @@ app.get("/app_glade", requireParams(["code"]), async (req, res) => {
       addUser: false,
       url: ""});
   }
-  // res.send(JSON.stringify(users));
 });
 
 app.get("/app_glade/create_user",
@@ -139,7 +150,7 @@ app.get("/app_glade/create_user",
         "", "", "", "", "", "", "", "", "", "", "",
         params.id]);
 
-      if (userToken.access_token) {
+      if (userToken!=null) {
         const addUserRes = await googleSheet.spreadsheets.values.append({
           spreadsheetId: process.env.SPREADSHEET_ID,
           range: process.env.ID_HOJA_NEW_USER,
@@ -170,7 +181,7 @@ app.get("/app_glade/create_user",
                 "values": updateValues},
             });
 
-            const rolesId = ["1006246320769618091"];
+            const rolesId = ["861566442418995240"];
             if (modifyUserRes.status == 200) {
               if (
                 await addUserOrModify(
@@ -408,8 +419,10 @@ async function addUserOrModify(roles, token, id) {
     if (hasRemoved && hasAdded) {
       hasAddOrModify = true;
     }
-  } else {
+  } else if (status != 201) {
     functions.logger.log("error_status: ", status);
+  } else {
+    hasAddOrModify = true;
   }
 
   return hasAddOrModify;
@@ -477,7 +490,7 @@ async function getRolesIdGS(userRow) {
   }
 
   if (crypto == 1 || stock == 1) {
-    rolesId.push(rolesInfo["Invrtir-free"]);
+    rolesId.push(rolesInfo["invrtir-free"]);
   }
 
   if (crypto == 2) {
@@ -485,9 +498,9 @@ async function getRolesIdGS(userRow) {
   }
 
   if (stock == 2) {
-    rolesId.push(rolesInfo["Invrtir-basic"]);
+    rolesId.push(rolesInfo["invrtir-basic"]);
   } else if (stock == 3) {
-    rolesId.push(rolesInfo["Invrtir-pro"]);
+    rolesId.push(rolesInfo["invrtir-pro"]);
   }
   return rolesId;
 }

@@ -39,7 +39,7 @@
             padding: 0 50px 0 50px;
         }
 
-        input{
+        .d-flex.justify-content-around.mt-4 > button {
             background-color: #5865F2;
             color: white;
             border: none;
@@ -47,10 +47,20 @@
             font-size: 14px;
             width: 100px;
             height: 40px;
+            text-align: center;
         }
 
-        input:nth-child(2){
-            width: 200px;
+        .d-flex.justify-content-around.mt-4 > :nth-child(2){
+            width: 110px;
+            /*padding: 8px 6px;*/
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .d-flex.justify-content-around.mt-4 > :nth-child(2).loading {
+            width: 140px;
         }
 
         p:nth-child(1){
@@ -79,18 +89,44 @@
                         <%= msg_sec %>
                     </p>
                     <div class="d-flex justify-content-around mt-4">
-                        <input type="button" value="Regresar" onclick="window.history.back();">
+                        <!-- <input type="button" value="Regresar" onclick="window.history.back();"> -->
+                        <button class="btn btn-primary" type="button" >
+                            <span class="">Regresar</span>
+                        </button>
                         <% if (addUser) { %>
-                        <input type="button" value="Crear cuenta" onclick="window.location.href = '<%= url %>';">
+                        <button class="btn btn-primary" type="button">
+                            <span class="">Crear cuenta</span>
+                        </button>
                         <% } %>
-                    </div> 
-                    
-                    
+                        <input type="hidden" value="<%= url %>">
+                    </div>
+
                 </div>             
             </div>
         </div>
     </div>
 
-    
+    <script>
+        let nClick = 0;
+        let btn_back = document.querySelector(".d-flex.justify-content-around.mt-4 :nth-child(1)");
+        let btn = document.querySelector(".d-flex.justify-content-around.mt-4 :nth-child(2)");
+
+        btn_back.onclick = function(e){
+            window.history.back();
+        }
+
+        btn.onclick = function(e){
+            nClick += 1;
+            if(nClick == 1){
+                let query = window.location.search;
+                let href = window.location.href;
+                let newUrl = href.replace(query,"");
+                btn.classList.add("loading");
+                btn.innerHTML += `
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+                window.location.href = newUrl + "/create_user" + document.querySelector("input[type^='hidden']").value;
+            }
+        }
+    </script>
 </body>
 </html>
