@@ -72,32 +72,22 @@ app.get("/app_glade", requireParams(["code"]), async (req, res) => {
       const userRef = await getUserRow(userInfo.email, googleSheet);
 
       if (userRef) {
-        if (userRef[0][38] == "" || !userRef[0][38] || userRef[0][38] == null) {
-          const updateValues = [];
-          updateValues.push([userInfo.id]);
-          await googleSheet.spreadsheets.values.update({
-            spreadsheetId: process.env.SPREADSHEET_ID,
-            range: "Users!AM"+ userRef[1] + ":AM"+ userRef[1],
-            valueInputOption: "USER_ENTERED",
-            requestBody: {
-              "range": "Users!AM"+ userRef[1] + ":AM"+ userRef[1],
-              "values": updateValues},
-          });
-        }
-        rolesId = await getRolesIdGS(userRef[0]);
+        const hasAddDiscordInfo = await addDiscordInfo(userInfo, googleSheet);
 
-        if (rolesId.length > 0) {
-          if (
-            await addUserOrModify(rolesId, userToken.access_token, userInfo.id)
-          ) {
-            res.render("successAddUserToDiscord", {url: "https://link.invrtir.com/comunidad"});
-          } else {
-            res.render("errorAddUserToDiscord", {
-              msg: "Algo salió mal con la autorización," +
-              " por favor intente nuevamente.",
-              msg_sec: "",
-              addUser: false,
-              url: ""});
+        if (hasAddDiscordInfo) {
+          rolesId = await getRolesIdGS(userRef[0]);
+
+          if (rolesId.length > 0) {
+            if (
+              await addUserOrModify(
+                  rolesId, userToken.access_token, userInfo.id)
+            ) {
+              res.render("successAddUserToDiscord", {
+                url1: "https://link.invrtir.com/comunidad",
+                url2: "https://app.invrtir.com"});
+
+              return;
+            }
           }
         }
       } else {
@@ -108,94 +98,73 @@ app.get("/app_glade", requireParams(["code"]), async (req, res) => {
             "' no consta en nuestra base de datos.",
           msg_sec: "¿Quieres crear una cuenta o deseas cambiar de usuario?",
           addUser: true,
-          url: "?email=" +
-          userInfo.email+"&id="+userInfo.id+
-          "&refresh_token="+userToken.refresh_token});
+          url: "?refresh_token="+userToken.refresh_token});
+        return;
       }
     } else {
       functions.logger.log("error", userInfo);
-      res.render("errorAddUserToDiscord", {
-        msg: "Algo salió mal con la autorización,"+
-          " por favor intente nuevamente.",
-        msg_sec: "",
-        addUser: false,
-        url: ""});
     }
   } else {
     functions.logger.log(userToken);
-    res.render("errorAddUserToDiscord", {
-      msg: "Algo salió mal con la autorización,"+
-        " por favor intente nuevamente.",
-      msg_sec: "",
-      addUser: false,
-      url: ""});
   }
+  res.render("errorAddUserToDiscord", {
+    msg: "Algo salió mal con la autorización,"+
+      " por favor intente nuevamente.",
+    msg_sec: "",
+    addUser: false,
+    url: ""});
 });
 
 app.get("/app_glade/create_user",
-    requireParams(["refresh_token", "email", "id"]), async (req, res) => {
+    requireParams(["refresh_token"]), async (req, res) => {
       const params = req.query;
       const client = await auth.getClient();
       const googleSheet = google.sheets({version: "v4", auth: client});
 
       const userToken = await getUserToken(params.refresh_token, "refresh");
 
-      const values = [];
-      values.push([
-        "11111111",
-        "",
-        params.email,
-        "",
-        "1381537",
-        "", "", "", "", "", "", "", "", "", "", "",
-        params.id]);
-
       if (userToken!=null) {
-        const addUserRes = await googleSheet.spreadsheets.values.append({
-          spreadsheetId: process.env.SPREADSHEET_ID,
-          range: process.env.ID_HOJA_NEW_USER,
-          valueInputOption: "USER_ENTERED",
-          requestBody: {
-            "range": process.env.ID_HOJA_NEW_USER,
-            "values": values},
-        });
+        const userInfo = await getUserInfo(userToken);
 
-        if (addUserRes.status == 200) {
-          let flag = true;
-          let userRow;
-          while (flag) {
-            userRow = await getUserRow(params.email, googleSheet);
-            if (userRow != null) {
-              flag = false;
-            }
-          }
-          const updateValues = [];
-          updateValues.push([params.id]);
-          if (userRow != null) {
-            const modifyUserRes = await googleSheet.spreadsheets.values.update({
-              spreadsheetId: process.env.SPREADSHEET_ID,
-              range: "Users!AM"+ userRow[1] + ":AM"+ userRow[1],
-              valueInputOption: "USER_ENTERED",
-              requestBody: {
-                "range": "Users!AM"+ userRow[1] + ":AM"+ userRow[1],
-                "values": updateValues},
-            });
+        if (userInfo != null) {
+          const values = [];
+          values.push([
+            "11111111",
+            "",
+            userInfo.email,
+            "",
+            "1381537",
+            "", "", "", "", "", "", "", "", "", "", "",
+            userInfo.id]);
 
-            const rolesId = ["861566442418995240"];
-            if (modifyUserRes.status == 200) {
+          const addUserRes = await googleSheet.spreadsheets.values.append({
+            spreadsheetId: process.env.SPREADSHEET_ID,
+            range: process.env.ID_HOJA_NEW_USER,
+            valueInputOption: "USER_ENTERED",
+            requestBody: {
+              "range": process.env.ID_HOJA_NEW_USER,
+              "values": values},
+          });
+
+          if (addUserRes.status == 200) {
+            const hasAddDiscordInfo =
+            await addDiscordInfo(userInfo, googleSheet);
+
+            if (hasAddDiscordInfo != null) {
+              const rolesId = ["861566442418995240"];
               if (
                 await addUserOrModify(
-                    rolesId, userToken.access_token, params.id)
+                    rolesId, userToken.access_token, userInfo.id)
               ) {
-                res.render("successAddUserToDiscord", {url: "https://discord.com/login"});
+                res.render("successAddUserToDiscord", {
+                  url1: "https://link.invrtir.com/comunidad",
+                  url2: "https://app.invrtir.com"});
                 return;
               }
-            } else {
-              functions.logger.log(modifyUserRes.json());
             }
+          } else {
+            functions.logger.log(addUserRes.json());
           }
-        } else {
-          functions.logger.log(addUserRes.json());
         }
       }
       res.render("errorAddUserToDiscord", {
@@ -619,6 +588,34 @@ async function addRol(rol, id) {
       .catch((err) => functions.logger.log(err));
 
   return hasAdd;
+}
+
+/**
+ * Registra en la base de datos de Google Sheet
+ * el id y nombre de usuario
+ * @param {JSON} userInfo - Datos del usuario de Discord
+ * @param {Object} googleSheet - Google sheet client
+ */
+async function addDiscordInfo(userInfo, googleSheet) {
+  const addValues = [];
+  addValues.push([
+    userInfo.email,
+    userInfo.id,
+    userInfo.username+"#"+userInfo.discriminator]);
+
+  const res = await googleSheet.spreadsheets.values.append({
+    spreadsheetId: process.env.SPREADSHEET_ID,
+    range: process.env.ID_HOJA_USERS_DISCORDS_IDS,
+    valueInputOption: "USER_ENTERED",
+    requestBody: {
+      "range": process.env.ID_HOJA_USERS_DISCORDS_IDS,
+      "values": addValues},
+  });
+
+  if (res.status == 200) {
+    return true;
+  }
+  return false;
 }
 
 module.exports = app;

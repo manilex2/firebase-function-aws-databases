@@ -49,6 +49,12 @@
             height: 40px;
         }
 
+        
+
+        p + div +div > input {
+            width: 200px;
+        }
+
         p:nth-child(1){
             font-size: 20px;
         }
@@ -75,9 +81,11 @@
                         Explora todo lo que hemos preparado para ti.
                     </p>
                     <div class="d-flex justify-content-center mt-4">
-                        <input type="button" value="Ir a Discord" onclick="window.location.href = '<%= url %>'">
+                        <input type="button" value="Ir a Discord" onclick="window.location.href = '<%= url1 %>'">
                     </div>
-                    
+                    <div class="d-flex justify-content-center mt-4">
+                        <input type="button" value="Accede a nuestra aplicación" onclick="window.location.href = '<%= url2 %>'">
+                    </div>
                     
                 </div>             
             </div>
