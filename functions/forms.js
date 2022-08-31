@@ -16,25 +16,7 @@ router.get("/webinar1", (req, res) => {
     idZoom: req.query.idZoom,
   });
 });
-// ---------------------------------------------------------------- Formulario Webimar 2 ---------------------------------------------------------------- //
-router.get("/webinar2", (req, res) => {
-  const eventStr = req.query.event.replace("&", " ");
-  return res.render("webinar2", {
-    affcode: req.query.affcode,
-    event: eventStr,
-    idZoom: req.query.idZoom,
-  });
-});
-// ---------------------------------------------------------------- Formulario Webimar 3 ---------------------------------------------------------------- //
-router.get("/webinar3", (req, res) => {
-  const eventStr = req.query.event.replace("&", " ");
-  return res.render("webinar3", {
-    affcode: req.query.affcode,
-    event: eventStr,
-    idZoom: req.query.idZoom,
-  });
-});
-router.post("/", async (req, res) => {
+router.post("/webinar1", async (req, res) => {
   const request = req.body;
   const response = await fetch(
       `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR}/contacts`,
@@ -58,9 +40,26 @@ router.post("/", async (req, res) => {
         }),
       },
   );
-  if (response.status === 200) {
-    res.redirect("https://invrtir.com/p/webinar-confirmation");
-  }
+  res.redirect("https://invrtir.com/p/webinar-confirmation");
 });
+// ---------------------------------------------------------------- Formulario Webimar 2 ---------------------------------------------------------------- //
+router.get("/webinar2", (req, res) => {
+  const eventStr = req.query.event.replace("&", " ");
+  return res.render("webinar2", {
+    affcode: req.query.affcode,
+    event: eventStr,
+    idZoom: req.query.idZoom,
+  });
+});
+// ---------------------------------------------------------------- Formulario Webimar 3 ---------------------------------------------------------------- //
+router.get("/webinar3", (req, res) => {
+  const eventStr = req.query.event.replace("&", " ");
+  return res.render("webinar3", {
+    affcode: req.query.affcode,
+    event: eventStr,
+    idZoom: req.query.idZoom,
+  });
+});
+
 
 module.exports = router;
