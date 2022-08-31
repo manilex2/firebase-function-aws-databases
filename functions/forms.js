@@ -19,7 +19,7 @@ router.get("/webinar1", (req, res) => {
 router.post("/webinar1", async (req, res) => {
   const request = req.body;
   await fetch(
-      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR}/contacts`,
+      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR1}/contacts`,
       {
         method: "POST",
         headers: {
@@ -55,7 +55,7 @@ router.get("/webinar2", (req, res) => {
 router.post("/webinar2", async (req, res) => {
   const request = req.body;
   await fetch(
-      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR}/contacts`,
+      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR2}/contacts`,
       {
         method: "POST",
         headers: {
@@ -69,7 +69,7 @@ router.post("/webinar2", async (req, res) => {
             LastName: request.inputLastName,
             Pais: request.inputCountry,
             Whatsapp: request.inputPhone,
-            affcode: request.inputAffcode,
+            Affcode: request.inputAffcode,
             Evento: request.inputEvent,
             IDZoom: request.inputZoom,
           },
