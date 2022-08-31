@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable space-before-blocks */
 require("dotenv").config();
 const express = require("express");
@@ -5,6 +6,8 @@ const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
 
+
+// ---------------------------------------------------------------- Formulario Webimar 1 ---------------------------------------------------------------- //
 router.get("/webinar1", (req, res) => {
   const eventStr = req.query.event.replace("&", " ");
   return res.render("webinar1", {
@@ -13,6 +16,7 @@ router.get("/webinar1", (req, res) => {
     idZoom: req.query.idZoom,
   });
 });
+// ---------------------------------------------------------------- Formulario Webimar 2 ---------------------------------------------------------------- //
 router.get("/webinar2", (req, res) => {
   const eventStr = req.query.event.replace("&", " ");
   return res.render("webinar2", {
@@ -21,6 +25,7 @@ router.get("/webinar2", (req, res) => {
     idZoom: req.query.idZoom,
   });
 });
+// ---------------------------------------------------------------- Formulario Webimar 3 ---------------------------------------------------------------- //
 router.get("/webinar3", (req, res) => {
   const eventStr = req.query.event.replace("&", " ");
   return res.render("webinar3", {

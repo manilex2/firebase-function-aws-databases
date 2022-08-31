@@ -23,11 +23,11 @@
     "public": "public",
     "rewrites": [
       {
-        "source": "/formEmailOctupus/webinar1",
+        "source": "/forms/webinar1",
         "function": "routes"
       },
       {
-        "source": "/formEmailOctupus/webinar2",
+        "source": "/forms/webinar2",
         "function": "routes"
       }
     ],
