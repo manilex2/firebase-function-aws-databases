@@ -5,15 +5,30 @@ const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
 
-router.get("/", (req, res) => {
+router.get("/webinar1", (req, res) => {
   const eventStr = req.query.event.replace("&", " ");
-  return res.render("viewformEmailOctupus", {
+  return res.render("webinar1", {
     affcode: req.query.affcode,
     event: eventStr,
     idZoom: req.query.idZoom,
   });
 });
-
+router.get("/webinar2", (req, res) => {
+  const eventStr = req.query.event.replace("&", " ");
+  return res.render("webinar2", {
+    affcode: req.query.affcode,
+    event: eventStr,
+    idZoom: req.query.idZoom,
+  });
+});
+router.get("/webinar3", (req, res) => {
+  const eventStr = req.query.event.replace("&", " ");
+  return res.render("webinar3", {
+    affcode: req.query.affcode,
+    event: eventStr,
+    idZoom: req.query.idZoom,
+  });
+});
 router.post("/", async (req, res) => {
   const request = req.body;
   const response = await fetch(
