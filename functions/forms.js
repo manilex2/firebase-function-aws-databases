@@ -18,7 +18,7 @@ router.get("/webinar1", (req, res) => {
 });
 router.post("/webinar1", async (req, res) => {
   const request = req.body;
-  const response = await fetch(
+  await fetch(
       `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR}/contacts`,
       {
         method: "POST",
