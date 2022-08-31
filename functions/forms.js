@@ -51,6 +51,33 @@ router.get("/webinar2", (req, res) => {
     idZoom: req.query.idZoom,
   });
 });
+
+router.post("/webinar2", async (req, res) => {
+  const request = req.body;
+  await fetch(
+      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR}/contacts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          api_key: process.env.API_KEY_OCTOPUS,
+          email_address: request.inputEmail,
+          fields: {
+            FirstName: request.inputName,
+            LastName: request.inputLastName,
+            Pais: request.inputCountry,
+            Whatsapp: request.inputPhone,
+            affcode: request.inputAffcode,
+            Evento: request.inputEvent,
+            IDZoom: request.inputZoom,
+          },
+        }),
+      },
+  );
+  res.redirect("https://invrtir.com/p/webinar-confirmation");
+});
 // ---------------------------------------------------------------- Formulario Webimar 3 ---------------------------------------------------------------- //
 router.get("/webinar3", (req, res) => {
   const eventStr = req.query.event.replace("&", " ");
