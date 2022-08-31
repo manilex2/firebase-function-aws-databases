@@ -69,7 +69,7 @@ router.post("/webinar2", async (req, res) => {
             LastName: request.inputLastName,
             Pais: request.inputCountry,
             Whatsapp: request.inputPhone,
-            Affcode: request.inputAffcode,
+            affcode: request.inputAffcode,
             Evento: request.inputEvent,
             IDZoom: request.inputZoom,
           },
