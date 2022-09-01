@@ -16,6 +16,7 @@ const addUserToDiscord = require("./addUserToDiscord");
 const addCoursestoPlan = require("./addCoursestoPlan");
 const routes = require("./routes");
 const createCryptosInfo = require("./createCryptosInfo");
+const reports = require("./reports");
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   // eslint-disable-next-line max-len
@@ -40,3 +41,4 @@ exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
 exports.addCoursestoPlan = functions.https.onRequest(addCoursestoPlan);
 exports.routes = functions.https.onRequest(routes);
 exports.createCryptosInfo = functions.https.onRequest(createCryptosInfo);
+exports.reports = functions.https.onRequest(reports);
