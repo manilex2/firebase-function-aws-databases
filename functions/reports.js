@@ -36,12 +36,12 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
       };
       try {
         // eslint-disable-next-line max-len
-        fs.mkdir(path.join(__dirname, "../public/reports/"), {recursive: true}, (err) => {
+        fs.mkdir(path.join(__dirname, "./public/reports/"), {recursive: true}, (err) => {
           if (err) throw err;
         });
-        fs.rm(path.join(__dirname, "../public/reports/", "report.pdf"), ()=>{
+        fs.rm(path.join(__dirname, "./public/reports/", "report.pdf"), ()=>{
           // eslint-disable-next-line max-len
-          pdf.create(result, options).toFile("../public/reports/report.pdf", function(err, data) {
+          pdf.create(result, options).toFile("./public/reports/report.pdf", function(err, data) {
             if (err) {
               res.send(err);
             } else {
@@ -55,7 +55,7 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
         });
       } catch (e) {
         // eslint-disable-next-line max-len
-        pdf.create(result, options).toFile("../public/reports/report.pdf", function(err, data) {
+        pdf.create(result, options).toFile("./public/reports/report.pdf", function(err, data) {
           if (err) {
             res.send(err);
           } else {
