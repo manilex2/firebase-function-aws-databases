@@ -1,6 +1,5 @@
 {
   "functions": {
-    "public": "public",
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint"
     ],
