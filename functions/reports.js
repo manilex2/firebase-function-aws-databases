@@ -34,17 +34,40 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
           "height": "20mm",
         },
       };
-      pdf.create(result, options).toFile("report.pdf", function(err, data) {
-        if (err) {
-          res.send(err);
-        } else {
-          console.log(data);
-          const file = fs.readFileSync(data.filename);
-          res.contentType("application/pdf");
-          res.send(file);
-          // res.send("File created successfully");
-        }
-      });
+      try {
+        // eslint-disable-next-line max-len
+        fs.mkdir(path.join(__dirname, "../public/reports/"), {recursive: true}, (err) => {
+          if (err) throw err;
+        });
+        fs.rm(path.join(__dirname, "../public/reports/", "report.pdf"), ()=>{
+          // eslint-disable-next-line max-len
+          pdf.create(result, options).toFile("../public/reports/report.pdf", function(err, data) {
+            if (err) {
+              res.send(err);
+            } else {
+              console.log(data);
+              const file = fs.readFileSync(data.filename);
+              res.contentType("application/pdf");
+              res.send(file);
+              // res.send("File created successfully");
+            }
+          });
+        });
+      } catch (e) {
+        // eslint-disable-next-line max-len
+        pdf.create(result, options).toFile("../public/reports/report.pdf", function(err, data) {
+          if (err) {
+            res.send(err);
+          } else {
+            console.log(data);
+            const file = fs.readFileSync(data.filename);
+            res.contentType("application/pdf");
+            res.send(file);
+            // res.send("File created successfully");
+          }
+        });
+        return "Archivo Enviado";
+      }
     }
   });
 });
