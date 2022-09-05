@@ -36,9 +36,9 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
   const fechas = req.body.fechas;
   const horasEntrada = req.body.horasEntrada;
   const horasSalida = req.body.horasSalida;
-  const totalHorasTrabajadas = ["18:20", "20:20", "21:20"];
-  const horasExtras = ["18:20", "20:20", "21:20"];
-  const horasFaltantes = ["18:20", "20:20", "21:20"];
+  const totalHorasTrabajadas = req.body.totalHorasTrabajadas;
+  const horasExtras = req.body.horasExtras;
+  const horasFaltantes = req.body.horasFaltantes;
   const person = {nombre: nombre, fecha: fecha, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes};
   const transporter = nodemailer.createTransport({
     service: "gmail", // true for 465, false for other ports
