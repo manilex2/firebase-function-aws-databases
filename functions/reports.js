@@ -4,7 +4,7 @@ const cors = require("cors");
 const ejs = require("ejs");
 // const fs = require("fs");
 const nodemailer = require("nodemailer");
-const pdf = require("html-pdf");
+const pdf = require("html-pdf-node");
 const path = require("path");
 const app = express();
 app.use(cors({origin: true}));
@@ -22,29 +22,30 @@ app.get(`/${process.env.API_KEY}`, (req, res) => {
   const totalHorasTrabajadas = ["18:20", "20:20", "21:20"];
   const horasExtras = ["18:20", "20:20", "21:20"];
   const horasFaltantes = ["18:20", "20:20", "21:20"];
-  const data = {nombre: nombre, fecha: fecha, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes};
+  const data = {nombre: nombre, cedula: fecha, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes};
   res.render("reporte", data);
 });
 app.post(`/${process.env.API_KEY}`, (req, res) => {
   res.set("Content-Type", "application/json");
-  const nombre = req.body.name;
-  const fecha = req.body.date;
+  console.log(req.body);
+  const nombre = req.body.nombre;
+  const cedula = req.body.cedula;
   const cargo = req.body.cargo;
   const unidad = req.body.unidad;
-  const mes = req.body.mes;
-  const totalHoras = req.body.totalHoras;
-  const fechas = req.body.fechas;
-  const horasEntrada = req.body.horasEntrada;
-  const horasSalida = req.body.horasSalida;
-  const totalHorasTrabajadas = req.body.totalHorasTrabajadas;
-  const horasExtras = req.body.horasExtras;
-  const horasFaltantes = req.body.horasFaltantes;
-  const person = {nombre: nombre, fecha: fecha, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes};
+  const mes = req.body.mesreporte;
+  const totalHoras = req.body.tiempototal;
+  const fechas = req.body.fecha;
+  const horasEntrada = req.body.entradas;
+  const horasSalida = req.body.salidas;
+  const totalHorasTrabajadas = req.body.horastrabajadas;
+  const horasExtras = req.body.horasextras;
+  const horasFaltantes = req.body.horasfaltantes;
+  const person = {nombre: nombre, cedula: cedula, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes};
   const transporter = nodemailer.createTransport({
     service: "gmail", // true for 465, false for other ports
     auth: {
-      user: "pauldelpezo@gmail.com", // generated ethereal user
-      pass: "vhbxnuouduqxexsl", // generated ethereal password
+      user: `${process.env.EMAIL_GMAIL}`, // generated ethereal user
+      pass: `${process.env.PASSWORD_GMAIL}`, // generated ethereal password
     },
   });
   // eslint-disable-next-line max-len
@@ -53,27 +54,23 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
       res.send(err);
     } else {
       const options = {
-        "height": "11.25in",
-        "width": "8.5in",
-        "header": {
-          "height": "20mm",
-        },
-        "footer": {
-          "height": "20mm",
-        },
+        format: "A4",
+        preferCSSPageSize: true,
       };
-      pdf.create(result, options).toBuffer(function(err, buffer) {
-        console.log("This is a buffer:", Buffer.isBuffer(buffer));
-        console.log("Bandera");
+      const file = {
+        content: result,
+      };
+      pdf.generatePdf(file, options).then((pdfBuffer) => {
         const mailOptions = {
-          from: "pauldelpezo@gmail.com",
-          to: "paul@invrtir.com",
-          subject: "Prueba",
-          text: "Prueba",
+          from: `${process.env.EMAIL_GMAIL}`,
+          to: `${process.env.EMAIL_DESTINY_GMAIL}`,
+          subject: `Reporte de horas trabajada de: ${nombre} | ${mes}`,
+          text: "Reporte Generado desde la aplicación de Nailbox",
           attachments: [
             {
               // eslint-disable-next-line new-cap
-              content: Buffer.from(buffer),
+              filename: `reporte_${nombre}_${mes}`,
+              content: Buffer.from(pdfBuffer),
               contentType: "application/pdf",
             },
           ]
@@ -90,36 +87,33 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
         });
       });
       /*
-      try {
-        fs.rm("/workspace/reports/report.pdf", ()=>{
-          // eslint-disable-next-line max-len
-          pdf.create(result, options).toFile("/workspace/reports/report.pdf", function(err, data) {
-            if (err) {
-              res.send(err);
-            } else {
-              console.log(data);
-              const file = fs.readFileSync(data.filename);
-              res.contentType("application/pdf");
-              res.send(file);
-              // res.send("File created successfully");
-            }
-          });
-        });
-      } catch (e) {
-        // eslint-disable-next-line max-len, max-len, max-len
-        pdf.create(result, options).toFile("/workspace/reports/report.pdf", function(err, data) {
+      pdf.create(result, options).toBuffer(function(err, buffer) {
+        console.log("This is a buffer:", Buffer.isBuffer(buffer));
+        const mailOptions = {
+          from: `${process.env.EMAIL_GMAIL}`,
+          to: `${process.env.EMAIL_DESTINY_TEST_EMAIL}`,
+          subject: `Reporte de horas trabajada de: ${nombre} | ${mes}`,
+          text: "Reporte Generado desde la aplicación de Nailbox",
+          attachments: [
+            {
+              // eslint-disable-next-line new-cap
+              filename: `reporte_${nombre}_${mes}`,
+              content: Buffer.from(buffer),
+              contentType: "application/pdf",
+            },
+          ]
+          ,
+        };
+        transporter.sendMail(mailOptions, (err, response) => {
           if (err) {
-            res.send(err);
+            console.error("there was an error: ", err);
+            res.status(401).json(err);
           } else {
-            console.log(data);
-            const file = fs.readFileSync(data.filename);
-            res.contentType("application/pdf");
-            res.send(file);
-            // res.send("File created successfully");
+            // console.log('here is the res: ', response);
+            res.status(200).json("recovery email sent");
           }
         });
-        return "Archivo Enviado";
-      }
+      });
       */
     }
   });
