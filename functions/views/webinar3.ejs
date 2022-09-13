@@ -1,243 +1,142 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webinar Futuros Criptomonedas</title>
+  <title>Webinar Futoros Criptomonedas</title>
   <link rel="shortcut icon" type="image/svg" href="https://d8ff17fs33kjt.cloudfront.net/logos/favicon-invrtir.svg">
-  <link rel="stylesheet" href="    https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+  <link
+      rel="stylesheet"
+      href="    https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+    />
 </head>
 
 
 <body>
   <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+<div>
+<div class="cover">
 
-  <div class="cover">
-    <a href="https://logwork.com/countdown-wzv5" class="countdown-timer" data-timezone="America/Guayaquil"
-      data-language="es" data-date="2022-09-08 20:00" data-background="#ff6600" data-digitscolor="#ffffff">_</a>
+  <img class="logo" src="https://d8ff17fs33kjt.cloudfront.net/logos/Logo+Invrtir+1.svg">
+  <h3 class="subtitle">WEBINAR GRATUITO</h3>
+  <h1 class="maintitle">GANA DINERO DE MANERA <strong>RÁPIDA E INTELIGENTE</strong> CON CRIPTOMONEDAS</h1>
+  <p class="subtitleb">¡Aprende cómo generar ganancias en menos tiempo y con poco capital</p>
+  <div class="buttoncontainer"><a class="regbutton" href="#formregister">¡Regístrate ahora!</a></div>
+</div>
 
-    <img class="logo" src="https://d8ff17fs33kjt.cloudfront.net/logos/Logo+Invrtir+1.svg">
-    <h3 class="subtitle">WEBINAR GRATUITO</h3>
-    <h1 class="maintitle">GANA DINERO DE MANERA <strong>RÁPIDA E INTELIGENTE</strong> CON CRIPTOMONEDAS</h1>
-    <p class="subtitleb">¡Aprende cómo generar ganancias en menos tiempo y con poco capital</p>
-    <img class="iconwebinar"
-      src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/icon+webinar+etf+v2.png">
-    <div class="buttoncontainer"><a class="regbutton" href="#formregister">¡Regístrate ahora!</a></div>
+
+<div id="wcontainer">
+
+  <div id="leftside">
+    <div id="timeanddate">
+      <div id="date">
+        <p id="monthtext">Septiembre</p>
+        <div class="day">
+          <p id="daytext">8</p>
+          <p class="horarioscontainer"><img class="horarios" src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-3.png"> | 10 PM</p>
+          <p class="horarioscontainer"><img class="horarios" src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-5.png"> | 8 PM</p>
+          <p class="horarioscontainer"><img class="horarios" src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-6.png"> | 7 PM</p>
+        </div>
+      </div>
+      <div id="host">
+        <p style="font-size: 16px;">Presentado por:</p>
+        <div id="instructor">
+          <img id="photo" src="https://www.filepicker.io/api/file/aqmJCAEFTpaveK9lcFVm">
+          <div id="instructordata">
+            <h3 id="insname">Dan Neira</h3>
+            <p id="cargo">CEO e Instructor</p>
+          </div>
+        </div>
+        <p id="hostdetalle">Asesor financiero, emprendedor, docente e inversionista, cuento con más de 12 años de experiencia en inversiones internacionales incluyendo acciones de compañías en Estados Unidos, divisas y Criptomonedas.</p>
+      </div>
+    </div>
+
+    <div class="formblock" id="formregister">
+      <h2 class="centertitle">¡Registrate ahora!</h2>
+      <a href="https://logwork.com/countdown-wzv5" class="countdown-timer" data-timezone="America/Guayaquil"
+        data-language="es" data-date="2022-09-08 20:00" data-background="#ff6600" data-digitscolor="#ffffff">_</a>
+  
+      <div class="formcontainer">
+        <form class="needs-validation" action="/forms/webinar3" method="POST" novalidate>
+          <div class="mb-3">
+            <input placeholder="Nombre" type="text" class="form-control" id="inputName" name="inputName"
+              aria-describedby="namelHelp" required />
+            <div class="invalid-feedback">
+              Ingrese el Apellido
+            </div>
+          </div>
+          <div class="mb-3">
+            <input placeholder="Apellido" type="text" class="form-control" id="inputLastName" name="inputLastName"
+              aria-describedby="lastNamelHelp" required />
+            <div class="invalid-feedback">
+              Ingrese el Apellido
+            </div>
+          </div>
+          <div class="mb-3">
+            <input placeholder="Correo" type="email" class="form-control" id="inputEmail" name="inputEmail"
+              aria-describedby="emailHelp" required />
+            <div class="invalid-feedback">
+              Ingrese el Correo
+            </div>
+          </div>
+          <div class="mb-3">
+            <input placeholder="País" type="text" class="form-control" id="inputCountry" name="inputCountry"
+              aria-describedby="countrylHelp" required />
+            <div class="invalid-feedback">
+              Ingrese su País
+            </div>
+          </div>
+          <div class="mb-3">
+            <input placeholder="Número de telefono" type="text" class="form-control" id="inputPhone" name="inputPhone"
+              aria-describedby="phonelHelp" required />
+            <div class="invalid-feedback">
+              Ingrese su número de telefono
+            </div>
+          </div>
+          <div class="mb-3 d-none">
+            <input required type="text" class="form-control" id="inputAffcode" name="inputAffcode"
+              aria-describedby="affcodelHelp" value=<%=affcode%>
+            />
+          </div>
+          <div class="mb-3 d-none">
+            <input required type="text" class="form-control" id="inputEvent" name="inputEvent"
+              aria-describedby="eventlHelp" value='<%- event%>' />
+          </div>
+          <div class="mb-3 d-none">
+            <input required type="text" class="form-control" id="inputZoom" name="inputZoom" aria-describedby="zoomlHelp"
+              value=<%=idZoom%>
+            />
+          </div>
+          <button type="submit" class="buttonform btn btn-primary">Registrarse</button>
+        </form>
+      </div>
+  
+    </div>
   </div>
 
-  <div class="secondblock">
-    <h2 class="lefttitle">Invrtir te ayudará <span class="resaltado">desde cero</span> en el mundo de las inversiones
-    </h2>
-    <div class="video">
-      <img class="imgresponsive"
-        src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+principal/invrtir-services.jpeg">
-    </div>
-    <p class="textcontent">Aprende desde cero como hacer trading en criptomonedas <strong>no importa si no tienes
-        experiencia</strong>, te guiaremos pasoo a paso en este camino.</p>
-    <br><br>
-    <div class="buttoncontainer"><a class="regbutton" href="#formregister">¡Regístrate ahora!</a></div>
-  </div>
-
-
-  <div class="thirdblock">
-    <h2 class="centertitle">¿Qué aprenderás en este Webinar?</h2>
-    <div class="center">
-      <img class="imgwebinar"
-        src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/invrtir-icon-money.png">
-    </div>
+  <div id="rightside">
+    <a href="https://logwork.com/countdown-w4xm" class="countdown-timer" data-timezone="America/Guayaquil" data-language="es" data-textcolor="#353535" data-date="2022-09-21 20:00" data-background="#ff6600" data-digitscolor="#ffffff" data-unitscolor="#353535">Jueves 8 de septiembre</a>
+    <h5 class="subtitulocontenido">Durante este EVENTO EN VIVO GRATUITO aprenderás:</h5>
     <ul>
-      <li>Conocimientos clave sobre inversiones en criptomonedas</li>
-      <li>Cómo funcionan las operaciones de futuros con Criptomonedas</li>
-      <li>Plataforma para poder realizar trades con futuros en criptomonedas</li>
-      <li>Las ganancias que puedes generar</li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
     </ul>
   </div>
 
-
-  <!--<div class="fourthblockmobile">
-  <div class="bookcontainer">
-    <h2 class="centertitle">y además... ¡obtén un bono especial!</h2>
-    <img class="bookcover" src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Page-Ebooks/Invrtir-ebook1-Dan-Neira.jpg">
-    <p>Registrate gratis a nuestro webinar y recibe <strong>¡GRATIS!</strong>, nuestro ebook para nuevos inversionistas</p>
-  </div>
-  <div class="buttoncontainerbook"><a class="regbutton" href="#formregister">¡Regístrate ahora!</a></div>
 </div>
 
-<div class="fourthblockweb">
-  <div class="bookcontainerweb">
-    <img class="bookcoverweb" src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Page-Ebooks/Invrtir-ebook1-Dan-Neira.jpg">
-  </div>
-  <div class="bookdetailweb">
-    <p>Registrate gratis a nuestro webinar y recibe <strong>¡GRATIS!</strong>, nuestro ebook para nuevos inversionistas</p>
-    <div class="buttoncontainerbook"><a class="regbutton" href="#formregister">¡Regístrate ya!</a></div>
-  </div>
-</div>-->
-
-  <div class="casosexito">
-    <h3 class="centertitle">Lo que opinan de nosotros</h3>
-    <div class="testimonialblock">
-      <img class="photo"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1KJ8WkHkdZSYDAt7vdbu7a6aB7jXBkyAdDQ&usqp=CAU">
-      <h4 class="testimonialname">Oscar Bravo</h4>
-      <p class="testimonialtext">"Aprendí de una forma facil como funciona el mundo de las criptomonedas, pude realizar
-        mis primeras inversiones con las guías que me facilitaron."</p>
-    </div>
-
-    <div class="testimonialblock">
-      <img class="photo"
-        src="https://s3.us-east-2.amazonaws.com/invrtir/Wesite-content/Pagina-Curso2/testimonials/invrtir-renato-correa.JPG">
-      <h4 class="testimonialname">Renato Correa</h4>
-      <p class="testimonialtext">"Las tutorías son claras y precisas. El contenido resulta muy interesante."</p>
-    </div>
-
-    <div class="testimonialblock">
-      <img class="photo" src="https://www.filepicker.io/api/file/DnMmEtq5RsyQrEgp9JdG">
-      <h4 class="testimonialname">Florencio Marquez</h4>
-      <p class="testimonialtext">"Todo muy bien explicado y te ayuda a entender como funciona el mundo de las
-        inversiones de mi punto de vista lo recomiendo es gratis y no se van a arrepentir yo me a decidí incursionar en
-        este mundo."</p>
-    </div>
-  </div>
-
-  <div class="formblock" id="formregister">
-    <h2 class="centertitle">¡Registrate ahora!</h2>
-    <a href="https://logwork.com/countdown-wzv5" class="countdown-timer" data-timezone="America/Guayaquil"
-      data-language="es" data-date="2022-09-08 20:00" data-background="#ff6600" data-digitscolor="#ffffff">_</a>
-
-    <div class="formcontainer">
-      <form class="needs-validation" action="/registerOctopus" method="POST" novalidate>
-        <div class="mb-3">
-          <input placeholder="Nombre" type="text" class="form-control" id="inputName" name="inputName"
-            aria-describedby="namelHelp" required />
-          <div class="invalid-feedback">
-            Ingrese el Apellido
-          </div>
-        </div>
-        <div class="mb-3">
-          <input placeholder="Apellido" type="text" class="form-control" id="inputLastName" name="inputLastName"
-            aria-describedby="lastNamelHelp" required />
-          <div class="invalid-feedback">
-            Ingrese el Apellido
-          </div>
-        </div>
-        <div class="mb-3">
-          <input placeholder="Correo" type="email" class="form-control" id="inputEmail" name="inputEmail"
-            aria-describedby="emailHelp" required />
-          <div class="invalid-feedback">
-            Ingrese el Correo
-          </div>
-        </div>
-        <div class="mb-3">
-          <input placeholder="País" type="text" class="form-control" id="inputCountry" name="inputCountry"
-            aria-describedby="countrylHelp" required />
-          <div class="invalid-feedback">
-            Ingrese su País
-          </div>
-        </div>
-        <div class="mb-3">
-          <input placeholder="Número de telefono" type="text" class="form-control" id="inputPhone" name="inputPhone"
-            aria-describedby="phonelHelp" required />
-          <div class="invalid-feedback">
-            Ingrese su número de telefono
-          </div>
-        </div>
-        <div class="mb-3 d-none">
-          <input required type="text" class="form-control" id="inputAffcode" name="inputAffcode"
-            aria-describedby="affcodelHelp" value=<%=affcode%>
-          />
-        </div>
-        <div class="mb-3 d-none">
-          <input required type="text" class="form-control" id="inputEvent" name="inputEvent"
-            aria-describedby="eventlHelp" value='<%- event%>' />
-        </div>
-        <div class="mb-3 d-none">
-          <input required type="text" class="form-control" id="inputZoom" name="inputZoom" aria-describedby="zoomlHelp"
-            value=<%=idZoom%>
-          />
-        </div>
-        <button type="submit" class="buttonform btn btn-primary">Registrarse</button>
-      </form>
-    </div>
-
-  </div>
-
-  <div class="faqblock">
-
-    <h2 class="lefttitle">Preguntas Frecuentes</h2>
-    <p class="pregunta">¿Necesito experiencia previa para asistir al webinar?</p>
-    <p class="respuesta">No necesitas ninguna experiencia o nocimientos previos, lo que verás en este webinar lo podrás
-      comprender de una manera sencilla y sobretodo lo podrás aplicar.</p>
-    <p class="pregunta">¿Cuánto dinero necesito para comenzar?</p>
-    <p class="respuesta">Puedes empezar a invertir desde $5 no hay minimos tu puedes definir la cantidad que se adapte a
-      tus posibilidades.</p>
-    <p class="pregunta">¿Despues de este webinar podré comenzar a invertir mi dinero?</p>
-    <p class="respuesta">Absolutamente si, luego de este webinar tendrás los conocimientos necesarios para comenzar con
-      una estrategia de inversión que podrás implementar de inmediato.</p>
-    <p class="pregunta">¿Donde puedo aprender más sobre inversiones?</p>
-    <p class="respuesta">Tienes disponible nuestro <a class="links" target="_blank"
-        href="https://podcast.invrtir.com">Podcast</a> y nuestro canal de <a class="links" target="_blank"
-        href="https://link.invrtir.com/youtube">Youtube</a> para que puedas obtener conocimientos importantes para
-      manejar tus inversiones.</p>
-  </div>
-
-  <div class="maspreguntas">
-    <h2 class="centertitle">¿Tienes más preguntas?</h2>
-    <br>
-    <a class="whatsappbutton" target="_blank" href="https://link.invrtir.com/escribeme">Escríbenos por Whatsapp <i
-        class="fab fa-whatsapp fa-2x"></i></a>
-  </div>
-
-  <div class="social">
-    <!-- Instagram -->
-    <a style="color: #ac2bac;" href="https://www.instagram.com/invrtir/" role="button"><i
-        class="socialicon fab fa-instagram fa-2x"></i></a>
-
-    <!-- Tiktok -->
-    <a style="color: #353535;" href="https://www.tiktok.com/@invrtir" role="button"><i
-        class="socialicon fab fa-tiktok fa-2x"></i></a>
-
-    <!-- Youtube -->
-    <a style="color: #dd4b39;" href="https://link.invrtir.com/youtube" role="button"><i
-        class="socialicon fab fa-youtube fa-2x"></i></a>
-
-    <!-- Whatsapp -->
-    <a style="color: #25d366;" href="https://link.invrtir.com/escribeme" role="button"><i
-        class="socialicon fab fa-whatsapp fa-2x"></i></a>
-  </div>
 
 
-  <script>
-    (() => {
-      'use strict';
-
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation');
-
-      // Loop over them and prevent submission
-      Array.prototype.slice.call(forms).forEach((form) => {
-        form.addEventListener('submit', (event) => {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    })();
-  </script>
-</body>
-
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-
+</div>
 
 <style media="screen">
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;0,500;0,800;1,200;1,600&display=swap');
 
-
-
   body {
     font-family: 'Montserrat', sans-serif;
     color: #404040;
+    background: rgb(252,240,253);
+    background: linear-gradient(28deg, rgba(252,240,253,1) 0%, rgba(201,233,250,1) 100%);
   }
 
   p {
@@ -252,9 +151,7 @@
 
   .cover {
     text-align: center;
-    padding: 0px 5% 200px 5%;
-    background: rgb(252, 240, 253);
-    background: linear-gradient(28deg, rgba(252, 240, 253, 1) 0%, rgba(201, 233, 250, 1) 100%);
+    padding: 40px 5% 30px 5%;
   }
 
   .count {
@@ -262,24 +159,21 @@
     color: transparent;
   }
 
+  .horarios {
+    height: 15px;
+  }
+
+  .horarioscontainer {
+    display: flex;
+    margin: -5px 0px;
+    padding-left: 10px;
+    align-items: baseline;
+    font-weight: 800;
+  }
+
   .logo {
     width: 60px;
     margin: 0px 0px 20px 0px;
-  }
-
-  .iconwebinar {
-    width: 100%;
-    margin: 30px 0px;
-  }
-
-  .imgwebinar {
-    width: 60%;
-    margin: 30px auto;
-    text-align: center;
-  }
-
-  .imgresponsive {
-    width: 100%;
   }
 
   .subtitle {
@@ -294,54 +188,9 @@
     text-align: center;
   }
 
-  .maintitle {
-    font-size: 3vh;
-    line-height: 120%;
-    font-weight: 600;
-  }
-
-  .maintitlehighlight {
-    font-weight: 800;
-  }
-
-  .banner {
-    border: 1px solid #232323;
-    height: 200px;
-    width: 100%;
-    margin: 50px auto;
-  }
-
-  .video {
-    margin: 50px auto;
-  }
-
-  .secondblock {
-    padding: 130px 5%;
-  }
-
-  .textcontent {
-    text-align: center;
-  }
-
-  .lefttitle {
-    text-align: left;
-    font-size: 4vh;
-    font-weight: 800;
-  }
-
-  .resaltado {
-    color: #ff6600;
-  }
-
-  .centertitle {
-    text-align: center;
-    font-size: 3.5vh;
-    font-weight: 800;
-  }
-
   .buttoncontainer {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 50px;
   }
 
   .buttoncontainerbook {
@@ -362,161 +211,112 @@
   }
 
   .regbutton:hover {
-    background-color: #ff9900;
-    /* Green */
+    background-color: #ff9900; /* Green */
     color: white;
   }
 
-  ul li {
-    margin: 20px 0px;
-    line-height: 130%;
-    font-size: 20px;
+  #wcontainer {
+    margin: 50px 2%;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
   }
 
-  .thirdblock {
-    padding: 130px 5%;
-    background-color: #f8f8f8;
+  #leftside {
+    width: 100%;
+    background-color: #232323;
+    padding: 20px;
   }
 
-  .fourthblockmobile {
-    padding: 130px 5% 130px 5%;
+  #rightside {
+    width: 100%;
   }
 
-  .fourthblockweb {
-    padding: 130px 5% 20px 5%;
-    display: none;
-  }
-
-  .bookcover {
-    width: 80%;
-    margin: 20px auto 50px auto;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-  }
-
-  .bookcontainer {
-    text-align: center;
+  #timeanddate {
     display: flex;
     flex-wrap: wrap;
   }
 
-  .bookcoverweb {
-    width: 70%;
-    margin: auto;
+  #date {
+    width: 30%;
   }
 
-  .bookcontainerweb {
+  #monthtext {
+    background-color: #3164FA;
+    font-size: 16px;
     text-align: center;
+    color: #ffffff;
+    padding: 10px 0px;
   }
 
-  .casosexito {
-    padding: 130px 5% 130px 5%;
-    background-color: #f8f8f8;
-  }
-
-  .testimonialblock {
-    padding: 30px 20px;
+  .day {
+    margin-top: -15px;
     background-color: #ffffff;
-    text-align: center;
-    width: 85%;
-    margin: 20px 20px;
-    border-radius: 10px;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    padding-bottom: 20px;
   }
 
-  .photo {
+  #daytext {
+    font-size: 44px;
+    font-weight: 800;
+    text-align: center;
+    color: #535353;
+    margin-bottom: 8px;
+  }
+
+  #host {
+    margin-left: 20px;
+    color: #ffffff;
+    width: 60%;
+  }
+
+  #hostdetalle {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  #instructor {
+    display: flex;
+    align-items: center;
+  }
+
+  #instructordata {
+    align-items: center;
+  }
+
+  #photo {
+    text-align: center;
+    border: 2px solid #ffffff;
     border-radius: 50%;
     width: 80px;
     height: 80px;
-    margin-bottom: 15px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 9px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    margin-right: 10px;
   }
 
-  .testimonialtext {
-    font-size: 14px;
-    line-height: 120%;
-  }
-
-  .testimonialname {
+  #insname {
+    margin-top: 20px;
+    font-size: 22px;
     font-weight: 800;
+    line-height: 80%;
+  }
+
+  #cargo {
     font-size: 16px;
+    line-height: 80%;
   }
 
-  .formblock {
-    text-align: center;
-    padding: 130px 5% 130px 5%;
-    background-color: #ffffff;
+  #rightside {
+    background-color: #f8f8f8;
+    padding: 20px 20px;
   }
 
-  .formcontainer {
-    margin: 40px auto;
-    width: 80%;
+  .subtitulocontenido {
     font-weight: 800;
+    margin-top: 20px;
   }
 
-  .fieldcontainer {
-    margin: 40px 0px;
-  }
-
-  .faqblock {
-    text-align: center;
-    padding: 130px 5% 130px 5%;
-    background-color: #ffffff;
-  }
-
-  .pregunta {
-    font-weight: 600;
-    margin-top: 50px;
-    font-size: 18px;
-  }
-
-  .respuesta {
-    margin-left: 20px;
-  }
-
-  .links {
-    color: #ff6600;
-    font-weight: 800;
-  }
-
-  .social {
-    text-align: center;
-    padding: 130px 5% 130px 5%;
-  }
-
-  .socialicon {
-    margin: 0px 20px;
-  }
-
-  .buttonform {
-    background-color: #ff6600;
-    padding: 10px 50px;
-    border: #ffffff;
-  }
-
-  .buttonform:hover {
-    background-color: #ff9900;
-    padding: 10px 50px;
-    border: #ffffff;
-  }
-
-  .whatsappbutton {
-    background-color: #25d366;
-    color: #ffffff;
-    padding: 20px 50px;
-    border-radius: 50px;
-    font-size: 20px;
-    font-weight: 800;
-    margin-top: 60px;
-    font-size: 16px;
-  }
-
-  .whatsappbutton:hover {
-    background-color: #25d299;
-    color: #ffffff;
-  }
-
-  .maspreguntas {
-    text-align: center;
+  ul {
+  list-style-image: "";
   }
 
   @media only screen and (min-width: 768px) {
@@ -524,64 +324,22 @@
       padding: 0px 25% 100px 25%;
     }
 
-    .maintitle {
-      font-size: 4vh;
-    }
-
-    .secondblock {
-      padding: 130px 25%;
-    }
-
-    .thirdblock {
-      padding: 130px 25%;
-    }
-
-    .fourthblockmobile {
-      display: none;
-    }
-
-    .fourthblockweb {
-      padding: 130px 15%;
-      display: inline;
-      display: flex;
-      flex-direction: row;
-    }
-
-    .bookdetailweb {
-      padding-top: 100px;
+    #leftside {
       width: 50%;
-      align-items: center;
     }
 
-    .casosexito {
-      padding: 130px 25%;
-      display: flex;
-      flex-direction: row;
+    #rightside {
+      width: 50%;
     }
 
-    .testimonialblock {
-      width: 30%;
+
+    #wcontainer {
+      margin: 50px 10%;
     }
 
-    .formblock {
-      text-align: center;
-      padding: 130px 25%;
-      background-color: #ffffff;
-    }
 
-    .faqblock {
-      text-align: center;
-      padding: 130px 25% 130px 25%;
-      background-color: #ffffff;
-    }
 
-    .formcontainer {
-      width: 350px;
-    }
-
-    .imgwebinar {
-      width: 300px;
-      margin: auto;
-    }
   }
+
+
 </style>

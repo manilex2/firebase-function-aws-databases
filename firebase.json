@@ -29,6 +29,10 @@
       {
         "source": "/forms/webinar2",
         "function": "routes"
+      },
+      {
+        "source": "/forms/webinar3",
+        "function": "routes"
       }
     ],
     "ignore": [

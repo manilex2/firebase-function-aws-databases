@@ -25,6 +25,8 @@
     "googleapis": "^95.0.0",
     "html-pdf": "^3.0.1",
     "html-pdf-node": "^1.0.8",
+    "jsreport": "^3.7.1",
+    "jsreport-core": "^2.10.1",
     "mysql2": "^2.3.3",
     "node-fetch": "^2.6.7",
     "nodemailer": "^6.7.8"

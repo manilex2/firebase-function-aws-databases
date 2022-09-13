@@ -88,5 +88,32 @@ router.get("/webinar3", (req, res) => {
   });
 });
 
+router.post("/webinar3", async (req, res) => {
+  const request = req.body;
+  await fetch(
+      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR2}/contacts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          api_key: process.env.API_KEY_OCTOPUS,
+          email_address: request.inputEmail,
+          fields: {
+            FirstName: request.inputName,
+            LastName: request.inputLastName,
+            Pais: request.inputCountry,
+            Whatsapp: request.inputPhone,
+            affcode: request.inputAffcode,
+            Evento: request.inputEvent,
+            IDZoom: request.inputZoom,
+          },
+        }),
+      },
+  );
+  res.redirect("https://invrtir.com/p/webinar-confirmation");
+});
+
 
 module.exports = router;
