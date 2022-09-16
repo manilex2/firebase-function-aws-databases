@@ -170,18 +170,21 @@
         </h4>
         <p class="totalhorassub">Total Horas Trabajadas</p>
         <p class="detailHoras">Total Horas Extras: <strong>
-            valor
+          <%= textTotHorasExtras %>
           </strong></p>
         <p class="detailHoras">Total Horas Faltantes: <strong>
-            valor
+          <%= textTotHorasFaltantes %>
           </strong></p>
         <hr>
+        <% if (validacionTotalHoras > 0) { %>
         <p class="detailHoras">Horas Extras : <strong>
-            valor
+          <%= totalHoraReporte %>
           </strong></p>
+        <% } else{ %>
         <p class="detailHoras">Horas Faltantes : <strong>
-            valor
+          <%= totalHoraReporte %>
           </strong></p>
+          <% } %>
       </div>
     </div>
     <table class="table">

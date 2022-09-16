@@ -41,7 +41,13 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
   const totalHorasTrabajadas = req.body.horastrabajadas;
   const horasExtras = req.body.horasextras;
   const horasFaltantes = req.body.horasfaltantes;
-  const person = {nombre: nombre, cedula: cedula, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes};
+  const totalHorasExtras = req.body.totalHorasExtras;
+  const totalHorasFaltantes = req.body.totalHorasFaltantes;
+  const validacionTotalHoras = totalHorasExtras + totalHorasFaltantes;
+  const textTotHorasExtras = decimalAHora(totalHorasExtras);
+  const textTotHorasFaltantes = decimalAHora(totalHorasFaltantes);
+  const totalHoraReporte = decimalAHora(totalHorasExtras + totalHorasFaltantes);
+  const person = {nombre: nombre, cedula: cedula, cargo: cargo, unidad: unidad, mes: mes, totalHoras: totalHoras, fechas: fechas, horasEntrada: horasEntrada, horasSalida: horasSalida, totalHorasTrabajadas: totalHorasTrabajadas, horasExtras: horasExtras, horasFaltantes: horasFaltantes, textTotHorasExtras: textTotHorasExtras, textTotHorasFaltantes: textTotHorasFaltantes, validacionTotalHoras: validacionTotalHoras, totalHoraReporte: totalHoraReporte};
   console.log(person);
   const transporter = nodemailer.createTransport({
     service: "gmail", // true for 465, false for other ports
@@ -65,7 +71,7 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
       pdf.generatePdf(file, options).then((pdfBuffer) => {
         const mailOptions = {
           from: `${process.env.EMAIL_GMAIL}`,
-          to: `${process.env.EMAIL_DESTINY_GMAIL}`,
+          to: `${process.env.EMAIL_DESTINY_GMAILregerghghffghfghgfhghghfghfghfghfggfhghfgh}`,
           subject: `Reporte de horas trabajada de: ${nombre} | ${mes}`,
           text: "Reporte Generado desde la aplicación de Nailbox",
           attachments: [
@@ -91,4 +97,15 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
     }
   });
 });
+// eslint-disable-next-line require-jsdoc
+function decimalAHora(decimal) {
+  const horas = Math.trunc(decimal);// Obtenemos la parte entera
+
+  const restoHoras = Math.trunc(decimal % 1 * 100); // Obtenemos la parde decimal
+
+  const decimalMinutos = restoHoras * 60 / 100; // Obtenemos los minutos expresado en decimal
+
+  const minutos = Math.trunc(decimalMinutos); // Obtenemos la parte entera
+  return `${("00"+horas).slice(-2)}:${("00"+minutos).slice(-2)}`;
+}
 module.exports = app;
