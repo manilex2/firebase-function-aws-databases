@@ -64,6 +64,7 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
       const options = {
         format: "A4",
         preferCSSPageSize: true,
+        margin: {top: "30px", bottom: "30px"},
       };
       const file = {
         content: result,
@@ -71,7 +72,7 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
       pdf.generatePdf(file, options).then((pdfBuffer) => {
         const mailOptions = {
           from: `${process.env.EMAIL_GMAIL}`,
-          to: `${process.env.EMAIL_DESTINY_GMAILregerghghffghfghgfhghghfghfghfghfggfhghfgh}`,
+          to: `${process.env.EMAIL_DESTINY_TEST_EMAIL}`,
           subject: `Reporte de horas trabajada de: ${nombre} | ${mes}`,
           text: "Reporte Generado desde la aplicación de Nailbox",
           attachments: [
