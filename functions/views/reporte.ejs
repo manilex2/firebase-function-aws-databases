@@ -90,7 +90,7 @@
       padding-right: 0;
     }
 
-  
+
     .signs {
       margin: 100px 0px;
       display: flex;
@@ -117,15 +117,16 @@
     td {
       border: 1px solid black;
     }
+
     table {
       width: 100%;
       margin-top: 15px;
       border-collapse: collapse;
     }
-    .nombreFirma{
+
+    .nombreFirma {
       font-size: 20px;
     }
-
   </style>
 
 </head>
@@ -170,21 +171,21 @@
         </h4>
         <p class="totalhorassub">Total Horas Trabajadas</p>
         <p class="detailHoras">Total Horas Extras: <strong>
-          <%= textTotHorasExtras %>
+            <%= textTotHorasExtras %>
           </strong></p>
         <p class="detailHoras">Total Horas Faltantes: <strong>
-          <%= textTotHorasFaltantes %>
+            <%= textTotHorasFaltantes %>
           </strong></p>
         <hr>
-        <% if (validacionTotalHoras > 0) { %>
-        <p class="detailHoras">Horas Extras : <strong>
-          <%= totalHoraReporte %>
-          </strong></p>
-        <% } else{ %>
-        <p class="detailHoras">Horas Faltantes : <strong>
-          <%= totalHoraReporte %>
-          </strong></p>
-          <% } %>
+        <% if (validacionTotalHoras> 0) { %>
+          <p class="detailHoras">Horas Extras : <strong>
+              <%= totalHoraReporte %>
+            </strong></p>
+          <% } else{ %>
+            <p class="detailHoras">Horas Faltantes : <strong>
+                <%= totalHoraReporte %>
+              </strong></p>
+            <% } %>
       </div>
     </div>
     <table class="table">
@@ -217,7 +218,7 @@
               <%= horasExtras[i]%>
             </td>
             <td>
-              <%= horasExtras[i]%>
+              <%= horasFaltantes[i]%>
             </td>
           </tr>
           <% }; %>
@@ -235,8 +236,12 @@
       </div>
       <div class="indsign">
         <hr>
-        <h2 class="nombreFirma"><%=nombre%></h2>
-        <p><%=cargo%></p>
+        <h2 class="nombreFirma">
+          <%=nombre%>
+        </h2>
+        <p>
+          <%=cargo%>
+        </p>
       </div>
     </div>
     <!--Fin firmas-->
