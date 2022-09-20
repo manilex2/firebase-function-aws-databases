@@ -31,6 +31,8 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
   res.set("Content-Type", "application/json");
   const nombre = req.body.nombre;
   const cedula = req.body.cedula;
+  const nombreEmitente = req.body.Nombre_Emitente;
+  const cargoEmitente = req.body.Cargo_Emitente;
   const cargo = req.body.cargo;
   const unidad = req.body.unidad;
   const mes = req.body.mesreporte;
@@ -72,9 +74,11 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
       pdf.generatePdf(file, options).then((pdfBuffer) => {
         const mailOptions = {
           from: `${process.env.EMAIL_GMAIL}`,
-          to: `${process.env.EMAIL_DESTINY_TEST_EMAIL}`,
+          to: `${process.env.EMAIL_DESTINY_GMAIL}`,
           subject: `Reporte de horas trabajada de: ${nombre} | ${mes}`,
-          text: "Reporte Generado desde la aplicación de Nailbox",
+          text: `Nombre : ${nombreEmitente}
+                 Cargo: ${cargoEmitente}
+                 Ha emitido el siguiente reporte de marcaciones.`,
           attachments: [
             {
               // eslint-disable-next-line new-cap
