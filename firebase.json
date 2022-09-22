@@ -33,6 +33,10 @@
       {
         "source": "/forms/webinar3",
         "function": "routes"
+      },
+      {
+        "source": "/forms/webinar4",
+        "function": "routes"
       }
     ],
     "ignore": [

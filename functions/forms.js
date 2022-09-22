@@ -49,7 +49,23 @@ router.get("/webinar3", (req, res) => {
 });
 
 router.post("/webinar3", async (req, res) => {
-  await registerWebinar(req.body, process.env.ID_LIST_WEBINAR2);
+  await registerWebinar(req.body, process.env.ID_LIST_WEBINAR3);
+  const paramsString = `event=${req.body.inputEvent}`;
+  const searchParams = new URLSearchParams(paramsString);
+  res.redirect("https://invrtir.com/p/webinar-confirmation?"+ searchParams);
+});
+
+router.get("/webinar4", (req, res) => {
+  const eventStr = req.query.event.replace("&", " ");
+  return res.render("webinar4", {
+    affcode: req.query.affcode,
+    event: eventStr,
+    idZoom: req.query.idZoom,
+  });
+});
+
+router.post("/webinar4", async (req, res) => {
+  await registerWebinar(req.body, process.env.ID_LIST_WEBINAR4);
   const paramsString = `event=${req.body.inputEvent}`;
   const searchParams = new URLSearchParams(paramsString);
   res.redirect("https://invrtir.com/p/webinar-confirmation?"+ searchParams);
