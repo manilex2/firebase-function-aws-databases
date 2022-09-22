@@ -17,30 +17,10 @@ router.get("/webinar1", (req, res) => {
   });
 });
 router.post("/webinar1", async (req, res) => {
-  const request = req.body;
-  await fetch(
-      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR1}/contacts`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          api_key: process.env.API_KEY_OCTOPUS,
-          email_address: request.inputEmail,
-          fields: {
-            FirstName: request.inputName,
-            LastName: request.inputLastName,
-            Pais: request.inputCountry,
-            Whatsapp: request.inputPhone,
-            affcode: request.inputAffcode,
-            Evento: request.inputEvent,
-            IDZoom: request.inputZoom,
-          },
-        }),
-      },
-  );
-  res.redirect("https://invrtir.com/p/webinar-confirmation");
+  await registerWebinar(req.body, process.env.ID_LIST_WEBINAR1);
+  const paramsString = `event=${req.body.inputEvent}`;
+  const searchParams = new URLSearchParams(paramsString);
+  res.redirect("https://invrtir.com/p/webinar-confirmation?"+ searchParams);
 });
 // ---------------------------------------------------------------- Formulario Webimar 2 ---------------------------------------------------------------- //
 router.get("/webinar2", (req, res) => {
@@ -53,30 +33,10 @@ router.get("/webinar2", (req, res) => {
 });
 
 router.post("/webinar2", async (req, res) => {
-  const request = req.body;
-  await fetch(
-      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR2}/contacts`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          api_key: process.env.API_KEY_OCTOPUS,
-          email_address: request.inputEmail,
-          fields: {
-            FirstName: request.inputName,
-            LastName: request.inputLastName,
-            Pais: request.inputCountry,
-            Whatsapp: request.inputPhone,
-            affcode: request.inputAffcode,
-            Evento: request.inputEvent,
-            IDZoom: request.inputZoom,
-          },
-        }),
-      },
-  );
-  res.redirect("https://invrtir.com/p/webinar-confirmation");
+  await registerWebinar(req.body, process.env.ID_LIST_WEBINAR2);
+  const paramsString = `event=${req.body.inputEvent}`;
+  const searchParams = new URLSearchParams(paramsString);
+  res.redirect("https://invrtir.com/p/webinar-confirmation?"+ searchParams);
 });
 // ---------------------------------------------------------------- Formulario Webimar 3 ---------------------------------------------------------------- //
 router.get("/webinar3", (req, res) => {
@@ -89,9 +49,19 @@ router.get("/webinar3", (req, res) => {
 });
 
 router.post("/webinar3", async (req, res) => {
-  const request = req.body;
+  await registerWebinar(req.body, process.env.ID_LIST_WEBINAR2);
+  const paramsString = `event=${req.body.inputEvent}`;
+  const searchParams = new URLSearchParams(paramsString);
+  res.redirect("https://invrtir.com/p/webinar-confirmation?"+ searchParams);
+});
+/**
+ * Función que registra a un nuevo usuario en un webinar
+ * @param {*} request Datos del formulario
+ * @param {*} idWebinar ID del Webinar
+ */
+async function registerWebinar(request, idWebinar){
   await fetch(
-      `https://emailoctopus.com/api/1.6/lists/${process.env.ID_LIST_WEBINAR2}/contacts`,
+      `https://emailoctopus.com/api/1.6/lists/${idWebinar}/contacts`,
       {
         method: "POST",
         headers: {
@@ -112,8 +82,5 @@ router.post("/webinar3", async (req, res) => {
         }),
       },
   );
-  res.redirect("https://invrtir.com/p/webinar-confirmation");
-});
-
-
+}
 module.exports = router;
