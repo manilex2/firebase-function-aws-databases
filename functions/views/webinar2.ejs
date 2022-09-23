@@ -48,10 +48,7 @@
         </div>
       </div>
       <div class="formblock" id="formregister">
-        <h2 class="centertitle">¡Registrate ahora!</h2>
-        <a href="https://logwork.com/countdown-wx34" class="count countdown-timer" data-timezone="America/Guayaquil"
-          data-language="es" data-date="2022-08-31 20:00" data-background="#4ca0ff" data-digitscolor="#ffffff">.</a>
-    
+        <h2 class="centertitle text-white">¡Registrate ahora!</h2>
         <div class="formcontainer">
           <!-- Aqui se iniciar el formulario para editar -->
           <form class="needs-validation" action="/forms/webinar2" method="POST" novalidate>
@@ -98,6 +95,14 @@
             <div class="mb-3 d-none">
               <input required type="text" class="form-control" id="inputEvent" name="inputEvent"
                 aria-describedby="eventlHelp" value='<%- event%>' />
+            </div>
+            <div class="mb-3 d-none">
+              <input required type="text" class="form-control" id="inputnameEvent" name="inputnameEvent"
+                aria-describedby="eventlHelp" value='<%- nameEvent%>' />
+            </div>
+            <div class="mb-3 d-none">
+              <input required type="text" class="form-control" id="inputdateEvent" name="inputdateEvent"
+                aria-describedby="eventlHelp" value='<%- dateEvent%>' />
             </div>
             <div class="mb-3 d-none">
               <input required type="text" class="form-control" id="inputZoom" name="inputZoom" aria-describedby="zoomlHelp"
