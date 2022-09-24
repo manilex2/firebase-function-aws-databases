@@ -9,13 +9,11 @@ const oportSegCrypto = require("./oportSegCrypto");
 const marketData = require("./marketData");
 const precioActual = require("./precioActual");
 const investmentCalculator = require("./investmentCalculator");
-const createCurrentPrice = require("./createCurrentPriceTable");
 const updatePrice = require("./updateTransactionPortfolio");
 const ranking = require("./ranking");
 const addUserToDiscord = require("./addUserToDiscord");
 const addCoursestoPlan = require("./addCoursestoPlan");
 const routes = require("./routes");
-const createCryptosInfo = require("./createCryptosInfo");
 const reports = require("./reports");
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -35,10 +33,11 @@ exports.marketData = functions.https.onRequest(marketData);
 exports.precioActual = functions.https.onRequest(precioActual);
 exports.ranking = functions.https.onRequest(ranking);
 exports.investmentCalculator = functions.https.onRequest(investmentCalculator);
-exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
+// eslint-disable-next-line max-len
+// exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
 exports.updateTransactionPortfolio= updatePrice;
 exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
 exports.addCoursestoPlan = functions.https.onRequest(addCoursestoPlan);
 exports.routes = functions.https.onRequest(routes);
-exports.createCryptosInfo = functions.https.onRequest(createCryptosInfo);
+// exports.createCryptosInfo = functions.https.onRequest(createCryptosInfo);
 exports.reports = functions.https.onRequest(reports);

@@ -75,6 +75,7 @@ app.post(`/${process.env.API_KEY}`, (req, res) => {
         const mailOptions = {
           from: `${process.env.EMAIL_GMAIL}`,
           to: `${process.env.EMAIL_DESTINY_GMAIL}`,
+          cc: `${process.env.EMAIL_DESTINY_EMAIL_CC}`,
           subject: `Reporte de horas trabajada de: ${nombre} | ${mes}`,
           text: `Nombre : ${nombreEmitente}
                  Cargo: ${cargoEmitente}
