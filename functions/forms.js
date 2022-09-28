@@ -71,6 +71,7 @@ router.get("/webinar4", (req, res) => {
   const eventStr = req.query.event.replace("&", " ");
   const dateStr = req.query.date.replace("&", " ");
   const nameEventStr = req.query.nameEvent.replace("&", " ");
+  console.log(req.query.affcode);
   return res.render("webinar4", {
     affcode: req.query.affcode,
     event: eventStr,
@@ -81,6 +82,7 @@ router.get("/webinar4", (req, res) => {
 });
 
 router.post("/webinar4", async (req, res) => {
+  console.log(req.body);
   await registerWebinar(req.body, process.env.ID_LIST_WEBINAR4);
   const paramsString = `dateEvent=${req.body.inputdateEvent}&nameEvent=${req.body.inputnameEvent}`;
   const searchParams = new URLSearchParams(paramsString);
