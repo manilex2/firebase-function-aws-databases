@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+
+<head>
+  <!-- CHARSET -->
+  <meta charset="UTF-8">
+  <!-- IE-EDGE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- VIEWPORT -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Éxitoso </title>
+  <!-- FONT AWESOME -->
+  <script src="https://kit.fontawesome.com/73f851add2.js" crossorigin="anonymous"></script>
+  <%- include('partials/header') %>
+    <script>
+      let emailClient = '<%= customer.email %>'
+      console.log(emailClient);
+      rewardful('convert', { email: emailClient })
+    </script>
+</head>
+
+
+<body>
+  <div class="container px-4">
+    <div class="row">
+      <div class="col-12 cover">
+        <img class="logo"
+          src="https://d8ff17fs33kjt.cloudfront.net/ventas/landing-forex/Logo+invrtir+bluepips+combinado.png">
+        <h1 class="titulo1">¡Te doy la Bienvenida!</h1>
+        <p>
+          <strong>
+            <%= customer.name %>
+          </strong> has accedido al siguiente curso <strong>
+            <%= product.name %>
+          </strong>, a continuación los
+          detalles:
+        </p>
+      </div>
+      <div class="col-12 mb-lg-3 mcover databox">
+        <div class="primerafila">
+          <% if (product.name==='BP-Plan Premium - Paquete Oportunidades + Sesiones en vivo' ) { %>
+            <ol class="list-group list-group-flush mt-3 mb-4">
+              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+              </li>
+              <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                  estrategias</strong> </li>
+              <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                  forex</strong> tanto para
+                divisas como para indices.
+              </li>
+              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                sesiones de Open
+                New York, Asia o Londres.
+              </li>
+            </ol>
+            <% } else if (product.name==='BP-Plan 2 - Sesiones de operación en vivo' ) {%>
+              <ol class="list-group list-group-flush mt-3 mb-4">
+                <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                  sesiones de Open
+                  New York, Asia o Londres.
+                </li>
+              </ol>
+              <% } else if (product.name==='BP-Plan 1 - Oportunidades' ){%>
+                <ol class="list-group list-group-flush mt-3 mb-4">
+                  <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                      forex</strong> tanto para
+                    divisas como para indices.
+                  </li>
+                </ol>
+                <% } %>
+        </div>
+      </div>
+      <div class="col-12  cover">
+        <p class="subtitulo">¿Qué más debo hacer?</p>
+        <p class="mb-0">En unos minutos recibirás un correo de confirmación con todos los detalles de tu adquisición.
+          Te dejamos los siguientes links para que puedas instalar y usar la app
+        </p>
+        <ul class="align-items-start p-0">
+          <li class="list-group-item p-0">
+            <p class="m-0"><strong>¿Como instalar la app? </strong> <a href="https://link.invrtir.com/guia-instapp">
+                Guía de
+                instalación</a></p>
+          </li>
+          <li class="list-group-item p-0">
+            <p class="m-0"><strong>Usa tu app </strong> <a href="https://app.invrtir.com"> Aplicación
+                Invrtir</a></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</html>

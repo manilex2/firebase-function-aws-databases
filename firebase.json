@@ -37,6 +37,18 @@
       {
         "source": "/forms/webinar4",
         "function": "routes"
+      },
+      {
+        "source": "/planesForex",
+        "function": "routes"
+      },
+      {
+        "source": "/planesForex/payPlan",
+        "function": "routes"
+      },
+      {
+        "source": "/planesForex/success",
+        "function": "routes"
       }
     ],
     "ignore": [
