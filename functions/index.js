@@ -33,11 +33,8 @@ exports.marketData = functions.https.onRequest(marketData);
 exports.precioActual = functions.https.onRequest(precioActual);
 exports.ranking = functions.https.onRequest(ranking);
 exports.investmentCalculator = functions.https.onRequest(investmentCalculator);
-// eslint-disable-next-line max-len
-// exports.createCurrentPriceTable= functions.https.onRequest(createCurrentPrice);
 exports.updateTransactionPortfolio= updatePrice;
 exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
 exports.addCoursestoPlan = functions.https.onRequest(addCoursestoPlan);
 exports.routes = functions.https.onRequest(routes);
-// exports.createCryptosInfo = functions.https.onRequest(createCryptosInfo);
 exports.reports = functions.https.onRequest(reports);

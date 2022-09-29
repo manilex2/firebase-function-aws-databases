@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webinar tus primeras Criptomonedas</title>
-    <link rel="shortcut icon" type="image/svg" href="https://d8ff17fs33kjt.cloudfront.net/logos/favicon-invrtir.svg">
-    <link
-        rel="stylesheet"
-        href="    https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-      />
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webinar tus primeras Criptomonedas</title>
+  <link rel="shortcut icon" type="image/svg" href="https://d8ff17fs33kjt.cloudfront.net/logos/favicon-invrtir.svg">
+  <link rel="stylesheet" href="    https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+</head>
 
 <body>
   <script src="https://cdn.logwork.com/widget/countdown.js"></script>
@@ -30,9 +27,12 @@
           <p id="monthtext">Octubre</p>
           <div class="day">
             <p id="daytext">12</p>
-            <p class="horarioscontainer"><img class="horarios" src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-3.png"> | 10 PM</p>
-            <p class="horarioscontainer"><img class="horarios" src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-5.png"> | 8 PM</p>
-            <p class="horarioscontainer"><img class="horarios" src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-6.png"> | 7 PM</p>
+            <p class="horarioscontainer"><img class="horarios"
+                src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-3.png"> | 10 PM</p>
+            <p class="horarioscontainer"><img class="horarios"
+                src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-5.png"> | 8 PM</p>
+            <p class="horarioscontainer"><img class="horarios"
+                src="https://d8ff17fs33kjt.cloudfront.net/eventos/Webinar+landings/GTM-6.png"> | 7 PM</p>
           </div>
         </div>
         <div id="host">
@@ -44,7 +44,9 @@
               <p id="cargo">CEO e Instructor</p>
             </div>
           </div>
-          <p id="hostdetalle">Asesor financiero, emprendedor, docente e inversionista, cuento con más de 12 años de experiencia en inversiones internacionales incluyendo acciones de compañías en Estados Unidos, divisas y Criptomonedas.</p>
+          <p id="hostdetalle">Asesor financiero, emprendedor, docente e inversionista, cuento con más de 12 años de
+            experiencia en inversiones internacionales incluyendo acciones de compañías en Estados Unidos, divisas y
+            Criptomonedas.</p>
         </div>
       </div>
       <div class="formblock" id="formregister">
@@ -73,16 +75,16 @@
                 Ingrese el Correo
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 d-none">
               <input placeholder="País" type="text" class="form-control" id="inputCountry" name="inputCountry"
-                aria-describedby="countrylHelp" required />
+                aria-describedby="countrylHelp" value="">
               <div class="invalid-feedback">
                 Ingrese su País
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 d-none">
               <input placeholder="Número de telefono" type="text" class="form-control" id="inputPhone" name="inputPhone"
-                aria-describedby="phonelHelp" required />
+                aria-describedby="phonelHelp" value="" />
               <div class="invalid-feedback">
                 Ingrese su número de telefono
               </div>
@@ -105,8 +107,8 @@
                 aria-describedby="eventlHelp" value='<%- dateEvent%>' />
             </div>
             <div class="mb-3 d-none">
-              <input required type="text" class="form-control" id="inputZoom" name="inputZoom" aria-describedby="zoomlHelp"
-                value=<%=idZoom%>
+              <input required type="text" class="form-control" id="inputZoom" name="inputZoom"
+                aria-describedby="zoomlHelp" value=<%=idZoom%>
               />
             </div>
             <button type="submit" class="buttonform btn btn-primary">Registrar</button>
@@ -115,9 +117,11 @@
         </div>
       </div>
     </div>
-  
+
     <div id="rightside">
-      <a href="https://logwork.com/countdown-wiqu" class="countdown-timer" data-timezone="America/Guayaquil" data-language="es" data-textcolor="#000000" data-date="2022-10-12 20:00" data-background="#ff6600" data-digitscolor="#ffffff" data-unitscolor="#000000">Miércoles 12 de octubre</a>
+      <a href="https://logwork.com/countdown-wiqu" class="countdown-timer" data-timezone="America/Guayaquil"
+        data-language="es" data-textcolor="#000000" data-date="2022-10-12 20:00" data-background="#ff6600"
+        data-digitscolor="#ffffff" data-unitscolor="#000000">Miércoles 12 de octubre</a>
       <h5 class="subtitulocontenido">Durante este EVENTO EN VIVO GRATUITO aprenderás:</h5>
       <ul>
         <li>Conoce cómo comenzar a una manera sencilla en el mundo de las criptomonedas</li>
@@ -155,8 +159,8 @@
   body {
     font-family: 'Montserrat', sans-serif;
     color: #404040;
-    background: rgb(252,240,253);
-    background: linear-gradient(28deg, rgba(252,240,253,1) 0%, rgba(201,233,250,1) 100%);
+    background: rgb(252, 240, 253);
+    background: linear-gradient(28deg, rgba(252, 240, 253, 1) 0%, rgba(201, 233, 250, 1) 100%);
   }
 
   p {
@@ -231,7 +235,8 @@
   }
 
   .regbutton:hover {
-    background-color: #ff9900; /* Green */
+    background-color: #ff9900;
+    /* Green */
     color: white;
   }
 
@@ -337,7 +342,7 @@
   }
 
   ul {
-  list-style-image: "";
+    list-style-image: "";
   }
 
   @media only screen and (min-width: 768px) {
@@ -361,8 +366,6 @@
 
 
   }
-
-
 </style>
 
 </html>
