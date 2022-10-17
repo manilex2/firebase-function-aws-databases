@@ -26,7 +26,7 @@
         <p class="fs-5 fw-normal text-center text-white">
           Te proporcionamos señales rentables de Forex.
         </p>
-        <img id="imgcover" src="https://d8ff17fs33kjt.cloudfront.net/ventas/landing-forex/img-cover-forex-inv.001.png">
+        <img id="imgcover" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-landing-cell.png">
       </div>
       <div class="pricing-header p-2 pb-md-4 mx-auto text-center">
         <img class="logob mb-4" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/Invrtir+Fx+-+logo.png">
@@ -154,341 +154,341 @@
                   </div>
                   <% }%>
                   <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' ) { %>
-                    <div id="planPremiumBody" class="card-body px-0">
-                      <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
-                        <% product.prices.forEach(function(price){ %>
-                        <li class="nav-item" role="presentation">
-                          <% if (price.type==='Semanal' ) { %>
-                          <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
-                            <%= price.type %>
-                          </button>
-                          <% } else {%>
-                          <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
-                            <%= price.type %>
-                          </button>
-                          <% }%>
-                        </li>
-                        <% }); %>
-                      </ul>
-                      <div class="tab-content p-4">
-                        <% product.prices.forEach(function(price){ %>
+                  <div id="planPremiumBody" class="card-body px-0">
+                    <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
+                      <% product.prices.forEach(function(price){ %>
+                      <li class="nav-item" role="presentation">
                         <% if (price.type==='Semanal' ) { %>
-                        <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                          <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
-  
-                            <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' )
-                                        { %>
-                            <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
-  
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                              </li>
-                              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                  estrategias</strong> </li>
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ) {%>
-                            <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
-  
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
-                            <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                            </ol>
-                            <% } %>
-                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                            <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
-                          </form>
-                        </div>
+                        <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                          <%= price.type %>
+                        </button>
                         <% } else {%>
-                        <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                          <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
-                            <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo'
-                                          ) { %>
-                            <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                              </li>
-                              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                  estrategias</strong> </li>
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ){%>
-                            <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
-                            <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                            </ol>
-                            <% } %>
-  
-                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                            <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
-                          </form>
-                        </div>
+                        <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                          <%= price.type %>
+                        </button>
                         <% }%>
-                        <% }); %>
+                      </li>
+                      <% }); %>
+                    </ul>
+                    <div class="tab-content p-4">
+                      <% product.prices.forEach(function(price){ %>
+                      <% if (price.type==='Semanal' ) { %>
+                      <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+
+                          <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' )
+                                        { %>
+                          <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
+
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+                            </li>
+                            <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                                estrategias</strong> </li>
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ) {%>
+                          <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
+
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
+                          <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                          </ol>
+                          <% } %>
+                          <input type="hidden" name="idPrice" value=<%=price.id %>>
+                          <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                        </form>
                       </div>
+                      <% } else {%>
+                      <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+                          <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo'
+                                          ) { %>
+                          <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+                            </li>
+                            <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                                estrategias</strong> </li>
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ){%>
+                          <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
+                          <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                          </ol>
+                          <% } %>
+
+                          <input type="hidden" name="idPrice" value=<%=price.id %>>
+                          <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                        </form>
+                      </div>
+                      <% }%>
+                      <% }); %>
                     </div>
+                  </div>
                   <% } else if(product.name==='Plan 2 - Sesiones de operación en vivo') {%>
-                    <div id="plan2Body" class="card-body px-0">
-                      <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
-                        <% product.prices.forEach(function(price){ %>
-                        <li class="nav-item" role="presentation">
-                          <% if (price.type==='Semanal' ) { %>
-                          <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
-                            <%= price.type %>
-                          </button>
-                          <% } else {%>
-                          <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
-                            <%= price.type %>
-                          </button>
-                          <% }%>
-                        </li>
-                        <% }); %>
-                      </ul>
-                      <div class="tab-content p-4">
-                        <% product.prices.forEach(function(price){ %>
+                  <div id="plan2Body" class="card-body px-0">
+                    <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
+                      <% product.prices.forEach(function(price){ %>
+                      <li class="nav-item" role="presentation">
                         <% if (price.type==='Semanal' ) { %>
-                        <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                          <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
-  
-                            <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' )
-                                        { %>
-                            <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
-  
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                              </li>
-                              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                  estrategias</strong> </li>
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ) {%>
-                            <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
-  
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
-                            <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                            </ol>
-                            <% } %>
-                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                            <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
-                          </form>
-                        </div>
+                        <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                          <%= price.type %>
+                        </button>
                         <% } else {%>
-                        <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                          <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
-                            <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo'
-                                          ) { %>
-                            <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                              </li>
-                              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                  estrategias</strong> </li>
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ){%>
-                            <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
-                            <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                            </ol>
-                            <% } %>
-  
-                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                            <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
-                          </form>
-                        </div>
+                        <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                          <%= price.type %>
+                        </button>
                         <% }%>
-                        <% }); %>
+                      </li>
+                      <% }); %>
+                    </ul>
+                    <div class="tab-content p-4">
+                      <% product.prices.forEach(function(price){ %>
+                      <% if (price.type==='Semanal' ) { %>
+                      <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+
+                          <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' )
+                                        { %>
+                          <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
+
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+                            </li>
+                            <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                                estrategias</strong> </li>
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ) {%>
+                          <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
+
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
+                          <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                          </ol>
+                          <% } %>
+                          <input type="hidden" name="idPrice" value=<%=price.id %>>
+                          <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                        </form>
                       </div>
+                      <% } else {%>
+                      <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+                          <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo'
+                                          ) { %>
+                          <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+                            </li>
+                            <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                                estrategias</strong> </li>
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ){%>
+                          <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
+                          <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                          </ol>
+                          <% } %>
+
+                          <input type="hidden" name="idPrice" value=<%=price.id %>>
+                          <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                        </form>
+                      </div>
+                      <% }%>
+                      <% }); %>
                     </div>
+                  </div>
                   <% } else if (product.name==='Plan 1 - Oportunidades') {%>
-                    <div id="plan1Body" class="card-body px-0">
-                      <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
-                        <% product.prices.forEach(function(price){ %>
-                        <li class="nav-item" role="presentation">
-                          <% if (price.type==='Semanal' ) { %>
-                          <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
-                            <%= price.type %>
-                          </button>
-                          <% } else {%>
-                          <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
-                            <%= price.type %>
-                          </button>
-                          <% }%>
-                        </li>
-                        <% }); %>
-                      </ul>
-                      <div class="tab-content p-4">
-                        <% product.prices.forEach(function(price){ %>
+                  <div id="plan1Body" class="card-body px-0">
+                    <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
+                      <% product.prices.forEach(function(price){ %>
+                      <li class="nav-item" role="presentation">
                         <% if (price.type==='Semanal' ) { %>
-                        <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                          <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
-  
-                            <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' )
-                                        { %>
-                            <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
-  
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                              </li>
-                              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                  estrategias</strong> </li>
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ) {%>
-                            <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
-  
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
-                            <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                            </ol>
-                            <% } %>
-                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                            <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
-                          </form>
-                        </div>
+                        <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                          <%= price.type %>
+                        </button>
                         <% } else {%>
-                        <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                          <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
-                            <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo'
-                                          ) { %>
-                            <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                              </li>
-                              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                  estrategias</strong> </li>
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ){%>
-                            <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                sesiones de Open
-                                New York, Asia o Londres.
-                              </li>
-                            </ol>
-                            <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
-                            <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
-                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
-                            <ol class="list-group list-group-flush mt-3 mb-4">
-                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                  forex</strong> tanto para
-                                divisas como para indices.
-                              </li>
-                            </ol>
-                            <% } %>
-  
-                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                            <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
-                          </form>
-                        </div>
+                        <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                          <%= price.type %>
+                        </button>
                         <% }%>
-                        <% }); %>
+                      </li>
+                      <% }); %>
+                    </ul>
+                    <div class="tab-content p-4">
+                      <% product.prices.forEach(function(price){ %>
+                      <% if (price.type==='Semanal' ) { %>
+                      <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+
+                          <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo' )
+                                        { %>
+                          <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
+
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+                            </li>
+                            <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                                estrategias</strong> </li>
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ) {%>
+                          <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
+
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
+                          <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                          </ol>
+                          <% } %>
+                          <input type="hidden" name="idPrice" value=<%=price.id %>>
+                          <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                        </form>
                       </div>
+                      <% } else {%>
+                      <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+                          <% if (product.name==='Plan Premium - Paquete Oportunidades + Sesiones en vivo'
+                                          ) { %>
+                          <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
+                            </li>
+                            <li class="list-group-item"><strong>Accesos a nuestros cursos de
+                                estrategias</strong> </li>
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 2 - Sesiones de operación en vivo' ){%>
+                          <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
+                              sesiones de Open
+                              New York, Asia o Londres.
+                            </li>
+                          </ol>
+                          <% } else if (product.name==='Plan 1 - Oportunidades' ){%>
+                          <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
+                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
+                          <ol class="list-group list-group-flush mt-3 mb-4">
+                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
+                                forex</strong> tanto para
+                              divisas como para indices.
+                            </li>
+                          </ol>
+                          <% } %>
+
+                          <input type="hidden" name="idPrice" value=<%=price.id %>>
+                          <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                        </form>
+                      </div>
+                      <% }%>
+                      <% }); %>
                     </div>
+                  </div>
                   <% }%>
                 </div>
               </div>
