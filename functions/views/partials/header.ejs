@@ -38,27 +38,73 @@
     height: max-content;
   }
 
-  .card:has(.card-header.text-white) {
-    border-color: #171b7f;
+  #planPremiumBody .card:has(.card-header.text-white) {
+    border-color: #ac881e;
   }
 
-  .nav {
-    border-color: #171b7f;
+  #planPremiumBody .nav {
+    border-color: #ac881e;
+  }
+  #plan2Body .nav {
+    border-color: #C0C0C0;
+  }#plan1Body .nav {
+    border-color: #CD7F32;
   }
 
-  .nav-item .nav-link.active {
-    color: #171b7f;
-    border-color: #171b7f #171b7f #fff;
+  #planPremiumBody .nav-item .nav-link.active {
+    background-color: #fefcf5;
+    color:black;
+    border-color: #ac881e #ac881e rgba(255, 255, 255, 0);
   }
-
+  #plan2Body .nav-item .nav-link.active {
+    background-color: #eeeeee;
+    color:black;
+    border-color: #C0C0C0 #C0C0C0 rgba(255, 255, 255, 0);
+  }
+  #plan1Body .nav-item .nav-link.active {
+    background-color: #f9f0e7;
+    color:black;
+    border-color: #CD7F32 #CD7F32 rgba(255, 255, 255, 0);
+  }
+  #planPremiumBody #botonComprar{
+    background: rgb(239,184,16);
+    background: linear-gradient(180deg, rgba(239,184,16,1) 0%, rgba(172,136,30,1) 64%);
+  }
+  #plan2Body #botonComprar{
+    background: rgb(192,192,192);
+    background: linear-gradient(180deg, rgba(192,192,192,1) 0%, rgba(132,132,132,1) 64%);
+  }
+  #plan1Body #botonComprar{
+    background: rgb(205,127,50);
+    background: linear-gradient(180deg, rgba(205,127,50,1) 0%, rgba(138,87,40,1) 64%);
+  }
   .nav-item .nav-link {
     color: darkgrey;
   }
-
-  .card-header.text-white {
-    background-color: #171b7f;
+  #planPremiumBody .list-group-item{
+    background-color: #fefcf5;
   }
-
+  #plan2Body .list-group-item{
+    background-color: #eeeeee;
+  }
+  #plan1Body .list-group-item{
+    background-color: #f9f0e7;
+  }
+  .card-header.text-white {
+    background: rgb(239,184,16);
+    background: linear-gradient(180deg, rgba(239,184,16,1) 0%, rgba(172,136,30,1) 64%);
+  }
+  #plan2 .card-header.text-white {
+    background: rgb(192,192,192);
+    background: linear-gradient(180deg, rgba(192,192,192,1) 0%, rgba(132,132,132,1) 64%);
+  }
+  #plan1 .card-header.text-white {
+    background: rgb(205,127,50);
+    background: linear-gradient(180deg, rgba(205,127,50,1) 0%, rgba(138,87,40,1) 64%);
+  }
+  #nameProduct {
+    font-weight: 700;
+  }
   body {
     font-family: "Montserrat", sans-serif;
     color: #404040;
@@ -287,7 +333,15 @@
   .card-text {
     text-align: start;
   }
-
+  #planPremiumBody{
+    background-color:#fefcf5;
+  }
+  #plan2Body{
+    background-color: #eeeeee;
+  }
+  #plan1Body{
+    background-color: #f9f0e7;
+  }
   .card-body {
     padding: 10px;
   }

@@ -96,10 +96,10 @@ app.get(`/${process.env.API_KEY}`, async (req, res) => {
           console.log(result[0]["coin_id"]);
           if (result) {
             if (err) throw err;
-            const query = admin
-              .firestore()
-              .collection("cryptos_info")
-              .doc(crypto);
+              const query = admin
+                .firestore()
+                .collection("cryptos_info")
+                .doc(crypto);
             if (!(await query.get()).exists) {
               query.create({
                 coin_id: result[0]["coin_id"],
