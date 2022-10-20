@@ -49,6 +49,10 @@
       {
         "source": "/planesForex/success",
         "function": "routes"
+      },
+      {
+        "source": "/blackWeekend",
+        "function": "routes"
       }
     ],
     "ignore": [

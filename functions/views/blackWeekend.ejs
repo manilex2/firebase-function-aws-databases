@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <%- include('partials/headerBlackWeekend') %>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row row-cols-md-2 row-cols-1">
+      <div class="col mainsection">
+        <% if(inicio){ %>
+          <img class="imagenbf" src=<%= linkImagenDescuento %> >
+          <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+          <a href="https://logwork.com/countdown-r3hd" class="countdown-timer" data-timezone="America/Guayaquil" data-language="es" data-textcolor="#ffffff" data-date=<%= hora %>  data-background="#ffffff" data-digitscolor="#ff6600" data-unitscolor="#ff6600">El descuento acabará en</a>
+        <% } else{ %>
+        <img class="imagenbf" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-Imagen+principal+.png">
+        <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+        <a href="https://logwork.com/countdown-r3hd" class="countdown-timer" data-timezone="America/Guayaquil" data-language="es" data-textcolor="#ffffff" data-date="2022-11-25 00:00" data-background="#ffffff" data-digitscolor="#ff6600" data-unitscolor="#ff6600">El Black Friday empezará en</a>
+        <% } %>
+
+        <div class="video-container videobox">
+          <video poster="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+app/Invrtir+Banner+launch+app+video.png" autoplay="false" controls="controls" width="90%" min-height="400">
+            <source src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+app/Invrtir-promo-app-landing.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="col mainsection">
+        <h2 class="subtitulo1">PROMOCIÓN ESPECIAL</h2>
+        <h1 class="tituloprincipal">Nuestros planes Anual y Lifetime con los mejores descuentos
+          <p class="subtitulo3 text-white py-2">Genera grandes ganancias invirtiendo en acciones o en criptomonedas, te ayudaremos
+            y guiaremos con los conocimientos, las herramientas y nuestro acompañamiento para que puedas comenzar.
+          </p>
+        </h1>
+        <% if(inicio){ %>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan Invrtir Basic
+            </p>
+            <div class="logoplanholder">
+              <img class="logoplan" src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+app/icon-invrtir-basic.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btnbasicanual" onclick="basicanual();" class="planbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+          
+                <div id="btnadvancelifetime" onclick="advancelifetime();" class="planbasiccontainerinactive">
+                  <button class="tituloplan">PLAN LIFETIME</button>
+                </div>
+              </div>
+              <div>
+                <div id="basicanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictBasic["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictBasic["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictBasic["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictBasic["anual"]["link"]%>` ;" class=" botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+                <div id="advancelifetime" style="display: none;" class="precioboxlifetime">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictBasic["lifetime"]["precio_actual"] %> <img class=" usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictBasic["lifetime"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictBasic["lifetime"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictBasic["lifetime"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN LIFETIME</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan Invrtir Pro</p>
+            <div class="logoplanholder">
+              <img class="logoplan" src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+app/icon-invrtir-pro.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btnproanual" onclick="proanual();" class="planbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+          
+                <div id="btnprolifetime" onclick="prolifetime();" class="planbasiccontainerinactive">
+                  <button class="tituloplan">PLAN LIFETIME</button>
+                </div>
+              </div>
+              <div>
+                <div id="proanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictPro["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictPro["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictPro["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictPro["anual"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+          
+                <div id="prolifetime" style="display: none;" class="precioboxlifetime">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictPro["lifetime"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictPro["lifetime"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictPro["lifetime"]["ahorro"] %></p>
+                  </div>
+                  
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictPro["lifetime"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN LIFETIME</button>
+                  </div>
+                </div>
+              </div>
+              <a href="https://invrtir.com/p/landingpro" target="_blank" class="masinfo">Conoce lo que incluye el
+                Plan Invrtir Pro</a>
+            </div>
+          </div>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan Invrtir Crypto</p>
+            <div class="logoplanholder">
+              <img class="logoplan" src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+app/icon-invrtir-crypto2.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btncryptoanual" onclick="cryptoanual();" class="planbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+          
+                <div id="btncryptolifetime" onclick="cryptolifetime();" class="planbasiccontainerinactive">
+                  <button class="tituloplan">PLAN LIFETIME</button>
+                </div>
+              </div>
+              <div>
+                <div id="cryptoanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictCrypto["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictCrypto["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictCrypto["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictCrypto["anual"]["link"]%>`" class="botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+                <div id="cryptolifetime" style="display: none;" class="precioboxlifetime">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictCrypto["lifetime"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictCrypto["lifetime"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictCrypto["lifetime"]["ahorro"] %></p>
+                  </div>
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictCrypto["lifetime"]["link"]%>`" class="botoncomprar">COMPRAR PLAN LIFETIME</button>
+                  </div>
+                </div>
+              </div>
+              <a href="https://invrtir.com/p/landingcrypto" target="_blank" class="masinfo">Conoce lo que incluye
+                el Plan Invrtir Crypto</a>
+            </div>
+          </div>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan Invrtir Crypto + Pro
+            </p>
+            <div class="logoplanholder">
+              <img class="logoplan" src="https://invrtir.s3.us-east-2.amazonaws.com/Wesite-content/Landing+app/icon-invrtir-crpto%2Bpro2.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btncryptoproanual" onclick="cryptoproanual();" class="planbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+          
+                <div id="btncryptoprolifetime" onclick="cryptoprolifetime();" class="planbasiccontainerinactive">
+                  <button class="tituloplan">PLAN LIFETIME</button>
+                </div>
+              </div>
+              <div>
+                <div id="cryptoproanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictCryptoPro["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictCryptoPro["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictCryptoPro["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictCryptoPro["anual"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+          
+                <div id="cryptoprolifetime" style="display: none;" class="precioboxlifetime">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictCryptoPro["lifetime"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictCryptoPro["lifetime"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictCryptoPro["lifetime"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictCryptoPro["lifetime"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN LIFETIME</button>
+                  </div>
+                </div>
+              </div>
+              <a href="https://invrtir.com/p/landingcryptopro" target="_blank" class="masinfo">Conoce lo que
+                incluye el Plan Invrtir Crypto + Pro</a>
+            </div>
+          </div>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan Premium Forex
+            </p>
+            <div class="logoplanholderFX">
+              <img class="logoplanFX" src="https://d8ff17fs33kjt.cloudfront.net/invrtir-planes/Invrtir-planes-FX-premium.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btnforexpremiumanual" onclick="forexpremiumanual();" class="Fxplanbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+              </div>
+              <div>
+                <div id="forexpremiumanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictForexPremium["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictForexPremium["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictForexPremium["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictForexPremium["anual"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+              </div>
+              <a href="https://invrtir.com/p/landingcryptopro" target="_blank" class="masinfo">Conoce lo que
+                incluye el Plan Forex Premium</a>
+            </div>
+          </div>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan En Vivo Forex
+            </p>
+            <div class="logoplanholderFX">
+              <img class="logoplanFX" src="https://d8ff17fs33kjt.cloudfront.net/invrtir-planes/Invrtir-planes-FX-envivo.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btnforexenvivomanual" onclick="forexenvivomanual();" class="Fxplanbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+              </div>
+              <div>
+                <div id="forexenvivomanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictForexEnvivo["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictForexEnvivo["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictForexEnvivo["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictForexEnvivo["anual"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+              </div>
+              <a href="https://invrtir.com/p/landingcryptopro" target="_blank" class="masinfo">Conoce lo que
+                incluye el Plan En Vivo Forex </a>
+            </div>
+          </div>
+          <div class="contenedorplan">
+            <p class="nombredelplan">Plan Alertas Forex
+            </p>
+            <div class="logoplanholderFX">
+              <img class="logoplanFX" src="https://d8ff17fs33kjt.cloudfront.net/invrtir-planes/Invrtir-planes-FX-alertas.svg">
+            </div>
+            <div class="contenedorplangeneral">
+              <div class="contenedorplantitulos">
+                <div id="btnforealertasmanual" onclick="forexalertasmanual();" class="Fxplanbasiccontaineractive">
+                  <button class="tituloplan">PLAN ANUAL</button>
+                </div>
+              </div>
+              <div>
+                <div id="forexalertasmanual" class="precioboxanual">
+                  <div class="precioboxinside">
+                    <p class="precioactual">$<%= dictForexAlertas["anual"]["precio_actual"] %> <img class="usflag" src="https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg">
+                    </p>
+                  </div>
+          
+                  <div class="precioboxinside">
+                    <p class="precioantes">ANTES <span>$<%= dictForexAlertas["anual"]["precio_antes"] %></span></p>
+                    <p class="ahorro py-2">AHORRAS: $<%= dictForexAlertas["anual"]["ahorro"] %></p>
+                  </div>
+          
+                  <div class="boton">
+                    <button onclick="window.location.href= `<%=dictForexAlertas["anual"]["link"]%>` ;" class="botoncomprar">COMPRAR PLAN ANUAL</button>
+                  </div>
+                </div>
+              </div>
+              <a href="https://invrtir.com/p/landingcryptopro" target="_blank" class="masinfo">Conoce lo que
+                incluye el Plan Alertas Forex </a>
+            </div>
+          </div>
+        <% } else{ %>
+          <img class="imagenbf" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-coming-soon.png">
+        <% } %>
+      </div>
+
+    </div>
+    <div class="col-12 descripcion">
+      <div class="preguntacontainer">
+        <p class="pregunta">¿QUÉ ES INVRTIR?</p>
+        <p class="respuestaprincipal">Somos el acompañamiento que necesitas para comenzar a invertir tu dinero</p>
+        <p class="respuesta">Sabemos que quieres comenzar a invertir tu dinero, sin embargo, <strong>existe tanta
+            información en internet que muchas veces no sabes por donde empezar</strong>.</p>
+        <p class="respuesta">Por eso en Invrtir <strong>hemos creado un servicio completo con los conocimientos, la
+            tecnología y nuestro acompañamiento</strong> para ayudarte y guiarte a que comiences a invertir y generes
+          ganancias.</p>
+        <p class="respuesta">A través de nuestros cursos en línea podrás conocer lo que necesitas para empezar, todo
+          con un lenguaje sencillo y desde cero, además te daremos las herramientas como nuestra app movil donde
+          tendrás información fácil de comprender, te ayudaremos a identificar las mejores alternativas para invertir
+          tu dinero y te acompañaremos y guiaremos en todo el camino, con el principal objetivo que generes ganancias
+          en tus inversiones.</p>
+      </div>
+
+      <div class="preguntacontainer">
+        <p class="pregunta">¿CUÁL ES LA PROMOCIÓN DE INVRTIR POR BLACK FRIDAY?</p>
+        <p class="respuesta">Por tiempo limitado <strong>podrás adquirir nuestros planes Anual y Lifetime de nuestras
+            suscripciones</strong>, las cuales incluyen cursos en línea, acceso a nuestra aplicación móvil y nuestro
+          acompañamiento durante todo el camino hacia convertirte en inversionista.</p>
+      </div>
+
+      <div class="preguntacontainer">
+        <p class="pregunta">¿QUÉ INCLUYEN LAS SUSCRIPCIONES DE INVRTIR?</p>
+        <p class="respuesta">Todas nuestras suscripciones incluyen <strong>cursos en línea, acceso a nuestra
+            aplicación móvil, oportunidades de inversión semanales, acceso a nuestra comunidad VIP y nuestro
+            acompañamiento</strong> (el acompañamiento aplica para los planes Pro y Crypto).</p>
+      </div>
+
+      <div class="preguntacontainer">
+        <p class="pregunta">¿QUÉ SON LAS OPORTUNIDADES DE INVERSIÓN?</p>
+        <p class="respuesta">Cada semana colocamos en nuestra aplicación 10 oportunidades de inversión, a las cuales
+          podrás acceder según el plan al que te suscribas, en estas oportunidades podrás conocer en qué acciones o
+          criptomonedas invertir y a que precio hacerlo, todo con el objetivo de que generes ganancias con riesgos
+          controlados.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row"></div>
+  </div>
+  <%- include('partials/footerBlackWeekend') %>
+</body>
+
+</html>
