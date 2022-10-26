@@ -14,7 +14,10 @@ const ranking = require("./ranking");
 const addUserToDiscord = require("./addUserToDiscord");
 const addCoursestoPlan = require("./addCoursestoPlan");
 const routes = require("./routes");
+const adminForex = require("./createAccountAdmin");
 const reports = require("./reports");
+const admin = require("firebase-admin");
+admin.initializeApp();
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   // eslint-disable-next-line max-len
@@ -38,3 +41,4 @@ exports.addUserToDiscord = functions.https.onRequest(addUserToDiscord);
 exports.addCoursestoPlan = functions.https.onRequest(addCoursestoPlan);
 exports.routes = functions.https.onRequest(routes);
 exports.reports = functions.https.onRequest(reports);
+exports.adminForex = functions.https.onRequest(adminForex);
