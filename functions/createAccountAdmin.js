@@ -9,23 +9,32 @@ adminForex.post(`/${process.env.API_KEY}/createAnalystForex`,
       const nombre = req.body.nombre;
       const contraseña = req.body.contraseña;
       const correo = req.body.correo;
-      const referenciaPlanAdmin = admin.firestore().collection("plans_admin")
-          .doc("plan_forex_analyst");
+      const referenciaRolAdmin = admin.firestore().collection("roles")
+          .doc("forex_analyst");
       const referenciaPlanForex = admin.firestore().collection("plans_forex")
           .doc("plan_premium_anually");
       await admin.auth().createUser({
         displayName: nombre,
         email: correo,
         password: contraseña,
-        plan_admin: (await referenciaPlanAdmin.get()).ref,
-        plan_forex: (await referenciaPlanForex.get()).ref,
       }).then(async (response) => {
-        console.log(response);
-        await admin.firestore().collection("users").doc(response.uid).create({
+        // eslint-disable-next-line max-len
+        const user = admin.firestore().collection("users").doc(response.uid);
+        const userSetting = admin.firestore().collection("user_settings").doc();
+        await userSetting.create({
+          activate_guides_acciones: false,
+          activate_guides_crypto: false,
+          activate_investor_journey: false,
+          activate_notifications: false,
+          user: user,
+          rol: referenciaRolAdmin,
+        });
+        await user.create({
           display_name: response.displayName,
           email: response.email,
           uid: response.uid,
           created_time: response.metadata.creationTime,
+          plan_forex: referenciaPlanForex,
         });
         res.status(200).json({
           status: 200,

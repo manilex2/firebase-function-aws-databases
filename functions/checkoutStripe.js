@@ -49,7 +49,6 @@ router.get("/", async function(req, res, next) {
       arraryProductPrices.push(productsPrices);
     }
   }
-  console.log(arraryProductPrices);
 
   res.render("landingForex",
       {arraryProductPricesData: arraryProductPrices});
@@ -64,14 +63,10 @@ router.get("/success", async function(req, res, next) {
   const product = await stripe.products.retrieve(
       subscription.plan.product,
   );
-  console.log(customer);
-  console.log(product);
   res.render("success_StripeCheckout",
       {customer: customer, product: product});
 });
 router.post("/payPlan", async function(req, res, next) {
-  console.log("Bandera");
-  console.log(req.body);
   const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   const referralCode = req.body.referral;
   const idPrice = req.body.idPrice;
@@ -83,12 +78,11 @@ router.post("/payPlan", async function(req, res, next) {
       },
     ],
     mode: "subscription",
-    success_url: "http://localhost:3000/planesForex/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: `http://localhost:3000/planesForex?referral=${req.body.referral}#pricing`,
+    success_url: `http://${process.env.HOST_DOMAIN_INVRTIR}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://${process.env.HOST_DOMAIN_INVRTIR}/planesForex?referral=${req.body.referral}#pricing`,
     automatic_tax: {enabled: true},
     client_reference_id: referralCode || "checkout_" + new Date().getTime(),
   });
-  console.log(session);
   res.redirect(303, session.url);
 });
 /**

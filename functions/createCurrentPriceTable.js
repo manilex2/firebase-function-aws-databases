@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 const admin = require("firebase-admin");
-admin.initializeApp();
+
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
 app.get(`/${process.env.API_KEY}`, async (req, res) => {

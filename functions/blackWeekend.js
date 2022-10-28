@@ -11,6 +11,7 @@ router.get("/", function(req, res, next) {
   let dictForexPremium = {};
   let dictForexAlertas = {};
   let dictForexEnvivo = {};
+  let codPromo = "";
   let hora="";
   let linkImagenDescuento="";
   let descuento;
@@ -30,31 +31,37 @@ router.get("/", function(req, res, next) {
       descuento = 0.7;
       hora="2022-11-25 11:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-70%25.png";
+      codPromo = "BLACK70";
     } else if (horaActual>= 12 && horaActual <=23) {
       console.log("Entré");
       descuento = 0.6;
       hora="2022-11-25 23:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-60%25.png";
+      codPromo = "BLACK60";
     }
   } else if (fecha.getDate() === 26 && fecha.getMonth()+1 === 11) {
     if (horaActual>= 0 && horaActual <= 11) {
       descuento = 0.5;
       hora="2022-11-26 11:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-50%25.png";
+      codPromo = "BLACK50";
     } else if (horaActual>= 12 && horaActual <=23) {
       descuento = 0.4;
       hora="2022-11-26 23:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-40%25.png";
+      codPromo = "BLACK40";
     }
   } else if (fecha.getDate() === 27 && fecha.getMonth()+1 === 11) {
     if (horaActual>= 0 && horaActual <= 11) {
       descuento = 0.3;
       hora="2022-11-27 11:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-30%25.png";
+      codPromo = "BLACK30";
     } else if (horaActual>= 12 && horaActual <=23) {
       descuento = 0.2;
       hora="2022-11-27 23:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-20%25.png";
+      codPromo = "BLACK20";
     }
   }
   dictBasic = {
@@ -62,13 +69,13 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(49.99*descuento)).toString(),
       "precio_antes": (49.99).toString(),
       "ahorro": (49.99-Math.round(49.99*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=4199967",
+      "link": `https://invrtir.com/purchase?product_id=4199967&coupon_code=${codPromo}`,
     },
     "lifetime": {
       "precio_actual": (Math.round(79.99*descuento)).toString(),
       "precio_antes": (79.99).toString(),
       "ahorro": (79.99-Math.round(79.99*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=4201764",
+      "link": `https://invrtir.com/purchase?product_id=4201764&coupon_code=${codPromo}`,
     },
   };
   dictPro = {
@@ -76,13 +83,13 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(199.99*descuento)).toString(),
       "precio_antes": (199.99).toString(),
       "ahorro": (199.99-Math.round(199.99*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=3514543",
+      "link": `https://invrtir.com/purchase?product_id=4199986&coupon_code=${codPromo}`,
     },
     "lifetime": {
       "precio_actual": (Math.round(249.99*descuento)).toString(),
       "precio_antes": (249.99).toString(),
       "ahorro": (249.99-Math.round(249.99*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=3395487",
+      "link": `https://invrtir.com/purchase?product_id=3395487&coupon_code=${codPromo}`,
     },
   };
   dictCrypto = {
@@ -90,13 +97,13 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(399.99*descuento)).toString(),
       "precio_antes": (399.99).toString(),
       "ahorro": (399.99-Math.round(399.99*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=3395437",
+      "link": `https://invrtir.com/purchase?product_id=4202202&coupon_code=${codPromo}`,
     },
     "lifetime": {
       "precio_actual": (Math.round(500*descuento)).toString(),
       "precio_antes": (500).toString(),
       "ahorro": (500-Math.round(500*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=3514489",
+      "link": `https://invrtir.com/purchase?product_id=3514489&coupon_code=${codPromo}`,
     },
   };
   dictCryptoPro = {
@@ -104,13 +111,13 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(499.99*descuento)).toString(),
       "precio_antes": (499.99).toString(),
       "ahorro": (499.99-Math.round(499.99*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=3395477",
+      "link": `https://invrtir.com/purchase?product_id=4202206&coupon_code=${codPromo}`,
     },
     "lifetime": {
       "precio_actual": (Math.round(650*descuento)).toString(),
       "precio_antes": (650).toString(),
       "ahorro": (650-Math.round(650*descuento)).toFixed(2),
-      "link": "https://invrtir.com/purchase?product_id=3541528",
+      "link": `https://invrtir.com/purchase?product_id=4202206&coupon_code=${codPromo}`,
     },
   };
   dictForexPremium = {
@@ -118,7 +125,7 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(1500*descuento)).toString(),
       "precio_antes": (1500).toString(),
       "ahorro": (1500-Math.round(1500*descuento)).toFixed(2),
-      "link": "https://buy.stripe.com/8wMbLteVWbSJ3GEaEU",
+      "link": `https://buy.stripe.com/8wMbLteVWbSJ3GEaEU?prefilled_promo_code=${codPromo}`,
     },
   };
   dictForexAlertas = {
@@ -126,7 +133,7 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(1000*descuento)).toString(),
       "precio_antes": (1000).toString(),
       "ahorro": (1000-Math.round(1000*descuento)).toFixed(2),
-      "link": "https://buy.stripe.com/6oE5n59BCbSJb96cN0",
+      "link": `https://buy.stripe.com/6oE5n59BCbSJb96cN0?prefilled_promo_code=${codPromo}`,
     },
   };
   dictForexEnvivo = {
@@ -134,7 +141,7 @@ router.get("/", function(req, res, next) {
       "precio_actual": (Math.round(1250*descuento)).toString(),
       "precio_antes": (1250).toString(),
       "ahorro": (1250-Math.round(1250*descuento)).toFixed(2),
-      "link": "https://buy.stripe.com/14k02L4hicWN5OM28C",
+      "link": `https://buy.stripe.com/14k02L4hicWN5OM28C?prefilled_promo_code=${codPromo}`,
     },
   };
   // eslint-disable-next-line max-len
