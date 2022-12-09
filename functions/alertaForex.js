@@ -8,7 +8,7 @@ alertForex.use(cors({origin: true}));
 alertForex.post(`/${process.env.API_KEY}/`, async (req, res)=>{
   res.set("Content-Type", "application/json");
   console.log(req.body);
-  const entrancePrice = req.body.priceEntrance;
+  const entrancePrice = Number(req.body.priceEntrance);
   const icon = req.body.logo;
   const initialPips = req.body.initialPips;
   const par = req.body.par;
@@ -17,6 +17,7 @@ alertForex.post(`/${process.env.API_KEY}/`, async (req, res)=>{
   const type = req.body.position;
   const tps = req.body.tps;
   const alert = {
+    created_time: new Date(),
     entrance_price: entrancePrice,
     icon: icon,
     initial_pips: initialPips,
@@ -25,6 +26,7 @@ alertForex.post(`/${process.env.API_KEY}/`, async (req, res)=>{
     take_profit: takeProfit,
     type: type,
     tps: tps,
+    status: "open",
   };
   admin.firestore().collection("alerts_forex").doc().create(alert);
   res.status(200).json({

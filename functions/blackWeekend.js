@@ -1,4 +1,6 @@
 require("dotenv").config();
+// eslint-disable-next-line max-len
+// const formatter = new Intl.DateTimeFormat("en-US", {timeZone: "America/Guayaquil"});
 const express = require("express");
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -17,29 +19,41 @@ router.get("/", function(req, res, next) {
   let descuento;
   const fechaInicio = new Date("November 25, 00:00");
   const fecha= new Date();
-
+  const ecDate = fecha.toLocaleString("en-US", {timeZone: "America/Guayaquil"});
+  const arrayecDate = ecDate.split(",");
+  const arrayFecha = arrayecDate[0].split("/");
+  const arrayHora = arrayecDate[1].split(" ");
+  let horaActual = 0;
+  if (arrayHora[2]=="PM") {
+    horaActual= parseInt(arrayHora[1].split(":")[0])+12;
+  } else {
+    horaActual= parseInt(arrayHora[1].split(":")[0]);
+  }
+  /*
+  console.log(fechaInicio);
+  console.log(fechaInicio.getMonth());
+  console.log(parseInt(arrayFecha[0]));
+  console.log(fechaInicio.getMonth === parseInt(arrayFecha[0]));
+  console.log(parseInt(arrayFecha[1]) >= fechaInicio.getDate());
+  console.log(horaActual >= fechaInicio.getHours());
+  */
   // eslint-disable-next-line max-len
-  if (fechaInicio.getMonth === fecha.getMonth && fecha.getDate() === fechaInicio.getDate() && fecha.getHours() >= fechaInicio.getHours()) {
+  if (fechaInicio.getMonth()+1 === parseInt(arrayFecha[0]) && parseInt(arrayFecha[1]) >= fechaInicio.getDate() && horaActual >= fechaInicio.getHours()) {
     inicio = true;
   }
-  const horaActual = fecha.getHours();
-  console.log(fecha.getDate());
-  console.log(fecha.getMonth());
-  if (fecha.getDate() === 25 && fecha.getMonth()+1 === 11) {
-    console.log(horaActual);
+  if (parseInt(arrayFecha[1]) === 25 && parseInt(arrayFecha[0]) === 11) {
     if (horaActual>= 0 && horaActual <= 11) {
       descuento = 0.7;
       hora="2022-11-25 11:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-70%25.png";
       codPromo = "BLACK70";
     } else if (horaActual>= 12 && horaActual <=23) {
-      console.log("Entré");
       descuento = 0.6;
       hora="2022-11-25 23:59";
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-60%25.png";
       codPromo = "BLACK60";
     }
-  } else if (fecha.getDate() === 26 && fecha.getMonth()+1 === 11) {
+  } else if (parseInt(arrayFecha[1]) === 26 && parseInt(arrayFecha[0]) === 11) {
     if (horaActual>= 0 && horaActual <= 11) {
       descuento = 0.5;
       hora="2022-11-26 11:59";
@@ -51,7 +65,7 @@ router.get("/", function(req, res, next) {
       linkImagenDescuento="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/BlackWeekend2022/Invrtir-descuento-40%25.png";
       codPromo = "BLACK40";
     }
-  } else if (fecha.getDate() === 27 && fecha.getMonth()+1 === 11) {
+  } else if (parseInt(arrayFecha[1]) === 27 && parseInt(arrayFecha[0]) === 11) {
     if (horaActual>= 0 && horaActual <= 11) {
       descuento = 0.3;
       hora="2022-11-27 11:59";
@@ -66,9 +80,9 @@ router.get("/", function(req, res, next) {
   }
   dictBasic = {
     "anual": {
-      "precio_actual": (Math.round(49.99*descuento)).toString(),
+      "precio_actual": (49.99-Math.round(49.99*descuento)).toFixed(2),
       "precio_antes": (49.99).toString(),
-      "ahorro": (49.99-Math.round(49.99*descuento)).toFixed(2),
+      "ahorro": (Math.round(49.99*descuento)).toString(),
       "link": `https://invrtir.com/purchase?product_id=4199967&coupon_code=${codPromo}`,
     },
     "lifetime": {
@@ -80,37 +94,37 @@ router.get("/", function(req, res, next) {
   };
   dictPro = {
     "anual": {
-      "precio_actual": (Math.round(199.99*descuento)).toString(),
+      "precio_actual": (199.99-Math.round(199.99*descuento)).toFixed(2),
       "precio_antes": (199.99).toString(),
-      "ahorro": (199.99-Math.round(199.99*descuento)).toFixed(2),
+      "ahorro": (Math.round(199.99*descuento)).toString(),
       "link": `https://invrtir.com/purchase?product_id=4199986&coupon_code=${codPromo}`,
     },
     "lifetime": {
-      "precio_actual": (Math.round(249.99*descuento)).toString(),
+      "precio_actual": (249.99-Math.round(249.99*descuento)).toFixed(2),
       "precio_antes": (249.99).toString(),
-      "ahorro": (249.99-Math.round(249.99*descuento)).toFixed(2),
+      "ahorro": (Math.round(249.99*descuento)).toString(),
       "link": `https://invrtir.com/purchase?product_id=3395487&coupon_code=${codPromo}`,
     },
   };
   dictCrypto = {
     "anual": {
-      "precio_actual": (Math.round(399.99*descuento)).toString(),
+      "precio_actual": (399.99-Math.round(399.99*descuento)).toFixed(2),
       "precio_antes": (399.99).toString(),
-      "ahorro": (399.99-Math.round(399.99*descuento)).toFixed(2),
+      "ahorro": (Math.round(399.99*descuento)).toString(),
       "link": `https://invrtir.com/purchase?product_id=4202202&coupon_code=${codPromo}`,
     },
     "lifetime": {
-      "precio_actual": (Math.round(500*descuento)).toString(),
+      "precio_actual": (500-Math.round(500*descuento)).toFixed(2),
       "precio_antes": (500).toString(),
-      "ahorro": (500-Math.round(500*descuento)).toFixed(2),
+      "ahorro": (Math.round(500*descuento)).toString(),
       "link": `https://invrtir.com/purchase?product_id=3514489&coupon_code=${codPromo}`,
     },
   };
   dictCryptoPro = {
     "anual": {
-      "precio_actual": (Math.round(499.99*descuento)).toString(),
+      "precio_actual": (499.99-Math.round(499.99*descuento)).toFixed(2),
       "precio_antes": (499.99).toString(),
-      "ahorro": (499.99-Math.round(499.99*descuento)).toFixed(2),
+      "ahorro": (Math.round(499.99*descuento)).toString(),
       "link": `https://invrtir.com/purchase?product_id=4202206&coupon_code=${codPromo}`,
     },
     "lifetime": {

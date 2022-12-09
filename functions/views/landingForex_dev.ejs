@@ -17,8 +17,7 @@
     <header>
       <div id="home-top-video">
         <video id="background-video" autoplay loop muted>
-          <source src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/invrtir-landing-page-forex.mp4"
-            type="video/mp4">
+          <source src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/invrtir-landing-page-forex.mp4" type="video/mp4">
         </video>
       </div>
       <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
@@ -30,8 +29,7 @@
         <img id="imgcover" src="https://d8ff17fs33kjt.cloudfront.net/ventas/landing-forex/img-cover-forex-inv.001.png">
       </div>
       <div class="pricing-header p-2 pb-md-4 mx-auto text-center">
-        <img class="logob mb-4"
-          src="https://d8ff17fs33kjt.cloudfront.net/ventas/landing-forex/Logo+invrtir+bluepips+combinado.png">
+        <img class="logob mb-4" src="https://d8ff17fs33kjt.cloudfront.net/ventas/landing-forex/Logo+invrtir+bluepips+combinado.png">
         <h2 class="display-4 fw-normal">¿Por qué Invrtir - Bluepips?</h1>
           <p class="fs-5 text-muted text-center">
             Nuestro equipo de especialistas identificarán las mejores oportunidades del mercado
@@ -84,9 +82,7 @@
       </div>
       <div class="row pt-5 d-flex align-items-center pb-5 mb-md-4 mb-lg-5">
         <div class="rellax col-md-6 pb-1 mb-3 pb-md-0 mb-md-0">
-          <img id="imgCaracteristicas"
-            src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LSesionesVivo.png"
-            class="img-fluid" alt="Sesiones en Vivo">
+          <img id="imgCaracteristicas" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LSesionesVivo.png" class="img-fluid" alt="Sesiones en Vivo">
         </div>
         <div class="section4 col-md-6">
           <h2>SESIONES EN VIVO</h2>
@@ -102,9 +98,7 @@
       </div>
       <div class="row d-flex align-items-center pb-5 mb-md-4 mb-lg-5">
         <div class="d-block d-sm-none rellax col-md-6 order-md-2 pb-1 mb-3 pb-md-0 mb-md-0 ">
-          <img id="imgCaracteristicas"
-            src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LCursosEstrategias.png"
-            class="img-fluid" alt="Cursos y Estrategias">
+          <img id="imgCaracteristicas" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LCursosEstrategias.png" class="img-fluid" alt="Cursos y Estrategias">
         </div>
         <div class="section5 col-md-6 order-md-1 pt-md-4 pt-lg-5">
           <h2>CURSOS Y ESTRATÉGIAS</h2>
@@ -115,17 +109,13 @@
           </ul>
         </div>
         <div class="d-none d-sm-block rellax col-md-6 order-md-2 pb-1 mb-3 pb-md-0 mb-md-0 ">
-          <img id="imgCaracteristicas"
-            src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LCursosEstrategias.png"
-            class="img-fluid" alt="Cursos y Estrategias">
+          <img id="imgCaracteristicas" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LCursosEstrategias.png" class="img-fluid" alt="Cursos y Estrategias">
         </div>
 
       </div>
       <div class="row d-flex align-items-center pb-5 mb-md-4 mb-lg-5">
         <div class="rellax col-md-6 pb-1 mb-3 pb-md-0 mb-md-0">
-          <img id="imgCaracteristicas"
-            src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LHerramientas.png"
-            class="img-fluid" alt="Herramientas">
+          <img id="imgCaracteristicas" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/Invrtir-forex-LHerramientas.png" class="img-fluid" alt="Herramientas">
         </div>
         <div class="section6 col-md-6 pt-md-4 pt-lg-5">
           <h2>HERRAMIENTAS PARA TU ANÁLISIS</h2>
@@ -140,152 +130,110 @@
       <main>
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
           <% arraryProductPricesData.forEach(function(product){ %>
-            <div class="col px-3">
-              <% if (product.name==='Prueba Suscription V1' ) { %>
-                <div class="card mb-4 rounded-3 shadow-sm">
-                  <div class="card-header py-3 text-white">
-                    <h4 id="nameProduct" class="my-0 fw-normal">
-                      <%= product.name %>
-                    </h4>
-                  </div>
-                  <% } else {%>
-                    <div class="card mb-4 rounded-3 shadow-sm">
-                      <div class="card-header py-3">
-                        <h4 id="nameProduct" class="my-0 fw-normal">
-                          <%= product.name %>
-                        </h4>
-                      </div>
-                      <% }%>
-                        <div class="card-body px-0">
-                          <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
-                            <% product.prices.forEach(function(price){ %>
-                              <li class="nav-item" role="presentation">
-                                <% if (price.type==='Semanal' ) { %>
-                                  <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab"
-                                    data-bs-target="#<%= price.id %>" type="button" role="tab"
-                                    aria-controls="<%= price.id %>" aria-selected="true">
-                                    <%= price.type %>
-                                  </button>
-                                  <% } else {%>
-                                    <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab"
-                                      data-bs-target="#<%= price.id %>" type="button" role="tab"
-                                      aria-controls="<%= price.id %>" aria-selected="true">
-                                      <%= price.type %>
-                                    </button>
-                                    <% }%>
-                              </li>
-                              <% }); %>
-                          </ul>
-                          <div class="tab-content p-4">
-                            <% product.prices.forEach(function(price){ %>
-                              <% if (price.type==='Semanal' ) { %>
-                                <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel"
-                                  aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                                  <form id="<%=price.id %>" action="/planesForex/payPlan" method="post"
-                                    data-rewardful="true">
-
-                                    <% if (product.name==='Prueba Suscription V1' ) { %>
-                                      <h1 class="card-title pricing-card-title">$39.99<small
-                                          class="text-muted fw-light">/semana</small></h1>
-
-                                      <ol class="list-group list-group-flush mt-3 mb-4">
-                                        <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                                        </li>
-                                        <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                            estrategias</strong> </li>
-                                        <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                            forex</strong> tanto para
-                                          divisas como para indices.
-                                        </li>
-                                        <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                          sesiones de Open
-                                          New York, Asia o Londres.
-                                        </li>
-                                      </ol>
-                                      <% } else if (product.name==='Plan 2' ) {%>
-                                        <h1 class="card-title pricing-card-title">$29.99<small
-                                            class="text-muted fw-light">/semana</small></h1>
-
-                                        <ol class="list-group list-group-flush mt-3 mb-4">
-                                          <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                            sesiones de Open
-                                            New York, Asia o Londres.
-                                          </li>
-                                        </ol>
-                                        <% } else if (product.name==='Plan 3' ){%>
-                                          <h1 class="card-title pricing-card-title">$10.99<small
-                                              class="text-muted fw-light">/semana</small></h1>
-                                          <ol class="list-group list-group-flush mt-3 mb-4">
-                                            <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                                forex</strong> tanto para
-                                              divisas como para indices.
-                                            </li>
-                                          </ol>
-                                          <% } %>
-
-                                            <input type="hidden" name="idPrice" value=<%=price.id %>>
-                                            <button id="botonComprar" type="submit"
-                                              class="w-100 btn btn-lg text-white">Comprar</button>
-                                  </form>
-                                </div>
-                                <% } else {%>
-                                  <div class="tab-pane " id="<%= price.id %>" role="tabpanel"
-                                    aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                                    <form id="<%=price.id %>" action="/planesForex/payPlan" method="post"
-                                      data-rewardful="true">
-                                      <% if (product.name==='Prueba Suscription V1' ) { %>
-                                        <h1 class="card-title pricing-card-title">$1,500<small
-                                            class="text-muted fw-light">/año</small></h1>
-                                        <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
-                                        <ol class="list-group list-group-flush mt-3 mb-4">
-                                          <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-                                          </li>
-                                          <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                                              estrategias</strong> </li>
-                                          <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                              forex</strong> tanto para
-                                            divisas como para indices.
-                                          </li>
-                                          <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                            sesiones de Open
-                                            New York, Asia o Londres.
-                                          </li>
-                                        </ol>
-                                        <% } else if (product.name==='Plan 2' ){%>
-                                          <h1 class="card-title pricing-card-title">$1,250<small
-                                              class="text-muted fw-light">/año</small></h1>
-                                          <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
-                                          <ol class="list-group list-group-flush mt-3 mb-4">
-                                            <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                                              sesiones de Open
-                                              New York, Asia o Londres.
-                                            </li>
-                                          </ol>
-                                          <% } else if (product.name==='Plan 3' ){%>
-                                            <h1 class="card-title pricing-card-title">$1,000<small
-                                                class="text-muted fw-light">/año</small></h1>
-                                            <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
-                                            <ol class="list-group list-group-flush mt-3 mb-4">
-                                              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                                                  forex</strong> tanto para
-                                                divisas como para indices.
-                                              </li>
-                                            </ol>
-                                            <% } %>
-
-                                              <input type="hidden" name="idPrice" value=<%=price.id %>>
-                                              <button id="botonComprar" type="submit"
-                                                class="w-100 btn btn-lg text-white">Comprar</button>
-                                    </form>
-                                  </div>
-                                  <% }%>
-                                    <% }); %>
-                          </div>
-                        </div>
-                    </div>
+          <div class="col px-3">
+            <% if (product.name==='CR-Plan 1' ) { %>
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3 text-white">
+                <h4 id="nameProduct" class="my-0 fw-normal">
+                  <%= product.name %>
+                </h4>
+              </div>
+              <% } else {%>
+              <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                  <h4 id="nameProduct" class="my-0 fw-normal">
+                    <%= product.name %>
+                  </h4>
                 </div>
-                <% }); %>
+                <% }%>
+                <div class="card-body px-0">
+                  <ul class="nav nav-tabs justify-content-center" id="forexTab" role="tablist">
+                    <% product.prices.forEach(function(price){ %>
+                    <li class="nav-item" role="presentation">
+                      <% if (price.type==='Semanal' ) { %>
+                      <button class="nav-link active" id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                        <%= price.type %>
+                      </button>
+                      <% } else {%>
+                      <button class="nav-link " id="<%= price.id %>-tab" data-bs-toggle="tab" data-bs-target="#<%= price.id %>" type="button" role="tab" aria-controls="<%= price.id %>" aria-selected="true">
+                        <%= price.type %>
+                      </button>
+                      <% }%>
+                    </li>
+                    <% }); %>
+                  </ul>
+                  <div class="tab-content p-4">
+                    <% product.prices.forEach(function(price){ %>
+                    <% if (price.type==='Semanal' ) { %>
+                    <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                      <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+
+                        <% if (product.name==='CR-Plan 1' ) { %>
+                        <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
+
+                        <ol class="list-group list-group-flush mt-3 mb-4">
+                          <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias avanzadas en forex.</strong></li>
+                          <li class="list-group-item">Hasta <strong>10 alertas de compra y venta </strong>en los horarios Asia, London y New York.</li>
+                          <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
+                          <li class="list-group-item">Análisis a mediano plazo con <strong>principales pares e índices.</strong></li>
+                        </ol>
+                        <% } else if (product.name==='Plan 2' ) {%>
+                        <h1 class="card-title pricing-card-title">$29.99<small class="text-muted fw-light">/semana</small></h1>
+
+                        <ol class="list-group list-group-flush mt-3 mb-4">
+                          <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
+                          <li class="list-group-item">Análisis del mercado <strong>juntos a los alumnos.</strong></li>
+                        </ol>
+                        <% } else if (product.name==='Plan 3' ){%>
+                        <h1 class="card-title pricing-card-title">$10.99<small class="text-muted fw-light">/semana</small></h1>
+                        <ol class="list-group list-group-flush mt-3 mb-4">
+                          <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias en forex.</strong></li>
+                        </ol>
+                        <% } %>
+
+                        <input type="hidden" name="idPrice" value=<%=price.id %>>
+                        <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                      </form>
+                    </div>
+                    <% } else {%>
+                    <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
+                      <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
+                        <% if (product.name==='CR-Plan 1' ) { %>
+                        <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
+                        <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
+                        <ol class="list-group list-group-flush mt-3 mb-4">
+                          <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias avanzadas en forex.</strong></li>
+                          <li class="list-group-item">Hasta <strong>10 alertas de compra y venta </strong>en los horarios Asia, London y New York.</li>
+                          <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
+                          <li class="list-group-item">Análisis a mediano plazo con <strong>principales pares e índices.</strong></li>
+                        </ol>
+                        <% } else if (product.name==='Plan 2' ){%>
+                        <h1 class="card-title pricing-card-title">$1,250<small class="text-muted fw-light">/año</small></h1>
+                        <h5 class="fst-italic card-title pricing-card-title">Ahorras $250</h5>
+                        <ol class="list-group list-group-flush mt-3 mb-4">
+                          <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
+                          <li class="list-group-item">Análisis del mercado <strong>juntos a los alumnos.</strong></li>
+                        </ol>
+                        <% } else if (product.name==='Plan 3' ){%>
+                        <h1 class="card-title pricing-card-title">$1,000<small class="text-muted fw-light">/año</small></h1>
+                        <h5 class="fst-italic card-title pricing-card-title">Ahorras $200</h5>
+                        <ol class="list-group list-group-flush mt-3 mb-4">
+                          <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias en forex.</strong></li>
+                        </ol>
+                        <% } %>
+
+                        <input type="hidden" name="idPrice" value=<%=price.id %>>
+                        <button id="botonComprar" type="submit" class="w-100 btn btn-lg text-white">Comprar</button>
+                      </form>
+                    </div>
+                    <% }%>
+                    <% }); %>
+                  </div>
+                </div>
+              </div>
             </div>
+            <% }); %>
+          </div>
       </main>
     </div>
     <div id="faqs">
@@ -298,63 +246,62 @@
     <div class="accordion" id="accordionExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-            aria-expanded="true" aria-controls="collapseOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             ¿Necesito experiencia previa para asistir al webinar?
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample">
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p>No necesitas ninguna experiencia o nocimientos previos, lo que verás en este webinar lo
-              podrás comprender de una manera sencilla y sobretodo lo podrás aplicar.</p>
+            <p>No necesitas ninguna experiencia o conocimiento previo, lo que encontrarás en esta aplicación lo podrás comprender de una manera sencilla y, sobretodo, lo podrás aplicar desde el primer día en tus operaciones.</p>
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            ¿Cuánto dinero necesito para comenzar?
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            ¿Necesito mucho dinero para poder invertir en FOREX?
           </button>
         </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-          data-bs-parent="#accordionExample">
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p>Puedes empezar a invertir desde $5 no hay minimos tu puedes definir la cantidad que se
-              adapte a tus posibilidades.</p>
+            <p>No necesitas mucho dinero para poder iniciar a invertir en este mercado, sin embargo, depende mucho del broker que estás usando.</p>
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            ¿Despues de este webinar podré comenzar a invertir mi dinero?
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            ¿Cuando invierto en FOREX compro directamente una divisa?
           </button>
         </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-          data-bs-parent="#accordionExample">
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p>Absolutamente si, luego de este webinar tendrás los conocimientos necesarios para
-              comenzar con una estrategia de inversión que podrás implementar de inmediato.</p>
+            <p>No compras directamente una divisa, lo que compras es un CFD o contrato por diferencia, el cual ha sido “contratado por el intermediario o Bróker, por esa razón, la inversión no suele ser tan grande.</p>
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingFour">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            ¿Donde puedo aprender más sobre inversiones?
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            ¿Qué horas son mejores para operar?
           </button>
         </h2>
-        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-          data-bs-parent="#accordionExample">
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="respuesta">Tienes disponible nuestro <a class="links" target="_blank"
-                href="https://podcast.invrtir.com">Podcast</a> y nuestro canal de <a class="links" target="_blank"
-                href="https://link.invrtir.com/youtube">Youtube</a> para que puedas obtener conocimientos
-              importantes para manejar tus inversiones.</p>
+            <p class="respuesta">Existen 3 horarios diferentes de los principales mercados internacionales, el de Nueva York que empieza a las 8:30 am, el de Asia que empieza a las 7 pm y el de Londres que empieza a las 2am. Por lo tanto, en estos 3 horarios puedes encontrar grandes oportunidades para generar ganancias.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            ¿Es necesario que esté todo el día pendiente de mis operaciones?
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p class="respuesta">Todo depende sobretodo del tiempo disponible que tengas y la cantidad de dinero que vayas a invertir, ya que si le dedicas bastantes horas podrás conseguir ganancias más rápidas, sin embargo, también necesitarás una mayor inversion.</p>
+            <p class="respuesta">A pesar de esto, gracias a nuestra suscripción podemos acortar aún más este tiempo, ya que nosotros te brindamos estrategias que hacen que estas operaciones sean rápidas y tan solo en 10 o 15 minutos podrás observar resultados reales.</p>
           </div>
         </div>
       </div>
@@ -368,22 +315,17 @@
           <div class="col-lg-8 px-3">
             <!-- logo -->
             <a class="me-0" href="index.html">
-              <img class="light-mode-item h-40px"
-                src="https://s3.us-east-2.amazonaws.com/invrtir/Wesite-content/logo-invrtir.svg" alt="logo">
+              <img class="light-mode-item h-40px" src="https://s3.us-east-2.amazonaws.com/invrtir/Wesite-content/logo-invrtir.svg" alt="logo">
             </a>
             <p class="my-3">Invrtir es una Fintech que brinda los conocimientos y herramientas para que puedas obtener
               insights y analisis que te ayuden a tomar decisiones de inversión en acciones de compañías en Estados
               Unidos.</p>
             <!-- Social media icon -->
             <ul class="list-inline mb-0 mt-3">
-              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-facebook"
-                  href="https://www.facebook.com/invrtir"><i class="fab fa-fw fa-facebook-f"></i></a> </li>
-              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-instagram"
-                  href="https://www.instagram.com/invrtir/"><i class="fab fa-fw fa-instagram"></i></a> </li>
-              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-whatsapp"
-                  href="https://link.invrtir.com/escribeme"><i class="fab fa-fw fa-whatsapp"></i></a> </li>
-              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-tiktok"
-                  href="https://www.tiktok.com/@invrtir"><i class="fa-brands fa-tiktok"></i></i></a> </li>
+              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-facebook" href="https://www.facebook.com/invrtir"><i class="fab fa-fw fa-facebook-f"></i></a> </li>
+              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-instagram" href="https://www.instagram.com/invrtir/"><i class="fab fa-fw fa-instagram"></i></a> </li>
+              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-whatsapp" href="https://link.invrtir.com/escribeme"><i class="fab fa-fw fa-whatsapp"></i></a> </li>
+              <li class="list-inline-item"> <a class="btn btn-white btn-sm shadow px-2 text-tiktok" href="https://www.tiktok.com/@invrtir"><i class="fa-brands fa-tiktok"></i></i></a> </li>
             </ul>
           </div>
           <!-- Widget 1 END -->
@@ -426,12 +368,10 @@
                 <!-- copyright links-->
                 <div class="justify-content-center mt-3 mt-lg-0">
                   <ul class="nav list-inline justify-content-center mb-0">
-                    <li class="list-inline-item"><a class="nav-link py-0"
-                        href="https://invrtir.com/p/terms?sa=off">Términos
+                    <li class="list-inline-item"><a class="nav-link py-0" href="https://invrtir.com/p/terms?sa=off">Términos
                         de
                         Uso</a></li>
-                    <li class="list-inline-item"><a class="nav-link py-0 pe-0"
-                        href="https://invrtir.com/p/privacy?sa=off">Politicas de Privacidad</a></li>
+                    <li class="list-inline-item"><a class="nav-link py-0 pe-0" href="https://invrtir.com/p/privacy?sa=off">Politicas de Privacidad</a></li>
                   </ul>
                 </div>
               </div>

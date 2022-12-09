@@ -12,11 +12,13 @@
   <!-- FONT AWESOME -->
   <script src="https://kit.fontawesome.com/73f851add2.js" crossorigin="anonymous"></script>
   <%- include('partials/header') %>
-    <script>
-      let emailClient = '<%= customer.email %>'
+  <script>
+    let emailClient = '<%= customer.email %>'
 
-      rewardful('convert', { email: emailClient })
-    </script>
+    rewardful('convert', {
+      email: emailClient
+    })
+  </script>
 </head>
 
 
@@ -24,70 +26,84 @@
   <div class="container px-4">
     <div class="row">
       <div class="col-12 cover">
-        <img class="logo"
-          src="https://d8ff17fs33kjt.cloudfront.net/ventas/landing-forex/Logo+invrtir+bluepips+combinado.png">
-        <h1 class="titulo1">¡Te doy la Bienvenida!</h1>
-        <p>
-          <strong>
-            <%= customer.name %>
-          </strong> has accedido al siguiente curso <strong>
-            <%= product.name %>
-          </strong>, a continuación los
-          detalles:
+        <img class="logo" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/Invrtir+Fx+-+logo.png">
+        <h1 class="titulo1">¡Te damos la Bienvenida a la App de Invrtir!</h1>
+        <p id="subtituloPrincipal">
+          Gracias a tu plan <strong> <%= product.name %> </strong>, tendrás acceso a la siguientes características:
         </p>
       </div>
       <div class="col-12 mb-lg-3 mcover databox">
-        <div class="primerafila">
+        <div class="primerafila row align-items-center">
           <% if (product.name==='CR-Plan 1' ) { %>
-            <ol class="list-group list-group-flush mt-3 mb-4">
-              <li class="list-group-item"> <strong>Beneficios del Plan 1 y Plan 2</strong>
-              </li>
-              <li class="list-group-item"><strong>Accesos a nuestros cursos de
-                  estrategias</strong> </li>
-              <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                  forex</strong> tanto para
-                divisas como para indices.
-              </li>
-              <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                sesiones de Open
-                New York, Asia o Londres.
-              </li>
-            </ol>
-            <% } else if (product.name==='Plan 2' ) {%>
-              <ol class="list-group list-group-flush mt-3 mb-4">
-                <li class="list-group-item"> <strong>Sesiones de Trading en vivo</strong> en
-                  sesiones de Open
-                  New York, Asia o Londres.
-                </li>
-              </ol>
-              <% } else if (product.name==='Plan 3' ){%>
-                <ol class="list-group list-group-flush mt-3 mb-4">
-                  <li class="list-group-item"> <strong>Acceso a alertas de trading en
-                      forex</strong> tanto para
-                    divisas como para indices.
-                  </li>
-                </ol>
-                <% } %>
+          <div id="divLogoPlan" class="col-3">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-logo-premium-TYP.png">
+          </div>
+          <ol class="list-group list-group-flush mt-3 mb-4 col-9">
+            <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias avanzadas en forex.</strong></li>
+            <li class="list-group-item">Hasta <strong>10 alertas de compra y venta </strong>en los horarios Asia, London y New York.</li>
+            <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
+            <li class="list-group-item">Análisis a mediano plazo con <strong>principales pares e índices.</strong></li>
+          </ol>
+          <% } else if (product.name==='Plan 2' ) {%>
+          <div id="divLogoPlan" class="col-3">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-logo-envivo-TYP.png">
+          </div>
+          <ol class="list-group list-group-flush mt-3 mb-4 col-9">
+            <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
+            <li class="list-group-item">Análisis del mercado <strong>juntos a los alumnos.</strong></li>
+          </ol>
+          <% } else if (product.name==='Plan 3' ){%>
+          <div id="divLogoPlan" class="col-3">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-logo-alertas-TYP.png">
+          </div>
+          <ol class="list-group list-group-flush mt-3 mb-4 col-9">
+            <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias en forex.</strong></li>
+          </ol>
+          <% } %>
         </div>
       </div>
-      <div class="col-12  cover">
-        <p class="subtitulo">¿Qué más debo hacer?</p>
-        <p class="mb-0">En unos minutos recibirás un correo de confirmación con todos los detalles de tu adquisición.
-          Te dejamos los siguientes links para que puedas instalar y usar la app
-        </p>
-        <ul class="align-items-start p-0">
-          <li class="list-group-item p-0">
-            <p class="m-0"><strong>¿Como instalar la app? </strong> <a href="https://link.invrtir.com/guia-instapp">
-                Guía de
-                instalación</a></p>
-          </li>
-          <li class="list-group-item p-0">
-            <p class="m-0"><strong>Usa tu app </strong> <a href="https://app.invrtir.com"> Aplicación
-                Invrtir</a></p>
-          </li>
-        </ul>
+      <div class="d-flex flex-column flex-md-row ">
+        <div class="col  my-5 me-2 databox">
+          <div class="d-flex flex-column align-items-center">
+            <p id="tituloBox">
+              Descarga nuetra App
+            </p>
+            <img id="imgBox" class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-landing-cells.png">
+            <div class="row align-items-center">
+              <div class="col ">
+                <a href="https://play.google.com/store/apps/details?id=com.invrtir&pli=1"><img id="buttonBox" class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-boton-google-TYP.png"></a>
+
+              </div>
+              <div class="col ">
+                <a href="">
+                  <img id="buttonBox" class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-boton-apple-TYP.png">
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col my-5 ms-2 databox">
+          <div class="d-flex flex-column align-items-center">
+            <p id="tituloBox">
+              !Espera! Antes de empezar...
+            </p>
+            <p class="p-3">Te sugerimos que crees y fondees una cuenta con un broker que permita hacer operaciones en Forex.</p>
+            <p class="p-3">Aqui en Invrtir, trabajamos con ..., a continuación te comparto un instructivo para crear y fondear una cuenta en Forex.</p>
+            <div class="row align-items-center">
+              <div class="col ">
+                <img class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-broker-Landing.png">
+              </div>
+              <div class="col ">
+                <a href="">
+                  <img class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-boton-broker-TYP.png">
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
 
 </html>
