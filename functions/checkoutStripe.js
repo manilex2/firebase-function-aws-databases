@@ -1,22 +1,17 @@
 /* eslint-disable max-len */
 const express = require("express");
-const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
+// const admin = require("firebase-admin");
+// const nodemailer = require("nodemailer");
 const cors = require("cors");
-const ejs = require("ejs");
-const qs = require("qs");
-const axios = require("axios").default;
-const generator = require("generate-password");
+// const ejs = require("ejs");
+// const qs = require("qs");
+// const axios = require("axios").default;
+// const generator = require("generate-password");
 // eslint-disable-next-line new-cap
 const router = express.Router();
 const sdk = require("api")("@teachable/v1.0#63kp5w1zl9iqeony");
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_GMAIL_INVRTIR, // generated ethereal user
-    pass: process.env.PASSWORD_GMAIL_INVRTIR, // generated ethereal password
-  },
-});
+
+/*
 const contextMail = {
   banner: "https://d8ff17fs33kjt.cloudfront.net/banners/Invrtir-banner+email.png",
   fecha: new Date().toLocaleDateString("es-ES", {
@@ -34,6 +29,7 @@ const contextMail = {
   url: "https://onelink.to/u8txrx",
   contacto: "contacto@invrtir.com",
 };
+*/
 router.use(cors({origin: true}));
 router.get("/", async function(req, res, next) {
   const formatoDeMoneda = (num) => `${num.slice(0, -2)}.${num.slice(-2)}`;
@@ -41,7 +37,7 @@ router.get("/", async function(req, res, next) {
   const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   let products = await stripe.products.search({
     // eslint-disable-next-line no-useless-escape
-    query: "active:'true' AND metadata['Plan']:'Bluepips'",
+    query: "active:'true' AND metadata['Plan']:'Prueba'",
   });
   products = products.data;
   for (let i = 0; i < products.length; i++) {
@@ -85,7 +81,7 @@ router.get("/", async function(req, res, next) {
     }
   }
   // eslint-disable-next-line max-len
-  res.render("landingForex", {arraryProductPricesData: arraryProductPrices});
+  res.render("landingForex_dev", {arraryProductPricesData: arraryProductPrices});
 });
 router.get("/success", async function(req, res, next) {
   sdk.auth(process.env.KEY_TEACHEABLE);
@@ -95,7 +91,9 @@ router.get("/success", async function(req, res, next) {
   const subscription = await stripe.subscriptions.retrieve(
       session.subscription,
   );
-  const dataPrice = subscription.items.data[0].price;
+  // const dataPrice = subscription.items.data[0].price;
+  const product = await stripe.products.retrieve(subscription.plan.product);
+  /*
   // eslint-disable-next-line max-len
   const referenciaPlan = admin.firestore().collection("plans")
       .doc("plan_free");
@@ -152,7 +150,8 @@ router.get("/success", async function(req, res, next) {
         })
         .catch((err) => console.error(err));
   }
-  res.render("success_StripeCheckout", {
+  */
+  res.render("success_StripeCheckout_dev", {
     customer: customer,
     product: product,
   });
@@ -170,9 +169,9 @@ router.post("/payPlan", async function(req, res, next) {
     ],
     mode: "subscription",
     // eslint-disable-next-line max-len
-    success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${process.env.HOST_DOMAIN_INVRTIR_DEV}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
     // eslint-disable-next-line max-len
-    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesForex?referral=${req.body.referral}#pricing`,
+    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR_DEV}/planesForex?referral=${req.body.referral}#pricing`,
     automatic_tax: {enabled: true},
     client_reference_id: referralCode || "checkout_" + new Date().getTime(),
   });
@@ -209,6 +208,7 @@ async function sortJSON(data, key, orden) {
  * @param {*} product Dato del producto en Stripe que ha comprado el usuario
  * @param {*} type Dato que especifica que tipo de suscripción ha adquiridado el ussuario
  */
+/*
 async function createAccounts(dataUser, customer, referenciaPlan, product, type) {
   const rol = admin.firestore().collection("roles")
       .doc("customer");
@@ -407,6 +407,7 @@ async function createAccounts(dataUser, customer, referenciaPlan, product, type)
         .catch((err) => console.error(err));
   }
 }
+*/
 /**
  * Función para enviar un correo con la información de para poder ingresar a la app
  * @param {*} data datos del usuario
@@ -414,6 +415,7 @@ async function createAccounts(dataUser, customer, referenciaPlan, product, type)
  * @param {*} transporter servicio de transporte para enviar el correo con el servicio de nodemailer
  * @param {Boolean} upgrade Valor booleano para identificar si el correo será cuando se un usuario ha hecho upgrade del plan
  */
+/*
 async function sendMailInvrtir(data, contextMail, transporter, upgrade) {
   let html;
   if (!upgrade) {
@@ -460,6 +462,7 @@ async function sendMailInvrtir(data, contextMail, transporter, upgrade) {
         });
   }
 }
+*/
 /**
  * Función para enrolar a un curso a un usuario que ha hecho la compra
  * @param {*} type Dato que especifica que tipo de suscripción ha adquiridado el usuario
@@ -467,6 +470,7 @@ async function sendMailInvrtir(data, contextMail, transporter, upgrade) {
  * @param {admin.firestore.QuerySnapshot<admin.firestore.DocumentData>} docUser  Documento de Firebase del usuario
  * @param {*} teachId  ID del usuario creado en teachable
  */
+/*
 async function updateEnroll(type, product, docUser, teachId) {
   const contextMail = {
     banner: "https://d8ff17fs33kjt.cloudfront.net/banners/Invrtir-banner+email.png",
@@ -547,11 +551,13 @@ async function updateEnroll(type, product, docUser, teachId) {
         .catch((err) => console.error(err));
   }
 }
+*/
 /**
  * Funcion para crear un link de referidos y actualizarlo en el documeto de Firebase
  * @param {String} token String que servirá como token para crear el link de referido
  * @param {admin.firestore.QuerySnapshot<admin.firestore.DocumentData>} docUser Documento de Firebase correspondiente al usuario
  */
+/*
 async function updateReferallLink(token, docUser) {
   const name = (docUser.docs[0].data().display_name).split(" ");
   token = token.replace("_", "-");
@@ -576,6 +582,7 @@ async function updateReferallLink(token, docUser) {
         console.err(error);
       });
 }
+*/
 /**
  *  Funcion para generar el link de afiliado en el Sistema de RewardFull
  * @param {*} token token para general el link de afiliado
@@ -583,6 +590,7 @@ async function updateReferallLink(token, docUser) {
  * @param {*} email email de la persona afiliada
  * @return {JSON} Link de referido
  */
+/*
 async function generateReferralLink(token, displayName, email) {
   const name = displayName.split(" ");
   token = token.replace("_", "-");
@@ -599,4 +607,5 @@ async function generateReferralLink(token, displayName, email) {
   const response = await axios(options);
   return response.data;
 }
+*/
 module.exports = router;
