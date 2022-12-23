@@ -14,7 +14,7 @@
   <%- include('partials/header') %>
   <script>
     let emailClient = '<%= customer.email %>'
-
+    console.log(emailClient);
     rewardful('convert', {
       email: emailClient
     })
