@@ -131,7 +131,7 @@
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
           <% arraryProductPricesData.forEach(function(product){ %>
           <div class="col px-3">
-            <% if (product.name==='Prueba Suscription V1' ) { %>
+            <% if (product.name==='CR-Plan 1' ) { %>
             <div class="card mb-4 rounded-3 shadow-sm">
               <div class="card-header py-3 text-white">
                 <h4 id="nameProduct" class="my-0 fw-normal">
@@ -168,7 +168,7 @@
                     <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
                       <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
 
-                        <% if (product.name==='Prueba Suscription V1' ) { %>
+                        <% if (product.name==='CR-Plan 1' ) { %>
                         <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
 
                         <ol class="list-group list-group-flush mt-3 mb-4">
@@ -198,7 +198,7 @@
                     <% } else {%>
                     <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
                       <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
-                        <% if (product.name==='Prueba Suscription V1' ) { %>
+                        <% if (product.name==='CR-Plan 1' ) { %>
                         <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
                         <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
                         <ol class="list-group list-group-flush mt-3 mb-4">

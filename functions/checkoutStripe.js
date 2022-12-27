@@ -4,9 +4,9 @@ const express = require("express");
 // const nodemailer = require("nodemailer");
 const cors = require("cors");
 // const ejs = require("ejs");
-const qs = require("qs");
-const axios = require("axios").default;
-const generator = require("generate-password");
+// const qs = require("qs");
+// const axios = require("axios").default;
+// const generator = require("generate-password");
 // eslint-disable-next-line new-cap
 const router = express.Router();
 const sdk = require("api")("@teachable/v1.0#63kp5w1zl9iqeony");
@@ -34,10 +34,16 @@ router.use(cors({origin: true}));
 router.get("/", async function(req, res, next) {
   const formatoDeMoneda = (num) => `${num.slice(0, -2)}.${num.slice(-2)}`;
   const arraryProductPrices = [];
-  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
+  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_DEV);
+  /*
   let products = await stripe.products.search({
     // eslint-disable-next-line no-useless-escape
     query: "active:'true' AND metadata['Plan']:'Prueba'",
+  });
+  */
+  let products = await stripe.products.search({
+    // eslint-disable-next-line no-useless-escape
+    query: "active:'true'",
   });
   products = products.data;
   for (let i = 0; i < products.length; i++) {
@@ -81,23 +87,27 @@ router.get("/", async function(req, res, next) {
     }
   }
   // eslint-disable-next-line max-len
-  res.render("landingForex_dev", {arraryProductPricesData: arraryProductPrices});
+  res.render("landingForex_dev", {
+    arraryProductPricesData: arraryProductPrices,
+  });
 });
 router.get("/success", async function(req, res, next) {
   sdk.auth(process.env.KEY_TEACHEABLE);
-  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
+  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_DEV);
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
   const customer = await stripe.customers.retrieve(session.customer);
   const subscription = await stripe.subscriptions.retrieve(
       session.subscription,
   );
+  /*
   const token = generator.generate({
     length: 10,
     strict: true,
   });
+  */
   // const dataPrice = subscription.items.data[0].price;
   const product = await stripe.products.retrieve(subscription.plan.product);
-  await generateReferralLink(token, customer.name, customer.email);
+  // await generateReferralLink(token, customer.name, customer.email);
   /*
   // eslint-disable-next-line max-len
   const referenciaPlan = admin.firestore().collection("plans")
@@ -162,7 +172,7 @@ router.get("/success", async function(req, res, next) {
   });
 });
 router.post("/payPlan", async function(req, res, next) {
-  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
+  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_DEV);
   const referralCode = req.body.referral;
   const idPrice = req.body.idPrice;
   const session = await stripe.checkout.sessions.create({
@@ -595,10 +605,16 @@ async function updateReferallLink(token, docUser) {
  * @param {*} email email de la persona afiliada
  * @return {JSON} Link de referido
  */
+/*
 async function generateReferralLink(token, displayName, email) {
   const name = displayName.split(" ");
   token = token.replace("_", "-");
-  const data = {"first_name": name[0], "last_name": name[1], "email": email, "token": token};
+  const data = {
+    first_name: name[0],
+    last_name: name[1],
+    email: email,
+    token: token,
+  };
   const options = {
     method: "POST",
     headers: {
@@ -608,7 +624,20 @@ async function generateReferralLink(token, displayName, email) {
     data: qs.stringify(data),
     url: "https://api.getrewardful.com/v1/affiliates",
   };
-  const response = await axios(options);
-  return response.data;
+  let response;
+  await axios(options)
+      .then(async function(responseRW) {
+        response = responseRW.data;
+      })
+      .catch(function(error) {
+        if (error.response !== undefined) {
+          const mensaje = error.response.data.mensaje;
+          console.log(mensaje);
+        } else {
+          console.error(error);
+        }
+      });
+  return response;
 }
+*/
 module.exports = router;
