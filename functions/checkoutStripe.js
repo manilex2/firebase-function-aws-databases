@@ -34,17 +34,17 @@ router.use(cors({origin: true}));
 router.get("/", async function(req, res, next) {
   const formatoDeMoneda = (num) => `${num.slice(0, -2)}.${num.slice(-2)}`;
   const arraryProductPrices = [];
-  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_DEV);
-  /*
+  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   let products = await stripe.products.search({
     // eslint-disable-next-line no-useless-escape
     query: "active:'true' AND metadata['Plan']:'Prueba'",
   });
-  */
+  /*
   let products = await stripe.products.search({
     // eslint-disable-next-line no-useless-escape
     query: "active:'true'",
   });
+  */
   products = products.data;
   for (let i = 0; i < products.length; i++) {
     const productsPrices = {};
@@ -86,14 +86,15 @@ router.get("/", async function(req, res, next) {
       arraryProductPrices.push(productsPrices);
     }
   }
+  console.log(arraryProductPrices);
   // eslint-disable-next-line max-len
-  res.render("landingForex_dev", {
+  res.render("landingForex_dev2", {
     arraryProductPricesData: arraryProductPrices,
   });
 });
 router.get("/success", async function(req, res, next) {
   sdk.auth(process.env.KEY_TEACHEABLE);
-  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_DEV);
+  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
   const customer = await stripe.customers.retrieve(session.customer);
   const subscription = await stripe.subscriptions.retrieve(
@@ -166,15 +167,16 @@ router.get("/success", async function(req, res, next) {
         .catch((err) => console.error(err));
   }
   */
-  res.render("success_StripeCheckout_dev", {
+  res.render("success_StripeCheckout_dev2", {
     customer: customer,
     product: product,
   });
 });
 router.post("/payPlan", async function(req, res, next) {
-  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_DEV);
+  const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   const referralCode = req.body.referral;
   const idPrice = req.body.idPrice;
+  console.log(referralCode);
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
