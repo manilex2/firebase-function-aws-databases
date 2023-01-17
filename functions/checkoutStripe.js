@@ -602,7 +602,7 @@ async function updateReferallLink(token, docUser) {
  *  Funcion para generar el link de afiliado en el Sistema de RewardFull
  * @param {*} token token para general el link de afiliado
  * @param {*} displayName nombre de la persona afiliada
- * @param {*} email email de la persona afiliada
+ * @param { *} email email de la persona afiliada
  * @return {JSON} Link de referido
  */
 /*
