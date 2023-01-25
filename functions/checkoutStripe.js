@@ -88,7 +88,7 @@ router.get("/", async function(req, res, next) {
   }
   console.log(arraryProductPrices);
   // eslint-disable-next-line max-len
-  res.render("landingForex_dev2", {
+  res.render("landing_forex_v2", {
     arraryProductPricesData: arraryProductPrices,
   });
 });
