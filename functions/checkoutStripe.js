@@ -33,11 +33,11 @@ const contextMail = {
 router.use(cors({origin: true}));
 router.get("/", async function(req, res, next) {
   const formatoDeMoneda = (num) => `${num.slice(0, -2)}.${num.slice(-2)}`;
-  const arraryProductPrices = [];
+  const jsonProductPrices = {};
   const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   let products = await stripe.products.search({
     // eslint-disable-next-line no-useless-escape
-    query: "active:'true' AND metadata['Plan']:'Prueba'",
+    query: "active:'true' AND metadata['Version']:'InvrtirFX'",
   });
   /*
   let products = await stripe.products.search({
@@ -65,9 +65,21 @@ router.get("/", async function(req, res, next) {
         productsPrices["name"] = products[i].name;
         productsPrices["description"] = products[i].description;
         infoPrices["id"] = prices[j].id;
-        if (prices[j].recurring.interval === "week") {
-          infoPrices["type"] = "Semanal";
-          infoPrices["order"] = 1;
+        if (
+          prices[j].recurring.interval === "month" &&
+          prices[j].recurring.interval_count == 6
+        ) {
+          infoPrices["type"] = "Semestral";
+        } else if (
+          prices[j].recurring.interval === "month" &&
+          prices[j].recurring.interval_count == 3
+        ) {
+          infoPrices["type"] = "Trimestral";
+        } else if (
+          prices[j].recurring.interval === "month" &&
+          prices[j].recurring.interval_count == 1
+        ) {
+          infoPrices["type"] = "Mensual";
         } else if (prices[j].recurring.interval === "year") {
           infoPrices["type"] = "Anual";
           infoPrices["order"] = 2;
@@ -76,20 +88,25 @@ router.get("/", async function(req, res, next) {
         infoPrices["valor"] = formatoDeMoneda(prices[j].unit_amount_decimal);
 
         arrayPrices.push(infoPrices);
-
         productsPrices["prices"] = arrayPrices;
       }
     }
     if (Object.keys(productsPrices).length > 0) {
       const oJSON = await sortJSON(productsPrices["prices"], "order", "asc");
       productsPrices["prices"] = oJSON;
-      arraryProductPrices.push(productsPrices);
+      jsonProductPrices[productsPrices["id"]] = productsPrices;
     }
   }
-  console.log(arraryProductPrices);
+  /*
+  for (const key in jsonProductPrices) {
+    if (Object.prototype.hasOwnProperty.call(jsonProductPrices, key)) {
+      console.log(jsonProductPrices[key].prices);
+    }
+  }
+  */
   // eslint-disable-next-line max-len
   res.render("landing_forex_v2", {
-    arraryProductPricesData: arraryProductPrices,
+    jsonProductPrices: jsonProductPrices,
   });
 });
 router.get("/success", async function(req, res, next) {

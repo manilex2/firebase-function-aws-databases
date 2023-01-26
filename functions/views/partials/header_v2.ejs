@@ -31,11 +31,16 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 <style>
   body {
-        background-image: url("https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/fondo-mini-landing.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-  #containerGeneral{
+    background-image: url("https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/fondo-mini-landing.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Montserrat';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #containerGeneral {
     background-color: rgba(255, 255, 255, 0.85);
   }
 
@@ -43,15 +48,35 @@
     background-color: white;
     border: 2px solid blue;
     border-radius: 12px;
+    box-shadow: 5px 10px #5c5b5b;
   }
-  .plusPaquete{
+
+  .tituloSubPaquete {
+    color: #040CB4;
+    font-weight: 600;
+  }
+
+  .subtituloPlan {
+    color: #FF6601;
+    font-weight: 400;
+    font-size: 17px;
+  }
+
+  .tituloPlan {
+    color: #040CB4;
+    font-weight: bold;
+  }
+
+  .plusPaquete {
     margin-left: 10px;
     margin-right: 10px;
   }
+
   .logo {
     margin: auto;
     width: 180px;
   }
+
   .textoDescripcionPlan {
     font-size: 12px;
     line-height: 1;
@@ -59,24 +84,58 @@
 
   .logoPaquete {
     margin: auto;
-    width: 60px;
+    width: 45px;
   }
+
+  .plusPaquete {
+    color: #040CB4;
+  }
+
+  .col .btn.btn-primary {
+    background: linear-gradient(to right, #FF6601, #FFB688);
+    border-color: rgba(255, 255, 255, 0.85);
+  }
+
   .textoDescripcionPaquete {
     font-size: 14px;
     line-height: 1;
   }
+
   @media (min-width: 768px) {
-    .planesCol1{
-    border-left: 2px dotted orange;
-    border-right: 2px dotted orange;
+
+    .custom-separator {
+      border-left: 2px dotted orange;
     }
 
-    .precioPlanTop{
+    .firstSection {
       border-bottom: 2px dotted orange;
     }
+
+    .secondPlan {
+      border-left: 2px dotted orange;
+    }
   }
-  @media (max-width: 575.98px) { 
-    .precioPlanTop, .precioPlanBottom{
+
+  @media (max-width: 991.98px) {
+    .firstSection {
+      border-top: 2px dotted orange;
+      border-bottom: 2px dotted orange;
+    }
+
+
+
+    #planesInfo {
+      flex-direction: column;
+    }
+
+    #thirdBlock {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width:575.98px) {
+    .firstPlan {
       border-bottom: 2px dotted orange;
     }
   }
