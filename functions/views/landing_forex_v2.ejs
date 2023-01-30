@@ -11,32 +11,33 @@
 
 <body>
   <div id="containerGeneral" class="container mx-2 px-4 py-4 min-vh-100">
-    <div class="row my-sm-5 my-3 mx-auto">
+    <div class="row my-sm-5 text-center my-3 mx-auto">
       <div class="col-sm-12"><img class="logo" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/Invrtir+Fx+-+logo.png"></div>
       <div class="col-sm-12">
-        <h1>¡Elige el plan que mejor se adapte a ti!</h1>
+        <h1 class="tituloGeneral">¡Elige el plan que mejor se adapte a ti!</h1>
       </div>
     </div>
     <div id="planesInfo" class="d-flex  flex-lg-row flex-column my-sm-5 my-3">
-      <div class="col flex-fill cardsPaquete me-sm-3 p-3 ">
-        <form action="/planesForex/payPlan" method="post" data-rewardful="true">
+      <% jsonProductPrices["prod_NEGSEJF0dgdFGv"].prices.forEach(function(price){ %>
+      <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
+        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
           <div class="row row-cols-1">
             <div class="col">
-              <h4 class="tituloPlan" style="text-align:center">PAQUETE INVERSIONISTA</h4>
+              <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGSEJF0dgdFGv"].name%></h4>
             </div>
             <div class="col my-3">
               <div class="row">
                 <div class="col-5">
-                  <img class="img-fluid d-block" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/Paq-inversionista-logo.svg">
+                  <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGSEJF0dgdFGv"].img%>>
                 </div>
                 <div class="col-7">
                   <div class="row row-cols-1">
                     <div class="col">
-                      <h5 class="subtituloPlan">Crypto + Acciones</h4>
+                      <h5 class="subtituloPlan"><%=price.name%></h4>
                     </div>
                     <div class="col">
                       <p class="textoDescripcionPlan">
-                        Este paquete incluye <strong>información y herramientas</strong> para invertir en <strong>acciones y criptomonedas</strong> , con el objetivo de brindarte las herramientas para convertirte en un inversionista exitoso, generando <strong>ganancias a mediano y largo plazo</strong>.
+                        <%- jsonProductPrices["prod_NEGSEJF0dgdFGv"].description %>
                       </p>
                     </div>
                   </div>
@@ -45,8 +46,8 @@
             </div>
             <div class="col mb-3">
               <div class="d-flex justify-content-center align-items-end">
-                <h2>$80</h2>
-                <p>/mensual</p>
+                <h2 class="valuePrecio">$<%=price.value %></h2>
+                <p>/<%=price.type %></p>
               </div>
             </div>
             <div class="col">
@@ -55,104 +56,138 @@
             </div>
           </div>
         </form>
-
       </div>
-      <div class="col flex-fill cardsPaquete me-sm-3 p-3">
-        <div class="row row-cols-1">
-          <div class="col">
-            <h4 class="tituloPlan">Paquete Inversionista</h4>
-          </div>
-          <div class="col">
-            <div class="row">
-              <div class="col-6">
-                logo
-              </div>
-              <div class="col-6">
-                <div class="row row-cols-1">
-                  <div class="col">
-                    <h5>Crypto + Acciones</h4>
-                  </div>
-                  <div class="col">
-                    <p class="textoDescripcionPlan">
-                      Este paquete incluye información y herramientas para invertir en acciones y criptomonedas, con el objetivo de brindarte las herramientas para convertirte en un inversionista exitoso, generando ganancias a mediano y largo plazo.
-                    </p>
+      <% }); %>
+      <% jsonProductPrices["prod_NEGUz31rPHbrxv"].prices.forEach(function(price){ %>
+      <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
+        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+          <div class="row row-cols-1">
+            <div class="col">
+              <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGUz31rPHbrxv"].name%></h4>
+            </div>
+            <div class="col my-3">
+              <div class="row">
+                <div class="col-5">
+                  <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGUz31rPHbrxv"].img%>>
+                </div>
+                <div class="col-7">
+                  <div class="row row-cols-1">
+                    <div class="col">
+                      <h5 class="subtituloPlan"><%=price.name%></h4>
+                    </div>
+                    <div class="col">
+                      <p class="textoDescripcionPlan">
+                        <%- jsonProductPrices["prod_NEGUz31rPHbrxv"].description %>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col">$80/mensual</div>
-          <div class="col">Suscribirme</div>
-        </div>
-      </div>
-      <div class="col flex-fill cardsPaquete me-sm-3 p-3">
-        <div class="row row-cols-1">
-          <div class="col">
-            <h4>Paquete Inversionista</h4>
-          </div>
-          <div class="col">
-            <div class="row">
-              <div class="col-6">
-                logo
+            <div class="col mb-3">
+              <div class="d-flex justify-content-center align-items-end">
+                <h2 class="valuePrecio">$<%=price.value %></h2>
+                <p>/<%=price.type %></p>
               </div>
-              <div class="col-6">
-                <div class="row row-cols-1">
-                  <div class="col">
-                    <h5>Crypto + Acciones</h4>
-                  </div>
-                  <div class="col">
-                    <p class="textoDescripcionPlan">
-                      Este paquete incluye información y herramientas para invertir en acciones y criptomonedas, con el objetivo de brindarte las herramientas para convertirte en un inversionista exitoso, generando ganancias a mediano y largo plazo.
-                    </p>
+            </div>
+            <div class="col">
+              <input type="hidden" name="idPrice" value=<%=price.id %>>
+              <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+            </div>
+          </div>
+        </form>
+      </div>
+      <% }); %>
+      <% jsonProductPrices["prod_NEGVS5wjnUjQD5"].prices.forEach(function(price){ %>
+      <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
+        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+          <div class="row row-cols-1">
+            <div class="col">
+              <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGVS5wjnUjQD5"].name%></h4>
+            </div>
+            <div class="col my-3">
+              <div class="row">
+                <div class="col-5">
+                  <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGVS5wjnUjQD5"].img%>>
+                </div>
+                <div class="col-7">
+                  <div class="row row-cols-1">
+                    <div class="col">
+                      <h5 class="subtituloPlan"><%=price.name%></h4>
+                    </div>
+                    <div class="col">
+                      <p class="textoDescripcionPlan">
+                        <%- jsonProductPrices["prod_NEGVS5wjnUjQD5"].description %>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col">$80/mensual</div>
-          <div class="col">Suscribirme</div>
-        </div>
-      </div>
-      <div class="col flex-fill cardsPaquete p-3">
-        <div class="row row-cols-1">
-          <div class="col">
-            <h4>Paquete Inversionista</h4>
-          </div>
-          <div class="col">
-            <div class="row">
-              <div class="col-6">
-                logo
+            <div class="col mb-3">
+              <div class="d-flex justify-content-center align-items-end">
+                <h2 class="valuePrecio">$<%=price.value %></h2>
+                <p>/<%=price.type %></p>
               </div>
-              <div class="col-6">
-                <div class="row row-cols-1">
-                  <div class="col">
-                    <h5>Crypto + Acciones</h4>
-                  </div>
-                  <div class="col">
-                    <p class="textoDescripcionPlan">
-                      Este paquete incluye información y herramientas para invertir en acciones y criptomonedas, con el objetivo de brindarte las herramientas para convertirte en un inversionista exitoso, generando ganancias a mediano y largo plazo.
-                    </p>
+            </div>
+            <div class="col">
+              <input type="hidden" name="idPrice" value=<%=price.id %>>
+              <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+            </div>
+          </div>
+        </form>
+      </div>
+      <% }); %>
+      <% jsonProductPrices["prod_NEGYV3pHNlrTJ6"].prices.forEach(function(price){ %>
+      <div class="col flex-fill align-items-center cardsPaquete me-lg-3 mb-2 mt-3 p-3 ">
+        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+          <div class="row row-cols-1">
+            <div class="col">
+              <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGYV3pHNlrTJ6"].name%></h4>
+            </div>
+            <div class="col my-3">
+              <div class="row">
+                <div class="col-5">
+                  <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGYV3pHNlrTJ6"].img%>>
+                </div>
+                <div class="col-7">
+                  <div class="row row-cols-1">
+                    <div class="col">
+                      <h5 class="subtituloPlan"><%=price.name%></h4>
+                    </div>
+                    <div class="col">
+                      <p class="textoDescripcionPlan">
+                        <%- jsonProductPrices["prod_NEGYV3pHNlrTJ6"].description %>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="col mb-3">
+              <div class="d-flex justify-content-center align-items-end">
+                <h2 class="valuePrecio">$<%=price.value %></h2>
+                <p>/<%=price.type %></p>
+              </div>
+            </div>
+            <div class="col">
+              <input type="hidden" name="idPrice" value=<%=price.id %>>
+              <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+            </div>
           </div>
-          <div class="col">$80/mensual</div>
-          <div class="col">Suscribirme</div>
-        </div>
+        </form>
       </div>
+      <% }); %>
     </div>
     <div id="thirdBlock" class="row cardsPaquete row-cols-1 mx-auto my-sm-5 my-3">
       <div class="col-lg-4  p-3">
         <div class="row align-items-center row-cols-1">
           <div class="col">
-            <h4 class="tituloPlan" style="text-align:center">MEMBRESIA PREMIUM</h4>
+            <h4 class="tituloPlan" style="text-align:center"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].name %></h4>
           </div>
-          <img class="logo my-3" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/membresia-logo.svg">
+          <img class="logo my-3" src=<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].img %>>
           <div class="col">
-            <p class="m-4 textoDescripcionPaquete">
-              Obtén acceso a acciones, criptomonedas, forex, índices sintéticos y una sección exclusiva de <strong>desarrollo personal</strong> con un <strong style="color:  #FF6601;">solo click</strong>.
-            </p>
+            <%- jsonProductPrices["prod_NEGbU8IfMKmzzF"].description %>
           </div>
           <div class="d-flex justify-content-around flex-row">
             <div class="flex-fill ">
@@ -179,90 +214,120 @@
           <div class="col firstSection">
             <div class="row align-items-center row-cols-sm-2 row-cols-1">
               <div class="col firstPlan">
-                <div class="row  row-cols-1 p-3">
-                  <div class="col">
-                    <h4 style="text-align:center" class="tituloSubPaquete">MASTER</h4>
-                  </div>
-                  <div class="col">
-                    <div class="d-flex justify-content-center align-items-end">
-                      <h1>$157</h1>
-                      <p>/mensual</p>
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                  <div class="row  row-cols-1 p-3">
+                    <div class="col">
+                      <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].name %></h4>
                     </div>
+                    <div class="col">
+                      <div class="d-flex justify-content-center align-items-end">
+                        <h1 class="valuePrecio">$<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].value %></h1>
+                        <p>/<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].type %></p>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <input type="hidden" name="idPrice" value=<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].id %>>
+                      <input type="hidden" name="discountCode" value="YUfpn0SD">
+                      <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+                    </div>
+                    <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].savings!=='0' ) { %>
+                    <div class="col mt-3">
+                      <div class="d-flex justify-content-center">
+                        <p> <strong> Ahorro: </strong></p>
+                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].savings%></strong></p>
+                      </div>
+                    </div>
+                    <% } %>
                   </div>
-                  <div class="col">
-                    <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
-                  </div>
-                </div>
+                </form>
               </div>
               <div class="col secondPlan">
-                <div class="row row-cols-1 p-3">
-                  <div class="col">
-                    <h4 style="text-align:center">MASTER</h4>
-                  </div>
-                  <div class="col">
-                    <div class="d-flex justify-content-center align-items-end">
-                      <h1>$157</h1>
-                      <p>/mensual</p>
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                  <div class="row  row-cols-1 p-3">
+                    <div class="col">
+                      <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].name %></h4>
                     </div>
-                  </div>
-                  <div class="col">
-                    <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
-                  </div>
-                  <div class="col mt-3">
-                    <div class="d-flex justify-content-center">
-                      <p> <strong> Ahorro:</strong></p>
-                      <p><strong style="color:  #FF6601;"> $74</strong></p>
+                    <div class="col">
+                      <div class="d-flex justify-content-center align-items-end">
+                        <h1 class="valuePrecio">$<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].value %></h1>
+                        <p>/<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].type %></p>
+                      </div>
                     </div>
+                    <div class="col">
+                      <input type="hidden" name="idPrice" value=<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].id %>>
+                      <input type="hidden" name="discountCode" value="uuNgy9xI">
+                      <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+                    </div>
+                    <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].savings!=='0' ) { %>
+                    <div class="col mt-3">
+                      <div class="d-flex justify-content-center">
+                        <p> <strong> Ahorro: </strong></p>
+                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].savings%></strong></p>
+                      </div>
+                    </div>
+                    <% } %>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
           <div class="col">
             <div class="row align-items-center row-cols-sm-2 row-cols-1">
               <div class="col firstPlan">
-                <div class="row  row-cols-1 p-3">
-                  <div class="col">
-                    <h4>MASTER</h4>
-                  </div>
-                  <div class="col">
-                    <div class="d-flex align-items-end">
-                      <h1>$157</h1>
-                      <p>/mensual</p>
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                  <div class="row  row-cols-1 p-3">
+                    <div class="col">
+                      <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].name %></h4>
                     </div>
-                  </div>
-                  <div class="col">
-                    <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
-                  </div>
-                  <div class="col">
-                    <div class="d-flex">
-                      <p>Ahorro:</p>
-                      <p>$74</p>
+                    <div class="col">
+                      <div class="d-flex justify-content-center align-items-end">
+                        <h1 class="valuePrecio">$<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].value %></h1>
+                        <p>/<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].type %></p>
+                      </div>
                     </div>
+                    <div class="col">
+                      <input type="hidden" name="idPrice" value=<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].id %>>
+                      <input type="hidden" name="discountCode" value="F1AJeG7J">
+                      <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+                    </div>
+                    <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].savings!=='0' ) { %>
+                    <div class="col mt-3">
+                      <div class="d-flex justify-content-center">
+                        <p> <strong> Ahorro: </strong></p>
+                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].savings%></strong></p>
+                      </div>
+                    </div>
+                    <% } %>
                   </div>
-                </div>
+                </form>
               </div>
               <div class="col secondPlan">
-                <div class="row row-cols-1 p-3">
-                  <div class="col">
-                    <h4>MASTER</h4>
-                  </div>
-                  <div class="col">
-                    <div class="d-flex align-items-end">
-                      <h1>$157</h1>
-                      <p>/mensual</p>
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                  <div class="row  row-cols-1 p-3">
+                    <div class="col">
+                      <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].name %></h4>
                     </div>
-                  </div>
-                  <div class="col">
-                    <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
-                  </div>
-                  <div class="col">
-                    <div class="d-flex">
-                      <p>Ahorro:</p>
-                      <p>$74</p>
+                    <div class="col">
+                      <div class="d-flex justify-content-center align-items-end">
+                        <h1 class="valuePrecio">$<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].value %></h1>
+                        <p>/<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].type %></p>
+                      </div>
                     </div>
+                    <div class="col">
+                      <input type="hidden" name="idPrice" value=<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].id %>>
+                      <input type="hidden" name="discountCode" value="1zPcm4VV">
+                      <input class="btn btn-primary w-100" type="submit" value="Suscriberse">
+                    </div>
+                    <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].savings!=='0' ) { %>
+                    <div class="col mt-3">
+                      <div class="d-flex justify-content-center">
+                        <p> <strong> Ahorro: </strong></p>
+                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].savings%></strong></p>
+                      </div>
+                    </div>
+                    <% } %>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>

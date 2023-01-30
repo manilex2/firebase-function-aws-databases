@@ -62,48 +62,30 @@ router.get("/", async function(req, res, next) {
       ) {
         const infoPrices = {};
         productsPrices["id"] = products[i].id;
-        productsPrices["name"] = products[i].name;
-        productsPrices["description"] = products[i].description;
+        productsPrices["name"] = products[i].metadata.Nombre;
+        productsPrices["description"] = products[i].metadata.DescripcionHtml;
+        productsPrices["img"] = products[i].metadata.Imagen;
         infoPrices["id"] = prices[j].id;
-        if (
-          prices[j].recurring.interval === "month" &&
-          prices[j].recurring.interval_count == 6
-        ) {
-          infoPrices["type"] = "Semestral";
-        } else if (
-          prices[j].recurring.interval === "month" &&
-          prices[j].recurring.interval_count == 3
-        ) {
-          infoPrices["type"] = "Trimestral";
-        } else if (
-          prices[j].recurring.interval === "month" &&
-          prices[j].recurring.interval_count == 1
-        ) {
-          infoPrices["type"] = "Mensual";
-        } else if (prices[j].recurring.interval === "year") {
-          infoPrices["type"] = "Anual";
-          infoPrices["order"] = 2;
-        }
-        infoPrices["img"] = prices[j].nickname;
-        infoPrices["valor"] = formatoDeMoneda(prices[j].unit_amount_decimal);
-
+        infoPrices["type"] = prices[j].metadata.Tipo;
+        infoPrices["name"] = prices[j].metadata.Nombre;
+        infoPrices["savings"] = prices[j].metadata.Ahorro;
+        infoPrices["value"] = Number(formatoDeMoneda(prices[j].unit_amount_decimal));
         arrayPrices.push(infoPrices);
         productsPrices["prices"] = arrayPrices;
       }
     }
     if (Object.keys(productsPrices).length > 0) {
-      const oJSON = await sortJSON(productsPrices["prices"], "order", "asc");
+      const oJSON = await sortJSON(productsPrices["prices"], "value", "desc");
       productsPrices["prices"] = oJSON;
       jsonProductPrices[productsPrices["id"]] = productsPrices;
     }
   }
-  /*
+  console.log(jsonProductPrices);
   for (const key in jsonProductPrices) {
     if (Object.prototype.hasOwnProperty.call(jsonProductPrices, key)) {
-      console.log(jsonProductPrices[key].prices);
+      console.log(jsonProductPrices[key]);
     }
   }
-  */
   // eslint-disable-next-line max-len
   res.render("landing_forex_v2", {
     jsonProductPrices: jsonProductPrices,
@@ -193,7 +175,8 @@ router.post("/payPlan", async function(req, res, next) {
   const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   const referralCode = req.body.referral;
   const idPrice = req.body.idPrice;
-  console.log(referralCode);
+  const discountCode = req.body.discountCode;
+  console.log(discountCode);
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -202,6 +185,9 @@ router.post("/payPlan", async function(req, res, next) {
       },
     ],
     mode: "subscription",
+    discounts: [{
+      coupon: discountCode,
+    }],
     // eslint-disable-next-line max-len
     success_url: `${process.env.HOST_DOMAIN_INVRTIR_DEV}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
     // eslint-disable-next-line max-len
