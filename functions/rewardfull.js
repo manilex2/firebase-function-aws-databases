@@ -1,8 +1,8 @@
 const express = require("express");
+const admin = require("firebase-admin");
 const cors = require("cors");
 const qs = require("qs");
 const axios = require("axios").default;
-const crypto = require("crypto");
 // eslint-disable-next-line new-cap
 const router = express.Router();
 router.use(cors({origin: true}));
@@ -59,21 +59,51 @@ router.post("/updateAffiliate", async function(req, res) {
         }
       });
 });
+router.post("/getInformationTeam", async function(req, res) {
+  const idDoc = req.body.idDoc;
+  const docAffiliate = admin.firestore().collection("affiliates").doc(idDoc);
+  const team = (await docAffiliate.get()).data().levels_1;
+  let total = 0;
+  let totalSaleTeam = 0;
+  for (const reference of team) {
+    const documentSnapshot = await reference.get();
+    if (documentSnapshot.exists) {
+      const subcollection = reference.collection("referrals");
+      const subcollectionSnapshot = await subcollection.get();
+      total += subcollectionSnapshot.docs.length;
+      totalSaleTeam += documentSnapshot.data().total_sale_direct_month;
+    }
+  }
+  res.status(200).json({
+    status: 200,
+    title: "Top Vendedores",
+    data: {
+      totalTeam: total,
+      totalSaleTeam: totalSaleTeam,
+    },
+  });
+});
+router.post("/topSellers", async (req, res) => {
+  res.set("Content-Type", "application/json");
+  const top = req.body.top;
+  const idDoc = req.body.idDoc;
+  const docAffiliate = admin.firestore().collection("affiliates").doc(idDoc);
+  const team = (await docAffiliate.get()).data().levels_1;
+  const promises = team.map(async (reference) => {
+    const doc = await reference.get();
+    return {
+      id: reference.id,
+      reference: doc,
+      value: doc.data()["total_sale_general"],
+    };
+  });
 
-router.post("/hook", async function(req, res) {
-  console.log(req.body);
-  console.log(req.headers["X-Rewardful-Signature"]);
-  // eslint-disable-next-line max-len
-  const hmac = crypto
-      .createHmac("sha256", "7b988555a090e7fbac4fe8a85d7c44d2")
-      .update("invrtir")
-      .digest("hex");
-  // eslint-disable-next-line max-len
-  const result = crypto.timingSafeEqual(
-      Buffer.from(hmac),
-      Buffer.from(req.headers["X-Rewardful-Signature"]),
-  );
-  console.log(result);
-  res.status(200).end();
+  const documents = await Promise.all(promises);
+  documents.sort((a, b) => b.value - a.value);
+  res.status(200).json({
+    status: 200,
+    title: "Top Vendedores",
+    data: documents.slice(0, top),
+  });
 });
 module.exports = router;
