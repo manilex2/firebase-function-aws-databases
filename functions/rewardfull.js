@@ -94,7 +94,7 @@ router.post("/topSellers", async (req, res) => {
     return {
       id: reference.id,
       reference: doc,
-      value: doc.data()["total_sale_general"],
+      value: doc.data()["total_sale_accumulate_month"],
     };
   });
 
