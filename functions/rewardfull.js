@@ -106,4 +106,26 @@ router.post("/topSellers", async (req, res) => {
     data: documents.slice(0, top),
   });
 });
+router.post("/actuallyGoal", async (req, res) => {
+  res.set("Content-Type", "application/json");
+  const accumulateMonth = req.body.total_sale_accumulate_month;
+  const goals = (await admin.firestore().collection("goals_affiliaton")
+      .orderBy("min_sale", "asc").get()).docs;
+  for (let j = 0; j < goals.length; j++) {
+    // eslint-disable-next-line max-len
+    if (goals[j].data().min_sale < accumulateMonth && goals[j].data().max_sale >= accumulateMonth) {
+      res.status(200).json({
+        status: 200,
+        title: "Meta actual",
+        meta_id: goals[j].data().meta_id,
+        idReference: goals[j].id,
+      });
+    }
+  }
+  res.status(400).json({
+    status: 400,
+    title: "No Hay Meta",
+    idReference: null,
+  });
+});
 module.exports = router;
