@@ -12,7 +12,7 @@
 <body>
   <div id="containerGeneral" class="container mx-2 px-4 py-4 min-vh-100">
     <div class="row my-sm-5 text-center my-3 mx-auto">
-      <div class="col-sm-12"><img class="logo" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/Invrtir+Fx+-+logo.png"></div>
+      <div class="col-sm-12"><img class="logo" src="https://d8ff17fs33kjt.cloudfront.net/logos/logo-invrtir%2B.png"></div>
       <div class="col-sm-12">
         <h1 class="tituloGeneral">¡Elige el plan que mejor se adapte a ti!</h1>
       </div>
@@ -20,7 +20,7 @@
     <div id="planesInfo" class="d-flex  flex-lg-row flex-column my-sm-5 my-3">
       <% jsonProductPrices["prod_NEGSEJF0dgdFGv"].prices.forEach(function(price){ %>
       <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
-        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
           <div class="row row-cols-1">
             <div class="col">
               <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGSEJF0dgdFGv"].name%></h4>
@@ -58,7 +58,7 @@
       <% }); %>
       <% jsonProductPrices["prod_NEGUz31rPHbrxv"].prices.forEach(function(price){ %>
       <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
-        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
           <div class="row row-cols-1">
             <div class="col">
               <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGUz31rPHbrxv"].name%></h4>
@@ -96,7 +96,7 @@
       <% }); %>
       <% jsonProductPrices["prod_NEGVS5wjnUjQD5"].prices.forEach(function(price){ %>
       <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
-        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
           <div class="row row-cols-1">
             <div class="col">
               <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGVS5wjnUjQD5"].name%></h4>
@@ -134,7 +134,7 @@
       <% }); %>
       <% jsonProductPrices["prod_NEGYV3pHNlrTJ6"].prices.forEach(function(price){ %>
       <div class="col flex-fill align-items-center cardsPaquete me-lg-3 mb-2 mt-3 p-3 ">
-        <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+        <form id="<%=price.id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
           <div class="row row-cols-1">
             <div class="col">
               <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGYV3pHNlrTJ6"].name%></h4>
@@ -206,7 +206,7 @@
           <div class="col firstSection">
             <div class="row align-items-center row-cols-sm-2 row-cols-1">
               <div class="col firstPlan">
-                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
                   <div class="row  row-cols-1 p-3">
                     <div class="col">
                       <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].name %></h4>
@@ -234,7 +234,7 @@
                 </form>
               </div>
               <div class="col secondPlan">
-                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
                   <div class="row  row-cols-1 p-3">
                     <div class="col">
                       <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].name %></h4>
@@ -266,7 +266,7 @@
           <div class="col">
             <div class="row align-items-center row-cols-sm-2 row-cols-1">
               <div class="col firstPlan">
-                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
                   <div class="row  row-cols-1 p-3">
                     <div class="col">
                       <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].name %></h4>
@@ -294,7 +294,7 @@
                 </form>
               </div>
               <div class="col secondPlan">
-                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                <form id="<%=jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].id %>" action="/planesForex/payPlan" method="post" data-rewardful="true">
                   <div class="row  row-cols-1 p-3">
                     <div class="col">
                       <h4 style="text-align:center" class="tituloSubPaquete"><%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].name %></h4>

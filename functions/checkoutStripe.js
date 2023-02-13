@@ -69,7 +69,9 @@ router.get("/", async function(req, res, next) {
         infoPrices["type"] = prices[j].metadata.Tipo;
         infoPrices["name"] = prices[j].metadata.Nombre;
         infoPrices["savings"] = prices[j].metadata.Ahorro;
-        infoPrices["value"] = Number(formatoDeMoneda(prices[j].unit_amount_decimal));
+        infoPrices["value"] = Number(
+            formatoDeMoneda(prices[j].unit_amount_decimal),
+        );
         arrayPrices.push(infoPrices);
         productsPrices["prices"] = arrayPrices;
       }
@@ -185,13 +187,15 @@ router.post("/payPlan", async function(req, res, next) {
       },
     ],
     mode: "subscription",
-    discounts: [{
-      coupon: discountCode,
-    }],
+    discounts: [
+      {
+        coupon: discountCode,
+      },
+    ],
     // eslint-disable-next-line max-len
-    success_url: `${process.env.HOST_DOMAIN_INVRTIR_DEV}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
     // eslint-disable-next-line max-len
-    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR_DEV}/planesForex?referral=${req.body.referral}#pricing`,
+    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesForex?referral=${req.body.referral}`,
     automatic_tax: {enabled: true},
     client_reference_id: referralCode || "checkout_" + new Date().getTime(),
   });

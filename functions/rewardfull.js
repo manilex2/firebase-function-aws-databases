@@ -13,6 +13,7 @@ const axios = require("axios").default;
 const {FieldValue} = require("firebase-admin/firestore");
 // eslint-disable-next-line new-cap
 const router = express.Router();
+const generator = require("generate-password");
 // eslint-disable-next-line max-len
 router.use(cors({origin: true}));
 
@@ -114,11 +115,19 @@ router.post("/topSellers", async (req, res) => {
 });
 router.post("/actuallyGoal", async (req, res) => {
   const accumulateMonth = req.body.total_sale_accumulate_month;
-  const goals = (await admin.firestore().collection("goals_affiliaton")
-      .orderBy("min_sale", "asc").get()).docs;
+  const goals = (
+    await admin
+        .firestore()
+        .collection("goals_affiliaton")
+        .orderBy("min_sale", "asc")
+        .get()
+  ).docs;
   for (let j = 0; j < goals.length; j++) {
     // eslint-disable-next-line max-len
-    if (goals[j].data().min_sale < accumulateMonth && goals[j].data().max_sale >= accumulateMonth) {
+    if (
+      goals[j].data().min_sale < accumulateMonth &&
+      goals[j].data().max_sale >= accumulateMonth
+    ) {
       res.status(200).json({
         status: 200,
         title: "Meta actual",
@@ -134,6 +143,81 @@ router.post("/actuallyGoal", async (req, res) => {
   });
 });
 
+router.post("/createUser", async (req, res) => {
+  let status = 0;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const email = req.body.email;
+  const iduser = req.body.iduser;
+  const token = generator.generate({
+    length: 10,
+    strict: true,
+  });
+  const data = {
+    first_name: firstName,
+    last_name: lastName,
+    email: email,
+    token: token,
+  };
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+      "Authorization": `Basic ${process.env.API_KEY_REWARDFULL}`,
+    },
+    data: qs.stringify(data),
+    url: "https://api.getrewardful.com/v1/affiliates",
+  };
+  let response;
+  await axios(options)
+      .then(async function(responseRW) {
+        status = responseRW.status;
+        response = responseRW.data;
+        console.log(response);
+        const affiliate = admin.firestore().collection("affiliates").doc();
+        const user = admin.firestore().collection("users").doc(iduser);
+        await affiliate.create({
+          email: response.email,
+          state: response.state,
+          link: response.links[0].url,
+          id_link: response.links[0].id,
+          total_comission_month: 0,
+          total_comission_general: 0,
+          total_sale_general: 0,
+          total_sale_indirect_month: 0,
+          total_sale_direct_month: 0,
+          work_month: new Date().getMonth() + 1,
+          id: response.id,
+          total_sale_accumulate_month: 0,
+          id_firebase: affiliate.id,
+        });
+        await user.update({
+          affiliate_code: response.links[0].token,
+          affiliate_link: response.links[0].url,
+        });
+      })
+      .catch(function(error) {
+        status = 404;
+        if (error.response !== undefined) {
+          const mensaje = error.response.data.mensaje;
+          console.log(mensaje);
+        } else {
+          console.error(error);
+        }
+      });
+  if (status === 200) {
+    res.status(status).json({
+      status: status,
+      title: "Creacion con exito el afiliado",
+    });
+  } else {
+    res.status(404).json({
+      status: 404,
+      title: "Error en la creacion del afiliado",
+    });
+  }
+  return response;
+});
 router.post("/sellManually", async (req, res) => {
   const batch = admin.firestore().batch();
   let docRefererallRef;
@@ -143,12 +227,18 @@ router.post("/sellManually", async (req, res) => {
   const infoProduct = req.body.infoProduct;
   const refAffiliate = req.body.refAffiliate;
   const urlVoucher = req.body.urlVoucher;
-  const productFirebase = await admin.firestore().collection("plans")
-      .where("name", "==", infoProduct.name).get();
-  const variantProduct = await productFirebase.docs[0]
-      .ref.collection("variations").where("name", "==", infoProduct.recurring)
+  const productFirebase = await admin
+      .firestore()
+      .collection("plans")
+      .where("name", "==", infoProduct.name)
       .get();
-  const affiliate = admin.firestore().collection("affiliates")
+  const variantProduct = await productFirebase.docs[0].ref
+      .collection("variations")
+      .where("name", "==", infoProduct.recurring)
+      .get();
+  const affiliate = admin
+      .firestore()
+      .collection("affiliates")
       .doc(refAffiliate);
   const collectionReferrals = affiliate.collection("referrals");
   const collectionSales = affiliate.collection("sales");
@@ -162,7 +252,7 @@ router.post("/sellManually", async (req, res) => {
     recurring_product: variantProduct.docs[0].data().name,
     ref_product: productFirebase.docs[0].ref,
     ref_product_variation: variantProduct.docs[0].ref,
-    month: payDay.getMonth()+1,
+    month: payDay.getMonth() + 1,
     url_voucher: urlVoucher,
   };
   const referenceSale = collectionSales.doc();
@@ -175,7 +265,7 @@ router.post("/sellManually", async (req, res) => {
       name_client: infoClient.name,
       lastname_client: infoClient.lastname,
       belongTo: affiliate,
-      month_sale: payDay.getMonth()+1,
+      month_sale: payDay.getMonth() + 1,
       sales: FieldValue.arrayUnion(referenceSale),
       id_firebase: docRefererallRef,
       active: true,
@@ -185,10 +275,10 @@ router.post("/sellManually", async (req, res) => {
     docRefererallRef = queryReferral.docs[0].ref;
     bodySale["ref_client"] = docRefererallRef;
     // eslint-disable-next-line max-len
-    if (queryReferral.docs[0].data().month_sale != payDay.getMonth()+1) {
+    if (queryReferral.docs[0].data().month_sale != payDay.getMonth() + 1) {
       batch.update(docRefererallRef, {
         sales: FieldValue.arrayUnion(referenceSale),
-        month_sale: payDay.getMonth()+1,
+        month_sale: payDay.getMonth() + 1,
       });
     } else {
       batch.update(docRefererallRef, {
@@ -217,7 +307,9 @@ router.post("/sellManually", async (req, res) => {
       LogType: "Tail",
       Payload: JSON.stringify(response),
     };
-    const resLambda = await lambda.invoke(params).promise()
+    const resLambda = await lambda
+        .invoke(params)
+        .promise()
         .then(
             function(data) {
               console.log("Success!");
@@ -252,8 +344,11 @@ router.post("/sellManually", async (req, res) => {
 router.get("/groupSalesByDayOfWeek", async (req, res) => {
   const idAffiliate = req.query.id;
   const dateSale = new Date(req.query.date);
-  const salesRef = admin.firestore().collection("affiliates")
-      .doc(idAffiliate).collection("sales");
+  const salesRef = admin
+      .firestore()
+      .collection("affiliates")
+      .doc(idAffiliate)
+      .collection("sales");
   const startOfWeek = getStartOfWeek(dateSale);
   // const endOfWeek = getEndOfWeek(dateSale);
   const salesByDayOfWeek = [];
@@ -264,7 +359,7 @@ router.get("/groupSalesByDayOfWeek", async (req, res) => {
 
     const salesByDate = await salesRef
         .where("date", ">=", currentDay)
-        // eslint-disable-next-line max-len
+    // eslint-disable-next-line max-len
         .where("date", "<", new Date(currentDay.getTime() + 24 * 60 * 60 * 1000))
         .get()
         .then((snapshot) => {
@@ -273,7 +368,12 @@ router.get("/groupSalesByDayOfWeek", async (req, res) => {
             total += sale.data().amount;
           });
           // eslint-disable-next-line max-len
-          return {dayOfWeek: currentDay.toLocaleDateString("es-Es", {weekday: "long"}), total};
+          return {
+            dayOfWeek: currentDay.toLocaleDateString("es-Es", {
+              weekday: "long",
+            }),
+            total,
+          };
         });
     salesByDayOfWeek.push(salesByDate);
   }
