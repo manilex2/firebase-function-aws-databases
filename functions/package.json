@@ -15,7 +15,9 @@
   "main": "index.js",
   "dependencies": {
     "api": "^5.0.1",
+    "aws-sdk": "^2.1290.0",
     "bootstrap-icons": "^1.9.1",
+    "chart.js": "^4.2.1",
     "cors": "^2.8.5",
     "discord.js": "^14.1.2",
     "dotenv": "^16.0.0",
@@ -31,6 +33,7 @@
     "html-pdf-node": "^1.0.8",
     "jsreport": "^3.7.1",
     "jsreport-core": "^2.10.1",
+    "moment": "^2.29.4",
     "mysql2": "^2.3.3",
     "node-fetch": "^2.6.7",
     "nodemailer": "^6.7.8",

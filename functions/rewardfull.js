@@ -1,14 +1,22 @@
 const express = require("express");
+const AWS = require("aws-sdk");
+AWS.config.update({
+  accessKeyId: process.env.ACCESS_KEY_AWS,
+  secretAccessKey: process.env.SECRET_KEY_AWS,
+});
+AWS.config.region = "us-east-2";
+const lambda = new AWS.Lambda();
 const admin = require("firebase-admin");
 const cors = require("cors");
 const qs = require("qs");
 const axios = require("axios").default;
+const {FieldValue} = require("firebase-admin/firestore");
 // eslint-disable-next-line new-cap
 const router = express.Router();
+// eslint-disable-next-line max-len
 router.use(cors({origin: true}));
 
 router.post("/generateSSO", async function(req, res) {
-  res.set("Content-Type", "application/json");
   // eslint-disable-next-line max-len
   const response = await axios.get(
       `${process.env.URL_CREATE_AFFILIADE_REWARDFULL}/${req.body.id}/sso`,
@@ -25,7 +33,6 @@ router.post("/generateSSO", async function(req, res) {
   });
 });
 router.post("/updateAffiliate", async function(req, res) {
-  res.set("Content-Type", "application/json");
   const data = {};
   if (req.body.emailWise !== undefined && req.body.emailWise !== "") {
     data["wise_email"] = req.body.emailWise;
@@ -84,7 +91,6 @@ router.post("/getInformationTeam", async function(req, res) {
   });
 });
 router.post("/topSellers", async (req, res) => {
-  res.set("Content-Type", "application/json");
   const top = req.body.top;
   const idDoc = req.body.idDoc;
   const docAffiliate = admin.firestore().collection("affiliates").doc(idDoc);
@@ -107,7 +113,6 @@ router.post("/topSellers", async (req, res) => {
   });
 });
 router.post("/actuallyGoal", async (req, res) => {
-  res.set("Content-Type", "application/json");
   const accumulateMonth = req.body.total_sale_accumulate_month;
   const goals = (await admin.firestore().collection("goals_affiliaton")
       .orderBy("min_sale", "asc").get()).docs;
@@ -128,4 +133,180 @@ router.post("/actuallyGoal", async (req, res) => {
     idReference: null,
   });
 });
+
+router.post("/sellManually", async (req, res) => {
+  const batch = admin.firestore().batch();
+  let docRefererallRef;
+  console.log(req.body);
+  const infoClient = req.body.client;
+  const payDay = new Date(req.body.payDate);
+  const infoProduct = req.body.infoProduct;
+  const refAffiliate = req.body.refAffiliate;
+  const urlVoucher = req.body.urlVoucher;
+  const productFirebase = await admin.firestore().collection("plans")
+      .where("name", "==", infoProduct.name).get();
+  const variantProduct = await productFirebase.docs[0]
+      .ref.collection("variations").where("name", "==", infoProduct.recurring)
+      .get();
+  const affiliate = admin.firestore().collection("affiliates")
+      .doc(refAffiliate);
+  const collectionReferrals = affiliate.collection("referrals");
+  const collectionSales = affiliate.collection("sales");
+  const queryReferral = await collectionReferrals
+      .where("email", "==", infoClient.email)
+      .get();
+  const bodySale = {
+    date: payDay,
+    amount: variantProduct.docs[0].data().price,
+    name_product: productFirebase.docs[0].data().name,
+    recurring_product: variantProduct.docs[0].data().name,
+    ref_product: productFirebase.docs[0].ref,
+    ref_product_variation: variantProduct.docs[0].ref,
+    month: payDay.getMonth()+1,
+    url_voucher: urlVoucher,
+  };
+  const referenceSale = collectionSales.doc();
+  if (queryReferral.empty) {
+    docRefererallRef = collectionReferrals.doc();
+    bodySale["ref_client"] = docRefererallRef;
+    const bodyReferral = {
+      platform: "app",
+      email: infoClient.email,
+      name_client: infoClient.name,
+      lastname_client: infoClient.lastname,
+      belongTo: affiliate,
+      month_sale: payDay.getMonth()+1,
+      sales: FieldValue.arrayUnion(referenceSale),
+      id_firebase: docRefererallRef,
+      active: true,
+    };
+    batch.set(docRefererallRef, bodyReferral);
+  } else {
+    docRefererallRef = queryReferral.docs[0].ref;
+    bodySale["ref_client"] = docRefererallRef;
+    // eslint-disable-next-line max-len
+    if (queryReferral.docs[0].data().month_sale != payDay.getMonth()+1) {
+      batch.update(docRefererallRef, {
+        sales: FieldValue.arrayUnion(referenceSale),
+        month_sale: payDay.getMonth()+1,
+      });
+    } else {
+      batch.update(docRefererallRef, {
+        sales: FieldValue.arrayUnion(referenceSale),
+      });
+    }
+  }
+  batch.set(referenceSale, bodySale);
+  try {
+    await batch.commit();
+    const response = {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        status: 200,
+        idAffiliate: affiliate.id,
+        amount_sale: variantProduct.docs[0].data().price,
+        date_sale: payDay,
+      }),
+    };
+    const params = {
+      FunctionName: "invrtir-update-sale",
+      InvocationType: "RequestResponse",
+      LogType: "Tail",
+      Payload: JSON.stringify(response),
+    };
+    const resLambda = await lambda.invoke(params).promise()
+        .then(
+            function(data) {
+              console.log("Success!");
+              console.log(JSON.stringify(data));
+              return data;
+            },
+            function(error) {
+              console.log("Error");
+              console.error(error);
+              console.log(JSON.stringify(error));
+              return error;
+            },
+        );
+    const {StatusCode, Payload} = resLambda;
+    console.log({
+      StatusCode,
+      Payload,
+    });
+    const payloadReturn = JSON.parse(Payload);
+    res.status(StatusCode).json({
+      status: StatusCode,
+      payloadAWS: JSON.parse(payloadReturn.body),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      status: 400,
+      title: "Error en la creacion de la venta",
+    });
+  }
+});
+router.get("/groupSalesByDayOfWeek", async (req, res) => {
+  const idAffiliate = req.query.id;
+  const dateSale = new Date(req.query.date);
+  const salesRef = admin.firestore().collection("affiliates")
+      .doc(idAffiliate).collection("sales");
+  const startOfWeek = getStartOfWeek(dateSale);
+  // const endOfWeek = getEndOfWeek(dateSale);
+  const salesByDayOfWeek = [];
+
+  for (let i = 0; i < 7; i++) {
+    const currentDay = new Date(startOfWeek);
+    currentDay.setDate(currentDay.getDate() + i);
+
+    const salesByDate = await salesRef
+        .where("date", ">=", currentDay)
+        // eslint-disable-next-line max-len
+        .where("date", "<", new Date(currentDay.getTime() + 24 * 60 * 60 * 1000))
+        .get()
+        .then((snapshot) => {
+          let total = 0;
+          snapshot.forEach((sale) => {
+            total += sale.data().amount;
+          });
+          // eslint-disable-next-line max-len
+          return {dayOfWeek: currentDay.toLocaleDateString("es-Es", {weekday: "long"}), total};
+        });
+    salesByDayOfWeek.push(salesByDate);
+  }
+
+  return res.render("chartWeekSales", {
+    labels: salesByDayOfWeek.map((day) => day.dayOfWeek),
+    values: salesByDayOfWeek.map((day) => day.total),
+  });
+});
+
+/**
+ * Funcion para retorna la fecha de inicio de semana según una fecha dada.
+ * @param {Date} date fecha para encontrar cuando inicia la semana
+ * @return {Date} Fecha del inicio de semana
+ */
+function getStartOfWeek(date) {
+  const dayOfWeek = date.getDay();
+  const startOfWeek = new Date(date);
+  startOfWeek.setDate(startOfWeek.getDate() - (dayOfWeek - 1));
+  return startOfWeek;
+}
+
+/**
+ * Funcion para retorna la fecha de fin de semana según una fecha dada.
+ * @param {Date} date fecha para encontrar cuando finaliza la semana
+ * @return {Date} Fecha del fin de semana
+ */
+/*
+function getEndOfWeek(date) {
+  const dayOfWeek = date.getDay();
+  const endOfWeek = new Date(date);
+  endOfWeek.setDate(endOfWeek.getDate() + (6 - dayOfWeek));
+  return endOfWeek;
+}
+*/
 module.exports = router;
