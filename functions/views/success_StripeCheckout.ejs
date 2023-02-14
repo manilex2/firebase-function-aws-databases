@@ -31,62 +31,59 @@
         <p>
           <strong>
             <%= customer.name %>
-          </strong> has accedido al siguiente curso <strong>
-            <%= product.name %>
+          </strong> has accedido al siguiente plan <strong>
+            <%= product.metadata.Nombre %>
           </strong>, a continuación los
           detalles:
         </p>
       </div>
       <div class="col-12 mb-lg-3 cover databox">
         <div class="primerafila row align-items-center">
-          <% if (product.name==='BP-Plan Premium - Paquete Oportunidades + Sesiones en vivo' ) { %>
+          <% if (product.name==='Paquete H' ) { %>
           <div id="divLogoPlan" class="col-3">
-            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-logo-premium-TYP.png">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/Paq-inversionista-logo.svg">
           </div>
           <ol class="list-group list-group-flush mt-3 mb-4 col-9">
-            <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias avanzadas en forex.</strong></li>
-            <li class="list-group-item">Hasta <strong>10 alertas de compra y venta </strong>en los horarios Asia, London y New York.</li>
-            <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
-            <li class="list-group-item">Análisis a mediano plazo con <strong>principales pares e índices.</strong></li>
+            <li class="list-group-item">Este paquete incluye <strong>información y herramientas</strong> para invertir en acciones y criptomonedas.</li>
+            <li class="list-group-item">Obtener <strong>desarrollo personal</strong>.</li>
           </ol>
-          <% } else if (product.name==='BP-Plan 2 - Sesiones de operación en vivo' ) {%>
+          <% } else if (product.name==='Paquete TP' ) {%>
           <div id="divLogoPlan" class="col-3">
-            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-logo-envivo-TYP.png">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/Paq-trader-pro-logo.svg">
           </div>
           <ol class="list-group list-group-flush mt-3 mb-4 col-9">
-            <li class="list-group-item">Aula virtual de <strong>trading en vivo de 2 a 5 veces por semana</strong> y en horarios de Asia, Londres y Nueva York.</li>
-            <li class="list-group-item">Análisis del mercado <strong>juntos a los alumnos.</strong></li>
+            <li class="list-group-item">Este paquete incluye <strong>información y herramientas</strong> para invertir en divisas e índices bursátiles americanos.</li>
+            <li class="list-group-item">Obtener <strong>desarrollo personal</strong>.</li>
           </ol>
-          <% } else if (product.name==='BP-Plan 1 - Oportunidades' ){%>
+          <% } else if (product.name==='Paquete RM' ){%>
           <div id="divLogoPlan" class="col-3">
-            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-logo-alertas-TYP.png">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/Pag-rentable-max-logo.svg">
           </div>
           <ol class="list-group list-group-flush mt-3 mb-4 col-9">
-            <li class="list-group-item">Acceso completo a nuestros <strong>cursos en línea de estrategias en forex.</strong></li>
+            <li class="list-group-item">Este paquete incluye <strong>información y herramientas</strong> para invertir en indices sintéticos.</li>
+            <li class="list-group-item">Obtener <strong>desarrollo personal</strong>.</li>
+          </ol>
+          <% } else if (product.name==='Paquete S' ) {%>
+          <div id="divLogoPlan" class="col-3">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/Paq-trading-deportivo-logo.svg">
+          </div>
+          <ol class="list-group list-group-flush mt-3 mb-4 col-9">
+            <li class="list-group-item">Este paquete incluye <strong>información y herramientas avanzadas</strong> para invertir en trading deportivo.</li>
+            <li class="list-group-item">Obtener <strong>desarrollo personal</strong>.</li>
+          </ol>
+          <% } else if (product.name==='Membresía Premium' ) {%>
+          <div id="divLogoPlan" class="col-3">
+            <img class="logoPlan img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/Contenido+WebPage/new-landing/membresia-logo.svg">
+          </div>
+          <ol class="list-group list-group-flush mt-3 mb-4 col-9">
+            <li class="list-group-item">Acceso a <strong>forex, cripto, acciones, índices americanos e deportes</strong>.</li>
+            <li class="list-group-item">Obtener <strong>desarrollo personal</strong>.</li>
           </ol>
           <% } %>
+
         </div>
       </div>
       <div class="d-flex flex-column flex-md-row ">
-        <div class="col  my-5 me-2 databox">
-          <div class="d-flex flex-column align-items-center">
-            <p id="tituloBox">
-              Descarga nuetra App
-            </p>
-            <img id="imgBox" class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-landing-cells.png">
-            <div class="row align-items-center">
-              <div class="col ">
-                <a href="https://play.google.com/store/apps/details?id=com.invrtir&pli=1"><img id="buttonBox" class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-boton-google-TYP.png"></a>
-              </div>
-              <div class="col ">
-                <a href="">
-                  <img id="buttonBox" class="img-fluid" src="https://d8ff17fs33kjt.cloudfront.net/bluepips/landing/InvrtirFx-boton-apple-TYP.png">
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
         <div class="col my-5 ms-2 databox">
           <div class="d-flex flex-column align-items-center">
             <p id="tituloBox">

@@ -142,7 +142,6 @@ router.post("/actuallyGoal", async (req, res) => {
     idReference: null,
   });
 });
-
 router.post("/createUser", async (req, res) => {
   let status = 0;
   const firstName = req.body.first_name;
@@ -383,7 +382,6 @@ router.get("/groupSalesByDayOfWeek", async (req, res) => {
     values: salesByDayOfWeek.map((day) => day.total),
   });
 });
-
 /**
  * Funcion para retorna la fecha de inicio de semana según una fecha dada.
  * @param {Date} date fecha para encontrar cuando inicia la semana

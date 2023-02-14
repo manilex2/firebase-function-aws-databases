@@ -43,15 +43,15 @@
         "function": "routes"
       },
       {
-        "source": "/planesForex",
+        "source": "/planesInvrtir",
         "function": "routes"
       },
       {
-        "source": "/planesForex/payPlan",
+        "source": "/planesInvrtir/payPlan",
         "function": "routes"
       },
       {
-        "source": "/planesForex/success",
+        "source": "/planesInvrtir/success",
         "function": "routes"
       },
       {

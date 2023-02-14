@@ -3,6 +3,13 @@ const express = require("express");
 // const admin = require("firebase-admin");
 // const nodemailer = require("nodemailer");
 const cors = require("cors");
+const AWS = require("aws-sdk");
+AWS.config.update({
+  region: "us-east-2",
+  accessKeyId: process.env.ACCESS_KEY_AWS,
+  secretAccessKey: process.env.SECRET_KEY_AWS,
+});
+const stepfunctions = new AWS.StepFunctions();
 // const ejs = require("ejs");
 // const qs = require("qs");
 // const axios = require("axios").default;
@@ -107,7 +114,7 @@ router.get("/success", async function(req, res, next) {
     strict: true,
   });
   */
-  // const dataPrice = subscription.items.data[0].price;
+  const dataPrice = subscription.items.data[0].price;
   const product = await stripe.products.retrieve(subscription.plan.product);
   // await generateReferralLink(token, customer.name, customer.email);
   /*
@@ -168,6 +175,48 @@ router.get("/success", async function(req, res, next) {
         .catch((err) => console.error(err));
   }
   */
+  let params;
+  if (subscription.trial_end == null && subscription.trial_start == null) {
+    params = {
+      stateMachineArn:
+        "arn:aws:states:us-east-2:174858107218:stateMachine:SystemAffiliate",
+      input: JSON.stringify({
+        dataUser: {
+          displayName: customer.name,
+          email: customer.email,
+        },
+        dataCourse: {
+          idPlanFirebase: product.metadata.IDFirebase,
+          idPlanRecurring: dataPrice.metadata.IDFirebase,
+          is_trial: true,
+          init_inscription: subscription.trial_start,
+          end_inscription: subscription.trial_end,
+        },
+      }),
+    };
+  } else {
+    params = {
+      stateMachineArn:
+        "arn:aws:states:us-east-2:174858107218:stateMachine:SystemAffiliate",
+      input: JSON.stringify({
+        dataUser: {
+          displayName: customer.name,
+          email: customer.email,
+        },
+        dataCourse: {
+          idPlanFirebase: product.metadata.IDFirebase,
+          idPlanRecurring: dataPrice.metadata.IDFirebase,
+          is_trial: false,
+        },
+      }),
+    };
+  }
+
+  stepfunctions
+      .startExecution(params)
+      .promise()
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
   res.render("success_StripeCheckout_dev2", {
     customer: customer,
     product: product,
@@ -186,6 +235,13 @@ router.post("/payPlan", async function(req, res, next) {
         quantity: 1,
       },
     ],
+    subscription_data: {
+      trial_settings: {end_behavior: {missing_payment_method: "cancel"}},
+      trial_period_days: parseInt(
+          getDaysBetweenDates(new Date(), new Date("2023-02-28T23:59:59")),
+      ),
+    },
+    payment_method_collection: "if_required",
     mode: "subscription",
     discounts: [
       {
@@ -193,9 +249,9 @@ router.post("/payPlan", async function(req, res, next) {
       },
     ],
     // eslint-disable-next-line max-len
-    success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesForex/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
     // eslint-disable-next-line max-len
-    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesForex?referral=${req.body.referral}`,
+    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir?referral=${req.body.referral}`,
     automatic_tax: {enabled: true},
     client_reference_id: referralCode || "checkout_" + new Date().getTime(),
   });
@@ -649,4 +705,20 @@ async function generateReferralLink(token, displayName, email) {
   return response;
 }
 */
+/**
+ * Function que retorna la diferencia de dias entre dos fechas.
+ * @param {Date} startDate Dia actual cuando se consulta.
+ * @param {Date} endDate Fin de la fecha.
+ * @return {int} Diferencia de Dias.
+ */
+function getDaysBetweenDates(startDate, endDate) {
+  // Obtener el tiempo en milisegundos entre las dos fechas
+  const differenceInTime = endDate.getTime() - startDate.getTime();
+
+  // Dividir el tiempo en milisegundos entre un día (en milisegundos)
+  const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+  // Devolver la cantidad de días
+  return differenceInDays;
+}
 module.exports = router;

@@ -11,7 +11,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 app.use("/forms", forms);
-app.use("/planesForex", checkout);
+app.use("/planesInvrtir", checkout);
 app.use("/blackWeekend", blackWeekend);
 app.listen(PUERTO || process.env.PORT, () => {
   console.log("Escuchando en Puerto", PUERTO || process.env.PORT);

@@ -166,7 +166,7 @@
                     <% product.prices.forEach(function(price){ %>
                     <% if (price.type==='Semanal' ) { %>
                     <div class="tab-pane active show" id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                      <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                      <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesInvrtir/payPlan" method="post" data-rewardful="true">
 
                         <% if (product.name==='CR-Plan 1' ) { %>
                         <h1 class="card-title pricing-card-title">$39.99<small class="text-muted fw-light">/semana</small></h1>
@@ -197,7 +197,7 @@
                     </div>
                     <% } else {%>
                     <div class="tab-pane " id="<%= price.id %>" role="tabpanel" aria-labelledby="<%= price.id %>-tab" tabindex="0">
-                      <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesForex/payPlan" method="post" data-rewardful="true">
+                      <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesInvrtir/payPlan" method="post" data-rewardful="true">
                         <% if (product.name==='CR-Plan 1' ) { %>
                         <h1 class="card-title pricing-card-title">$1,500<small class="text-muted fw-light">/año</small></h1>
                         <h5 class="fst-italic card-title pricing-card-title">Ahorras $300</h5>
