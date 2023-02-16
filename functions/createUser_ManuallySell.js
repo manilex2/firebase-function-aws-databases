@@ -12,6 +12,7 @@ module.exports = functions.firestore
     .document("/affiliates/{docId}/sales/{subDocId}")
     .onCreate(async (snap, context) => {
       const data = snap.data();
+      const batch = admin.firestore().batch();
       const dataReferral = (await data.ref_client.get()).data();
       console.log(dataReferral);
       if (dataReferral.platform == "app") {
@@ -58,6 +59,8 @@ module.exports = functions.firestore
                     .firestore()
                     .collection("user_settings")
                     .doc();
+                // eslint-disable-next-line max-len
+                const simulator = admin.firestore().collection("simulator").doc();
                 const currentDate = new Date();
                 currentDate.setHours(currentDate.getHours() - 5);
                 let endDate;
@@ -75,7 +78,7 @@ module.exports = functions.firestore
                   endDate = new Date(currentDate);
                   endDate.setDate(endDate.getDate() + 360);
                 }
-                await inscription.create({
+                batch.set(inscription, {
                   active: true,
                   plan_variation: data.ref_product_variation,
                   plan: data.ref_product,
@@ -83,7 +86,7 @@ module.exports = functions.firestore
                   user: newuser,
                   end_date: endDate,
                 });
-                await userSetting.create({
+                batch.set(userSetting, {
                   accept_program_affiliate: false,
                   profile_complete: false,
                   activate_guides_acciones: false,
@@ -97,13 +100,20 @@ module.exports = functions.firestore
                   user: newuser,
                   rol: rol,
                 });
-                await userJourneyProgress.create({
+                batch.set(simulator, {
+                  purchasing_power: 5000,
+                  invested_value: 0,
+                  user: newuser,
+                  user_email: user.email,
+                  total_value: 0,
+                });
+                batch.set(userJourneyProgress, {
                   crypto_progress: 1,
                   steps_completed: ["investor_journey"],
                   stock_progress: 1,
                   user_email: user.email,
                 });
-                await newuser.create({
+                batch.set(newuser, {
                   display_name: user.displayName,
                   first_name: dataReferral.name_client,
                   last_name: dataReferral.lastname_client,
@@ -116,44 +126,50 @@ module.exports = functions.firestore
                   journey_progress: userJourneyProgress,
                   user_discord: "",
                   aceptaTerminosAfiliados: false,
+                  agreeSimulator: false,
                 });
-                const response = {
-                  statusCode: 200,
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    status: 200,
-                    typePay: "no-upgrade",
-                    dataUser: {
-                      displayName: user.displayName,
-                      email: user.email,
-                      password: password,
+                try {
+                  await batch.commit();
+                  const response = {
+                    statusCode: 200,
+                    headers: {
+                      "Content-Type": "application/json",
                     },
-                  }),
-                };
-                const params = {
-                  FunctionName: "send-email-user",
-                  InvocationType: "RequestResponse",
-                  LogType: "Tail",
-                  Payload: JSON.stringify(response),
-                };
-                await lambda
-                    .invoke(params)
-                    .promise()
-                    .then(
-                        function(data) {
-                          console.log("Success!");
-                          console.log(JSON.stringify(data));
-                          return data;
-                        },
-                        function(error) {
-                          console.log("Error");
-                          console.error(error);
-                          console.log(JSON.stringify(error));
-                          return error;
-                        },
-                    );
+                    body: JSON.stringify({
+                      status: 200,
+                      typePay: "no-upgrade",
+                      dataUser: {
+                        displayName: user.displayName,
+                        email: user.email,
+                        password: password,
+                      },
+                    }),
+                  };
+                  const params = {
+                    FunctionName: "send-email-user",
+                    InvocationType: "RequestResponse",
+                    LogType: "Tail",
+                    Payload: JSON.stringify(response),
+                  };
+                  await lambda
+                      .invoke(params)
+                      .promise()
+                      .then(
+                          function(data) {
+                            console.log("Success!");
+                            console.log(JSON.stringify(data));
+                            return data;
+                          },
+                          function(error) {
+                            console.log("Error");
+                            console.error(error);
+                            console.log(JSON.stringify(error));
+                            return error;
+                          },
+                      );
+                } catch (error) {
+                  console.error(error);
+                }
               })
               .catch((error) => {
                 console.error(error);
