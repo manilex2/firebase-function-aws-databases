@@ -58,7 +58,8 @@ module.exports = functions.firestore
                     .firestore()
                     .collection("user_settings")
                     .doc();
-                let currentDate;
+                const currentDate = new Date();
+                currentDate.setHours(currentDate.getHours() - 5);
                 let endDate;
                 const dataPlanVariation = refPlanVariation.data();
                 if (dataPlanVariation.code_name == "month") {
@@ -114,6 +115,7 @@ module.exports = functions.firestore
                   plan_variation: data.ref_product_variation,
                   journey_progress: userJourneyProgress,
                   user_discord: "",
+                  aceptaTerminosAfiliados: false,
                 });
                 const response = {
                   statusCode: 200,

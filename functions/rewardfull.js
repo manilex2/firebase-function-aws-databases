@@ -86,8 +86,8 @@ router.post("/getInformationTeam", async function(req, res) {
     status: 200,
     title: "Top Vendedores",
     data: {
-      totalTeam: total,
-      totalSaleTeam: totalSaleTeam,
+      totalTeam: total == null ? 0: total,
+      totalSaleTeam: totalSaleTeam == null ? 0: totalSaleTeam,
     },
   });
 });
@@ -96,22 +96,29 @@ router.post("/topSellers", async (req, res) => {
   const idDoc = req.body.idDoc;
   const docAffiliate = admin.firestore().collection("affiliates").doc(idDoc);
   const team = (await docAffiliate.get()).data().levels_1;
-  const promises = team.map(async (reference) => {
-    const doc = await reference.get();
-    return {
-      id: reference.id,
-      reference: doc,
-      value: doc.data()["total_sale_accumulate_month"],
-    };
-  });
-
-  const documents = await Promise.all(promises);
-  documents.sort((a, b) => b.value - a.value);
-  res.status(200).json({
-    status: 200,
-    title: "Top Vendedores",
-    data: documents.slice(0, top),
-  });
+  if (team.length > 0) {
+    const promises = team.map(async (reference) => {
+      const doc = await reference.get();
+      return {
+        id: reference.id,
+        reference: doc,
+        value: doc.data()["total_sale_accumulate_month"],
+      };
+    });
+    const documents = await Promise.all(promises);
+    documents.sort((a, b) => b.value - a.value);
+    res.status(200).json({
+      status: 200,
+      title: "Top Vendedores",
+      data: documents.slice(0, top),
+    });
+  } else {
+    res.status(200).json({
+      status: 200,
+      title: "Top Vendedores",
+      data: [],
+    });
+  }
 });
 router.post("/actuallyGoal", async (req, res) => {
   const accumulateMonth = req.body.total_sale_accumulate_month;
@@ -189,10 +196,15 @@ router.post("/createUser", async (req, res) => {
           id: response.id,
           total_sale_accumulate_month: 0,
           id_firebase: affiliate.id,
+          levels_1: [],
         });
         await user.update({
+          first_name: firstName,
+          last_name: lastName,
           affiliate_code: response.links[0].token,
           affiliate_link: response.links[0].url,
+          aceptaTerminosAfiliados: false,
+          affiliate_ref: affiliate,
         });
       })
       .catch(function(error) {
