@@ -22,6 +22,7 @@ const alertForex = require("./alertaForex");
 const admin = require("firebase-admin");
 const salesWeekAffiliate = require("./salesWeekAffiliate");
 const createUserManuallySell = require("./createUser_ManuallySell");
+const addAffiliateTeam = require("./addAffiliateTeam");
 admin.initializeApp();
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -54,3 +55,4 @@ exports.adminForex = functions.https.onRequest(adminForex);
 exports.alertForex = functions.https.onRequest(alertForex);
 exports.rewardFull = functions.https.onRequest(rewardFull);
 exports.salesWeekAffiliate = functions.https.onRequest(salesWeekAffiliate);
+exports.addAffiliateTeam = addAffiliateTeam;

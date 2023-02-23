@@ -84,43 +84,36 @@ router.get("/success", async function(req, res, next) {
   );
   const dataPrice = subscription.items.data[0].price;
   const product = await stripe.products.retrieve(subscription.plan.product);
-  let params;
+  const bodyUser = {
+    displayName: customer.name,
+    email: customer.email,
+  };
+  const bodyCourse = {
+    idPlanFirebase: product.metadata.IDFirebase,
+    idPlanRecurring: dataPrice.metadata.IDFirebase,
+  };
   if (subscription.trial_end != null && subscription.trial_start != null) {
-    params = {
-      stateMachineArn:
-        "arn:aws:states:us-east-2:174858107218:stateMachine:SystemAffiliate",
-      input: JSON.stringify({
-        dataUser: {
-          displayName: customer.name,
-          email: customer.email,
-        },
-        dataCourse: {
-          idPlanFirebase: product.metadata.IDFirebase,
-          idPlanRecurring: dataPrice.metadata.IDFirebase,
-          is_trial: true,
-          init_inscription: subscription.trial_start * 1000,
-          end_inscription: subscription.trial_end * 1000,
-        },
-      }),
-    };
+    bodyCourse["is_trial"] = true;
+    bodyCourse["init_inscription"] = subscription.trial_start * 1000;
+    bodyCourse["end_inscription"] = subscription.trial_end * 1000;
   } else {
-    params = {
-      stateMachineArn:
-        "arn:aws:states:us-east-2:174858107218:stateMachine:SystemAffiliate",
-      input: JSON.stringify({
-        dataUser: {
-          displayName: customer.name,
-          email: customer.email,
-        },
-        dataCourse: {
-          idPlanFirebase: product.metadata.IDFirebase,
-          idPlanRecurring: dataPrice.metadata.IDFirebase,
-          is_trial: false,
-        },
-      }),
-    };
+    bodyCourse["is_trial"] = false;
   }
-
+  if ("Link" in customer.metadata && "referral" in customer.metadata) {
+    bodyUser["affiliate"] = customer.metadata.Link;
+    bodyUser["is_referral"] = true;
+  } else {
+    bodyUser["is_referral"] = false;
+  }
+  const bodyParams = {
+    dataUser: bodyUser,
+    dataCourse: bodyCourse,
+  };
+  const params = {
+    stateMachineArn:
+      "arn:aws:states:us-east-2:174858107218:stateMachine:SystemAffiliate",
+    input: JSON.stringify(bodyParams),
+  };
   stepfunctions
       .startExecution(params)
       .promise()
@@ -137,33 +130,59 @@ router.post("/payPlan", async function(req, res, next) {
   const idPrice = req.body.idPrice;
   const discountCode = req.body.discountCode;
   console.log(discountCode);
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price: idPrice,
-        quantity: 1,
+  let session;
+  if (idPrice === "price_1MbjMQEpKT8AzW5NcK9wivc3") {
+    session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: idPrice,
+          quantity: 1,
+        },
+      ],
+      mode: "subscription",
+      discounts: [
+        {
+          coupon: discountCode,
+        },
+      ],
+      // eslint-disable-next-line max-len
+      success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
+      // eslint-disable-next-line max-len
+      cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir?referral=${req.body.referral}`,
+      automatic_tax: {enabled: true},
+      client_reference_id: referralCode || "checkout_" + new Date().getTime(),
+    });
+  } else {
+    session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: idPrice,
+          quantity: 1,
+        },
+      ],
+      subscription_data: {
+        trial_settings: {end_behavior: {missing_payment_method: "cancel"}},
+        trial_period_days: parseInt(
+            getDaysBetweenDates(new Date(), new Date("2023-03-01T23:59:59")),
+        )+1,
       },
-    ],
-    subscription_data: {
-      trial_settings: {end_behavior: {missing_payment_method: "cancel"}},
-      trial_period_days: parseInt(
-          getDaysBetweenDates(new Date(), new Date("2023-02-28T23:59:59")),
-      ),
-    },
-    payment_method_collection: "if_required",
-    mode: "subscription",
-    discounts: [
-      {
-        coupon: discountCode,
-      },
-    ],
-    // eslint-disable-next-line max-len
-    success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
-    // eslint-disable-next-line max-len
-    cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir?referral=${req.body.referral}`,
-    automatic_tax: {enabled: true},
-    client_reference_id: referralCode || "checkout_" + new Date().getTime(),
-  });
+      mode: "subscription",
+      discounts: [
+        {
+          coupon: discountCode,
+        },
+      ],
+      // eslint-disable-next-line max-len
+      success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
+      // eslint-disable-next-line max-len
+      cancel_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir?referral=${req.body.referral}`,
+      automatic_tax: {enabled: true},
+      client_reference_id: referralCode || "checkout_" + new Date().getTime(),
+    });
+  }
+
   res.redirect(303, session.url);
 });
 /**

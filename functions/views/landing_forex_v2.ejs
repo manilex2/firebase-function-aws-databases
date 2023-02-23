@@ -225,8 +225,7 @@
                     <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].savings!=='0' ) { %>
                     <div class="col mt-3">
                       <div class="d-flex justify-content-center">
-                        <p> <strong> Ahorro: </strong></p>
-                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].savings%></strong></p>
+                        <p> <strong> Ahorro: </strong><strong style="color:  #FF6601;">$<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[3].savings%></strong></p>
                       </div>
                     </div>
                     <% } %>
@@ -253,8 +252,7 @@
                     <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].savings!=='0' ) { %>
                     <div class="col mt-3">
                       <div class="d-flex justify-content-center">
-                        <p> <strong> Ahorro: </strong></p>
-                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].savings%></strong></p>
+                        <p> <strong> Ahorro: </strong><strong style="color:  #FF6601;">$<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[2].savings%></strong></p>
                       </div>
                     </div>
                     <% } %>
@@ -285,8 +283,7 @@
                     <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].savings!=='0' ) { %>
                     <div class="col mt-3">
                       <div class="d-flex justify-content-center">
-                        <p> <strong> Ahorro: </strong></p>
-                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].savings%></strong></p>
+                        <p> <strong> Ahorro: </strong><strong style="color:  #FF6601;">$<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[1].savings%></strong></p>
                       </div>
                     </div>
                     <% } %>
@@ -313,8 +310,7 @@
                     <% if (jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].savings!=='0' ) { %>
                     <div class="col mt-3">
                       <div class="d-flex justify-content-center">
-                        <p> <strong> Ahorro: </strong></p>
-                        <p><strong style="color:  #FF6601;"> $<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].savings%></strong></p>
+                        <p> <strong> Ahorro: </strong><strong style="color:  #FF6601;">$<%= jsonProductPrices["prod_NEGbU8IfMKmzzF"].prices[0].savings%></strong></p>
                       </div>
                     </div>
                     <% } %>
@@ -325,6 +321,18 @@
           </div>
         </div>
       </div>
+    </div>
+    
+    <div id="" class="row cardsPaquete row-cols-1 p-lg-5 p-3  mx-auto my-sm-5 my-3">
+      <form id="<%=jsonProductPrices["prod_NMSGBeQWmwTl16"].prices[0].id %>" action="/planesInvrtir/payPlan" method="post" data-rewardful="true">
+        <div class="col">
+          <%- jsonProductPrices["prod_NMSGBeQWmwTl16"].description %>
+        </div>
+        <div class="col text-center">
+          <input type="hidden" name="idPrice" value=<%=jsonProductPrices["prod_NMSGBeQWmwTl16"].prices[0].id %>>
+          <input class="btn btn-primary w-50" type="submit" value="Suscriberme como Invrtir+ Partner">
+        </div>
+      </form>
     </div>
   </div>
 </body>

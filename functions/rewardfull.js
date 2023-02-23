@@ -197,6 +197,7 @@ router.post("/createUser", async (req, res) => {
           total_sale_accumulate_month: 0,
           id_firebase: affiliate.id,
           levels_1: [],
+          token: response.links[0].token,
         });
         await user.update({
           first_name: firstName,

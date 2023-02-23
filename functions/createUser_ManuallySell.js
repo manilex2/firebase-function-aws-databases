@@ -12,6 +12,8 @@ module.exports = functions.firestore
     .document("/affiliates/{docId}/sales/{subDocId}")
     .onCreate(async (snap, context) => {
       const data = snap.data();
+      // eslint-disable-next-line max-len
+      const affiliate = admin.firestore().collection("affiliate").doc(context.params.docId);
       const batch = admin.firestore().batch();
       const dataReferral = (await data.ref_client.get()).data();
       console.log(dataReferral);
@@ -64,6 +66,7 @@ module.exports = functions.firestore
                 const currentDate = new Date();
                 currentDate.setHours(currentDate.getHours() - 5);
                 let endDate;
+                const dataPlan = refPlan.data();
                 const dataPlanVariation = refPlanVariation.data();
                 if (dataPlanVariation.code_name == "month") {
                   endDate = new Date(currentDate);
@@ -78,6 +81,45 @@ module.exports = functions.firestore
                   endDate = new Date(currentDate);
                   endDate.setDate(endDate.getDate() + 360);
                 }
+                // eslint-disable-next-line max-len
+                const relationship = admin.firestore().collection("relationships").doc();
+                const bodyRet = {
+                  idClient: newuser.id,
+                  client: user,
+                  belongsTo: affiliate,
+                };
+                const bodyUser = {
+                  display_name: user.displayName,
+                  first_name: dataReferral.name_client,
+                  last_name: dataReferral.lastname_client,
+                  email: user.email,
+                  uid: user.uid,
+                  created_time: new Date(),
+                  journey_progress: userJourneyProgress,
+                  user_discord: "",
+                  aceptaTerminosAfiliados: false,
+                  agreeSimulator: false,
+                  referencedBy: affiliate,
+                };
+                if (dataPlan.code_name === "plan_partner") {
+                  // eslint-disable-next-line max-len
+                  const planIns = admin.firestore().collection("plans").doc("plan_free");
+                  // eslint-disable-next-line max-len
+                  const inscriptionPlan = admin.firestore().collection("inscriptions").doc("");
+                  batch.set(inscriptionPlan, {
+                    active: true,
+                    plan: planIns,
+                    user: newuser,
+                  });
+                  bodyUser["partner_inscription"] = inscription;
+                  bodyUser["partner"] = data.ref_product;
+                  bodyUser["inscription"] = inscriptionPlan;
+                  bodyUser["plan"] = planIns;
+                } else {
+                  bodyUser["plan"] = refPlan;
+                  bodyUser["plan_variation"] = refPlanVariation;
+                  bodyUser["inscription"] = inscription;
+                }
                 batch.set(inscription, {
                   active: true,
                   plan_variation: data.ref_product_variation,
@@ -86,6 +128,7 @@ module.exports = functions.firestore
                   user: newuser,
                   end_date: endDate,
                 });
+                batch.set(relationship, bodyRet);
                 batch.set(userSetting, {
                   accept_program_affiliate: false,
                   profile_complete: false,
@@ -113,21 +156,7 @@ module.exports = functions.firestore
                   stock_progress: 1,
                   user_email: user.email,
                 });
-                batch.set(newuser, {
-                  display_name: user.displayName,
-                  first_name: dataReferral.name_client,
-                  last_name: dataReferral.lastname_client,
-                  email: user.email,
-                  uid: user.uid,
-                  created_time: new Date(),
-                  inscription: inscription,
-                  plan: data.ref_product,
-                  plan_variation: data.ref_product_variation,
-                  journey_progress: userJourneyProgress,
-                  user_discord: "",
-                  aceptaTerminosAfiliados: false,
-                  agreeSimulator: false,
-                });
+                batch.set(newuser, bodyUser );
                 try {
                   await batch.commit();
                   const response = {
@@ -192,17 +221,33 @@ module.exports = functions.firestore
             endDate = new Date(currentDate);
             endDate.setDate(endDate.getDate() + 360);
           }
-          queryUser.docs[0].ref.update({
-            plan: data.ref_product,
-            plan_variation: data.ref_product,
-          });
-          queryUser.docs[0].data().inscription.update({
-            active: true,
-            plan_variation: data.ref_product_variation,
-            plan: data.ref_product,
-            init_date: currentDate,
-            end_date: endDate,
-          });
+          if (dataPlan.code_name === "plan_partner") {
+            const partnerInscription = admin.firestore()
+                .collection("inscriptions").doc();
+            batch.set(partnerInscription, {
+              active: true,
+              plan_variation: data.ref_product_variation,
+              plan: data.ref_product,
+              init_date: currentDate,
+              end_date: endDate,
+            });
+            queryUser.docs[0].ref.update({
+              partner: data.ref_product,
+              partner_inscription: partnerInscription,
+            });
+          } else {
+            queryUser.docs[0].ref.update({
+              plan: data.ref_product,
+              plan_variation: data.ref_product,
+            });
+            queryUser.docs[0].data().inscription.update({
+              active: true,
+              plan_variation: data.ref_product_variation,
+              plan: data.ref_product,
+              init_date: currentDate,
+              end_date: endDate,
+            });
+          }
           const response = {
             statusCode: 200,
             headers: {
