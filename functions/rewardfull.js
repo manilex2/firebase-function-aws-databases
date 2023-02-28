@@ -182,12 +182,17 @@ router.post("/createUser", async (req, res) => {
         console.log(response);
         const affiliate = admin.firestore().collection("affiliates").doc();
         const user = admin.firestore().collection("users").doc(iduser);
+        const referrals = affiliate.collection("referrals").doc();
+        const sales = affiliate.collection("sales").doc();
+        const comissions = affiliate.collection("comissions").doc();
         await affiliate.create({
           email: response.email,
           state: response.state,
           link: response.links[0].url,
           id_link: response.links[0].id,
           total_comission_month: 0,
+          sale_direct_next_month: 0,
+          sale_indirect_next_month: 0,
           total_comission_general: 0,
           total_sale_general: 0,
           total_sale_indirect_month: 0,
@@ -199,6 +204,9 @@ router.post("/createUser", async (req, res) => {
           levels_1: [],
           token: response.links[0].token,
         });
+        await referrals.create({});
+        await sales.create({});
+        await comissions.create({});
         await user.update({
           first_name: firstName,
           last_name: lastName,
