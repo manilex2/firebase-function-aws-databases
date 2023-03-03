@@ -128,8 +128,6 @@ router.post("/payPlan", async function(req, res, next) {
   const stripe = require("stripe")(process.env.KEY_SECRET_STRIPE_PROD);
   const referralCode = req.body.referral;
   const idPrice = req.body.idPrice;
-  const discountCode = req.body.discountCode;
-  console.log(discountCode);
   let session;
   if (idPrice === "price_1MbjMQEpKT8AzW5NcK9wivc3") {
     session = await stripe.checkout.sessions.create({
@@ -141,11 +139,6 @@ router.post("/payPlan", async function(req, res, next) {
         },
       ],
       mode: "subscription",
-      discounts: [
-        {
-          coupon: discountCode,
-        },
-      ],
       // eslint-disable-next-line max-len
       success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
       // eslint-disable-next-line max-len
@@ -162,18 +155,7 @@ router.post("/payPlan", async function(req, res, next) {
           quantity: 1,
         },
       ],
-      subscription_data: {
-        trial_settings: {end_behavior: {missing_payment_method: "cancel"}},
-        trial_period_days: parseInt(
-            getDaysBetweenDates(new Date(), new Date("2023-03-01T23:59:59")),
-        )+1,
-      },
       mode: "subscription",
-      discounts: [
-        {
-          coupon: discountCode,
-        },
-      ],
       // eslint-disable-next-line max-len
       success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
       // eslint-disable-next-line max-len
@@ -212,6 +194,7 @@ async function sortJSON(data, key, orden) {
  * @param {Date} endDate Fin de la fecha.
  * @return {int} Diferencia de Dias.
  */
+/*
 function getDaysBetweenDates(startDate, endDate) {
   // Obtener el tiempo en milisegundos entre las dos fechas
   const differenceInTime = endDate.getTime() - startDate.getTime();
@@ -221,5 +204,6 @@ function getDaysBetweenDates(startDate, endDate) {
 
   // Devolver la cantidad de días
   return differenceInDays;
-}
+}*/
+
 module.exports = router;
