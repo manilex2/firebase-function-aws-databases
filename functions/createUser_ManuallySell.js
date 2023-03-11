@@ -85,7 +85,7 @@ module.exports = functions.firestore
                 const relationship = admin.firestore().collection("relationships").doc();
                 const bodyRet = {
                   idClient: newuser.id,
-                  client: user,
+                  client: newuser,
                   belongsTo: affiliate,
                 };
                 const bodyUser = {
@@ -116,8 +116,8 @@ module.exports = functions.firestore
                   bodyUser["inscription"] = inscriptionPlan;
                   bodyUser["plan"] = planIns;
                 } else {
-                  bodyUser["plan"] = refPlan;
-                  bodyUser["plan_variation"] = refPlanVariation;
+                  bodyUser["plan"] = data.ref_product;
+                  bodyUser["plan_variation"] = data.ref_product_variation;
                   bodyUser["inscription"] = inscription;
                 }
                 batch.set(inscription, {
@@ -238,7 +238,7 @@ module.exports = functions.firestore
           } else {
             queryUser.docs[0].ref.update({
               plan: data.ref_product,
-              plan_variation: data.ref_product,
+              plan_variation: data.ref_product_variation,
             });
             queryUser.docs[0].data().inscription.update({
               active: true,

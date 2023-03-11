@@ -1,0 +1,116 @@
+<% jsonProductPrices["prod_NEGSEJF0dgdFGv"].prices.forEach(function(price){ %>
+    <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
+      <form id="<%=price.id %>" action="/invrtir-app-b3266/us-central1/routes/planesInvrtir/payPlan" method="post" data-rewardful="true">
+        <div class="row row-cols-1">
+          <div class="col">
+            <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGSEJF0dgdFGv"].name%></h4>
+          </div>
+          <div class="col my-3">
+            <div class="row">
+              <div class="col-5">
+                <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGSEJF0dgdFGv"].img%>>
+              </div>
+              <div class="col-7">
+                <div class="row row-cols-1">
+                  <div class="col">
+                    <h5 class="subtituloPlan"><%=price.name%></h4>
+                  </div>
+                  <div class="col">
+                    <%- jsonProductPrices["prod_NEGSEJF0dgdFGv"].description %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col mb-3">
+            <div class="d-flex justify-content-center align-items-end">
+              <h2 class="valuePrecio">$<%=price.value %></h2>
+              <p>/<%=price.type %></p>
+            </div>
+          </div>
+          <div class="col">
+            <input type="hidden" name="idPrice" value=<%=price.id %>>
+            <input class="btn btn-primary w-100" type="submit" value="Suscribirse">
+          </div>
+        </div>
+      </form>
+    </div>
+    <% }); %>
+
+    <% jsonProductPrices["prod_NEGVS5wjnUjQD5"].prices.forEach(function(price){ %>
+        <div class="col flex-fill align-items-center cardsPaquete me-lg-3 my-3 p-3 ">
+          <form id="<%=price.id %>" action="/planesInvrtir/payPlan" method="post" data-rewardful="true">
+            <div class="row row-cols-1">
+              <div class="col">
+                <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGVS5wjnUjQD5"].name%></h4>
+              </div>
+              <div class="col my-3">
+                <div class="row">
+                  <div class="col-5">
+                    <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGVS5wjnUjQD5"].img%>>
+                  </div>
+                  <div class="col-7">
+                    <div class="row row-cols-1">
+                      <div class="col">
+                        <h5 class="subtituloPlan"><%=price.name%></h4>
+                      </div>
+                      <div class="col">
+                        <%- jsonProductPrices["prod_NEGVS5wjnUjQD5"].description %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col mb-3">
+                <div class="d-flex justify-content-center align-items-end">
+                  <h2 class="valuePrecio">$<%=price.value %></h2>
+                  <p>/<%=price.type %></p>
+                </div>
+              </div>
+              <div class="col">
+                <input type="hidden" name="idPrice" value=<%=price.id %>>
+                <input class="btn btn-primary w-100" type="submit" value="Suscribirse">
+              </div>
+            </div>
+          </form>
+        </div>
+        <% }); %>
+
+        <% jsonProductPrices["prod_NEGYV3pHNlrTJ6"].prices.forEach(function(price){ %>
+            <div class="col flex-fill align-items-center cardsPaquete me-lg-3 mb-2 mt-3 p-3 ">
+              <form id="<%=price.id %>" action="/planesInvrtir/payPlan" method="post" data-rewardful="true">
+                <div class="row row-cols-1">
+                  <div class="col">
+                    <h4 class="tituloPlan" style="text-align:center"><%=jsonProductPrices["prod_NEGYV3pHNlrTJ6"].name%></h4>
+                  </div>
+                  <div class="col my-3">
+                    <div class="row">
+                      <div class="col-5">
+                        <img class="img-fluid d-block" src=<%=jsonProductPrices["prod_NEGYV3pHNlrTJ6"].img%>>
+                      </div>
+                      <div class="col-7">
+                        <div class="row row-cols-1">
+                          <div class="col">
+                            <h5 class="subtituloPlan"><%=price.name%></h4>
+                          </div>
+                          <div class="col">
+                            <%- jsonProductPrices["prod_NEGYV3pHNlrTJ6"].description %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col mb-3">
+                    <div class="d-flex justify-content-center align-items-end">
+                      <h2 class="valuePrecio">$<%=price.value %></h2>
+                      <p>/<%=price.type %></p>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <input type="hidden" name="idPrice" value=<%=price.id %>>
+                    <input class="btn btn-primary w-100" type="submit" value="Suscribirse">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <% }); %>

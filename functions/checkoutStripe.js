@@ -63,12 +63,14 @@ router.get("/", async function(req, res, next) {
       jsonProductPrices[productsPrices["id"]] = productsPrices;
     }
   }
-  console.log(jsonProductPrices);
+  // console.log(jsonProductPrices);
+  /*
   for (const key in jsonProductPrices) {
     if (Object.prototype.hasOwnProperty.call(jsonProductPrices, key)) {
       console.log(jsonProductPrices[key]);
     }
   }
+  */
   // eslint-disable-next-line max-len
   res.render("landing_forex_v2", {
     jsonProductPrices: jsonProductPrices,
@@ -154,7 +156,22 @@ router.post("/payPlan", async function(req, res, next) {
           price: idPrice,
           quantity: 1,
         },
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Cargo inicial",
+            },
+            unit_amount: 700, // Monto del cargo inicial
+            tax_behavior: "exclusive", // Incluir impuestos en el cargo inicial
+          },
+          quantity: 1,
+        },
       ],
+      subscription_data: {
+        trial_settings: {end_behavior: {missing_payment_method: "cancel"}},
+        trial_period_days: 7,
+      },
       mode: "subscription",
       // eslint-disable-next-line max-len
       success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
