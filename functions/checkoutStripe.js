@@ -141,6 +141,7 @@ router.post("/payPlan", async function(req, res, next) {
         },
       ],
       mode: "subscription",
+      allow_promotion_codes: true,
       // eslint-disable-next-line max-len
       success_url: `${process.env.HOST_DOMAIN_INVRTIR}/planesInvrtir/success?session_id={CHECKOUT_SESSION_ID}`,
       // eslint-disable-next-line max-len
@@ -168,6 +169,7 @@ router.post("/payPlan", async function(req, res, next) {
           quantity: 1,
         },
       ],
+      allow_promotion_codes: true,
       subscription_data: {
         trial_settings: {end_behavior: {missing_payment_method: "cancel"}},
         trial_period_days: 7,
