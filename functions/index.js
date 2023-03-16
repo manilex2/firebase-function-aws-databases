@@ -24,6 +24,8 @@ const salesWeekAffiliate = require("./salesWeekAffiliate");
 const createUserManuallySell = require("./createUser_ManuallySell");
 const addAffiliateTeam = require("./addAffiliateTeam");
 const initStepFunctionsWeebhook = require("./initStepFunctionsWeebhook");
+// eslint-disable-next-line max-len
+const initStepFunctionsCheckInvoices = require("./initStepFunctionsCheckInvoices");
 admin.initializeApp();
 exports.ping = functions.https.onRequest((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -58,4 +60,6 @@ exports.rewardFull = functions.https.onRequest(rewardFull);
 exports.salesWeekAffiliate = functions.https.onRequest(salesWeekAffiliate);
 // eslint-disable-next-line max-len
 exports.initStepFunctionsWeebhook = functions.https.onRequest(initStepFunctionsWeebhook);
+// eslint-disable-next-line max-len
+exports.initStepFunctionsCheckInvoices = functions.https.onRequest(initStepFunctionsCheckInvoices);
 exports.addAffiliateTeam = addAffiliateTeam;

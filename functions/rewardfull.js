@@ -295,7 +295,7 @@ router.post("/sellManually", async (req, res) => {
     docRefererallRef = queryReferral.docs[0].ref;
     bodySale["ref_client"] = docRefererallRef;
     // eslint-disable-next-line max-len
-    if (queryReferral.docs[0].data().month_sale != payDay.getMonth() + 1) {
+    if (queryReferral.docs[0].data().month_sale < payDay.getMonth() + 1) {
       batch.update(docRefererallRef, {
         sales: FieldValue.arrayUnion(referenceSale),
         month_sale: payDay.getMonth() + 1,

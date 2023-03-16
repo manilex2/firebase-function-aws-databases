@@ -31,7 +31,7 @@ router.post("/", async function(req, res) {
       throw error;
     }
   };
-  console.log(req.headers);
+  // console.log(req.headers);
   /*
   const headers = JSON.parse(req.headers);
   if (Object.prototype.hasOwnProperty.call(headers, "X-Rewardful-Signature")) {
@@ -43,7 +43,7 @@ router.post("/", async function(req, res) {
   // const body = req.body;
   // eslint-disable-next-line quotes
   const rawBody = req.rawBody;
-  console.log(rawBody);
+  // console.log(rawBody);
   const signature = _generateSignature(rawBody);
   if (signature !== req.headers["x-rewardful-signature"]) {
     console.error("Auth Incorrect");
@@ -53,7 +53,7 @@ router.post("/", async function(req, res) {
       message: "Auth Incorrect",
     });
   } else {
-    console.log(req.body);
+    // console.log(req.body);
     // const objectComission = JSON.parse(req.body);
     const params = {
       stateMachineArn:
