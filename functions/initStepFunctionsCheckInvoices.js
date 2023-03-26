@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const express = require("express");
 const cors = require("cors");
 const AWS = require("aws-sdk");
@@ -14,12 +15,14 @@ const endpointSecret = process.env.SIGNIN_SECRET_STRIPE_WEEBHOOK_INVOICE_UPDATE;
 const router = express.Router();
 router.use(cors({origin: true}));
 
-router.post("/checkInvoices", async function(req, res) {
+router.post("/", async function(req, res) {
+  router.use(rawBodyMiddleware);
   const sig = req.headers["stripe-signature"];
+  const rawBody = req.rawBody;
   let dataEvent;
   try {
-    dataEvent = stripe.webhooks.constructEvent(
-        req.body,
+    dataEvent = await stripe.webhooks.constructEvent(
+        rawBody,
         sig,
         endpointSecret,
     );
@@ -82,4 +85,23 @@ async function invokeStepFunction(params) {
   }
 }
 
+/**
+ * Funcion para obtener un body sin procesar.
+ * @param {*} req data
+ * @param {*} res data
+ * @param {*} next data
+ */
+function rawBodyMiddleware(req, res, next) {
+  let data = "";
+  req.setEncoding("utf8");
+
+  req.on("data", (chunk) => {
+    data += chunk;
+  });
+
+  req.on("end", () => {
+    req.rawBody = data;
+    next();
+  });
+}
 module.exports = router;
